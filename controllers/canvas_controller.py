@@ -17,7 +17,10 @@ def start_up():
 
     status = choose_status()
 
-    return status
+    user_login_as(status)
+
+
+
 
 
 def choose_status():
@@ -60,3 +63,15 @@ def load_lists_from_file(status):
 
     if status == ['Manager']:
         manager_controller.load_managers_from_file()
+
+
+def get_password_and_login():
+    '''
+    '''
+    login = view.input_login()
+    password = view.input_password()
+
+
+def login_user(status):
+    view.print_login_screen(status)
+    pass
