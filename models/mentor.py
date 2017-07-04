@@ -1,5 +1,5 @@
-from codecooler import Codecooler
+from employee import Employee
 
 
-class Mentor(Codecooler):
+class Mentor(Employee):
     pass
