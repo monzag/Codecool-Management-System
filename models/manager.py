@@ -2,4 +2,6 @@ from employee import Employee
 
 
 class Manager(Employee):
-    pass
+
+    def __init__(self, *args):
+        super().__init__(*args)
