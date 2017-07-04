@@ -147,7 +147,7 @@ def is_user_in_system(status, login, password):
     '''
     if status == 'Student':
         return student_controller.get_user_by_login_and_password(login, password)
-    
+
     if status == 'Employee':
         return employee_controller.get_user_by_login_and_password(login, password)
 
@@ -156,4 +156,44 @@ def is_user_in_system(status, login, password):
 
     if status == 'Manager':
         return manager_controller.get_user_by_login_and_password(login, password)
-    
+
+
+def operate_on_user(user):
+    '''
+    Depending on type of user, opens differen priviliges menus which 
+    are declared in different modules and hold users operation logic.
+
+    Fallowing disallows certain groups on accessing features they 
+    souldn't have access to.
+
+    Parameters:
+        user : Codecooler obj. instance
+
+    Returns:
+        None
+    '''
+    if isinstance(user, Studen):
+        student_controller.student_menu()
+    if isinstance(user, Employee):
+        employee_controller.employee_menu()
+    if isinstance(user, Mentor):
+        mentor_controller.mentor_menu()
+    if isinstance(user, Manager):
+        manager_controller.manager_menu()
+
+
+def close_program():
+    '''
+    Prints end screen
+    '''
+    os.system('clear')
+    view.print_end_screen()
+
+
+def hold_session():
+    '''
+    Holds procedural logic of program
+    '''
+    user = start_up()
+    operate_on_user(user)
+    close_program()
