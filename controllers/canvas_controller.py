@@ -1,7 +1,7 @@
 import os
 import sys
 
-from views import view
+import views.view
 
 from controllers import student_controller
 from controllers import employee_controller
@@ -82,7 +82,36 @@ def load_lists_from_file(status):
     if status in ['Manager', 'Employee']:
         employee_controller.load_employees_from_file()
 
-    if status in ['Manager', 'Mentor']:
+    if status in ['Manager', 'Mentor']:def choose_status():
+    '''
+    Asks user about his privilige in accessing cerain program
+    features, and determining fallowing logging system
+
+    Returns:
+        status : str - representing privilige
+    '''
+    title = 'Do you want to log as'
+    otions = ['Student', 'Employee', 'Mentor', 'Manager', 'Exit']
+
+    status = None
+    while status:
+        os.system('clear')
+
+        view.print_menu(title, options)
+        option = view.input_number()
+        
+        if option == 1:
+            status = 'Student'
+        if option == 2:
+            status = 'Employee'
+        if option == 3:
+            status = 'Mentor'
+        if option == 4:
+            status = 'Manager'
+        if option == 0:
+            sys.exit()
+    
+    return status
         mentor_controller.load_mentors_from_file()
 
     if status == 'Manager':
@@ -173,13 +202,13 @@ def operate_on_user(user):
         None
     '''
     if isinstance(user, Studen):
-        student_controller.student_menu()
+        student_controller.student_menu(user)
     if isinstance(user, Employee):
-        employee_controller.employee_menu()
+        employee_controller.employee_menu(user)
     if isinstance(user, Mentor):
-        mentor_controller.mentor_menu()
+        mentor_controller.mentor_menu(user)
     if isinstance(user, Manager):
-        manager_controller.manager_menu()
+        manager_controller.manager_menu(user)
 
 
 def close_program():
