@@ -1,13 +1,13 @@
 import os
 
 import views.view
-import controllers.student_controller
 import controllers.assigment_controller
 
-from models.mentor import Mentor
+from models.student import Student
+from models.assigemnt import Assigment
 
 
-def mentor_menu(user):
+def student_menu(user):
     '''
     Prints user specific features and asks him for operation
     to perform. Resolve all interacions, util user diecides to exit.
@@ -15,8 +15,9 @@ def mentor_menu(user):
     Returns:
         None
     '''
+
     title = 'Hi {}! What would you like to do'.format(user.name)
-    otions = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student', 'Exit']
+    otions = ['View grades', 'Submit assigment', 'Exit']
 
     end = False
     while end:
@@ -26,16 +27,8 @@ def mentor_menu(user):
         option = view.input_number()
 
         if option == 1:
-            view_students()
+            view_grades(user)
         if option == 2:
-            add_assigment()
-        if option == 3:
-            grade_assigment()
-        if option == 4:
-            check_attendence()
-        if option == 5:
-            add_student()
-        if option == 6:
-            remove_student()
+            submit_assigment(user)
         if option == 0:
             end = True
