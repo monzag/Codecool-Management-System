@@ -16,6 +16,7 @@ def start_up():
     view.wait_until_key_pressed()
 
     status = choose_status()
+    # login
 
     return status
 
