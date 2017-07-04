@@ -119,7 +119,7 @@ def edit_student():
     
     should use views.view.print_students() to print all students
 
-    should use views.view.get_number() to detrmine which student should be deleted
+    should use views.view.get_number() to detrmine which student should be edited
 
     should use controllers.student_controler.edit_student() to edit students data
     '''
