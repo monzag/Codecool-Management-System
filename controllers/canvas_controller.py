@@ -71,7 +71,29 @@ def get_password_and_login():
     login = view.input_login()
     password = view.input_password()
 
+    return login, password
 
-def login_user(status):
-    view.print_login_screen(status)
+
+def log_in_user(status):
+    '''
+    '''
+    attempt = 1
+    is_user = False
+    while is_user:
+        os.system('clear')
+
+        view.print_login_screen(status, attempt)
+        login, password = get_password_and_login()
+
+        attempt += 1
+        is_user = is_user_in_system(status, login, password)
+
+
+def is_user_in_system(status, login, password):
+    '''
+    '''
+    if status == 'Student':
+        return student_controller.match_login_and_password(login, password)
+    
     pass
+    
