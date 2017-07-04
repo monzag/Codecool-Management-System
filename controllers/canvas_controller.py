@@ -11,20 +11,32 @@ from controllers import manager_controller
 
 def start_up():
     '''
+    function starts program by displaying about-screen
+    and leading user thorugh logging into a system
+
+    determines identity of user and his privilige in
+    accessing sertain functions of program
+
+
+    Returns:
+        user : Codecooler obj. instance
     '''
     view.print_welcome_screen()
     view.wait_until_key_pressed()
 
     status = choose_status()
+    user = log_in_as_user(status)
 
-    user_login_as(status)
-
-
-
+    return user
 
 
 def choose_status():
     '''
+    Asks user about his privilige in accessing cerain program
+    features, and determining fallowing logging system
+
+    Returns:
+        status : str - representing privilige
     '''
     title = 'Do you want to log as'
     otions = ['Student', 'Employee', 'Mentor', 'Manager', 'Exit']
@@ -52,10 +64,22 @@ def choose_status():
 
 def load_lists_from_file(status):
     '''
+    Depending on user privilige loads certain data into a program:
+    
+    -> for each group program will load group own users, to find one
+       who is trying to access program
+    -> employees and mentors have access to list of students
+    -> manager have access to all
+
+    Parameters:
+        status: str - representing privilige
+
+    Return:
+        None
     '''
     student_controller.load_students_from_file()
 
-    if status in ['Manager', 'Mentor', 'Employee']:
+    if status in ['Manager', 'Employee']:
         employee_controller.load_employees_from_file()
 
     if status in ['Manager', 'Mentor']:
@@ -65,8 +89,30 @@ def load_lists_from_file(status):
         manager_controller.load_managers_from_file()
 
 
+def log_in_as_user(status):
+    '''
+    '''
+    attempt = 1
+    is_user = None
+    while user:
+        os.system('clear')
+
+        view.print_login_screen(status, attempt)
+        login, password = get_password_and_login()
+
+        attempt += 1
+        user = is_user_in_system(status, login, password)
+
+    return user
+
+
 def get_password_and_login():
     '''
+    Takes loggin information from user
+
+    Returns:
+        login: str
+        pasword: str
     '''
     login = view.input_login()
     password = view.input_password()
@@ -74,33 +120,29 @@ def get_password_and_login():
     return login, password
 
 
-def log_in_user(status):
-    '''
-    '''
-    attempt = 1
-    is_user = False
-    while is_user:
-        os.system('clear')
-
-        view.print_login_screen(status, attempt)
-        login, password = get_password_and_login()
-
-        attempt += 1
-        is_user = is_user_in_system(status, login, password)
-
-
 def is_user_in_system(status, login, password):
     '''
+    Determines whenever given login and password exist in certain grup
+
+    Parameters:
+        status: str - representing privilige group
+        login: str
+        password: str
+
+    Returns:
+        Codecooler obj. instance
+        or
+        None - if password and login doesn't match
     '''
     if status == 'Student':
-        return student_controller.match_login_and_password(login, password)
+        return student_controller.get_user_by_login_and_password(login, password)
     
     if status == 'Employee':
-        return employee_controller.match_login_and_password(login, password)
+        return employee_controller.get_user_by_login_and_password(login, password)
 
     if status == 'Mentor':
-        return mentor_controller.match_login_and_password(login, password)
+        return mentor_controller.get_user_by_login_and_password(login, password)
 
     if status == 'Manager':
-        return manager_controller.match_login_and_password(login, password)
+        return manager_controller.get_user_by_login_and_password(login, password)
     
