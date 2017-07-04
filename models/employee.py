@@ -1,4 +1,6 @@
-from codecooler import codecooler
+from codecooler import Codecooler
 
 class Employee(Codecooler):
-    pass
+
+    def __init__(self, *args):
+        super().__init__(*args)
