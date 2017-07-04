@@ -2,4 +2,9 @@ from codecooler import Codecooler
 
 
 class Student(Codecooler):
-    pass
+
+    list_of_students = []
+
+    def __init__(self, *args):
+        super().__init__(*args)
+        Student.list_of_students.append(self)
