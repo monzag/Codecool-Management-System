@@ -33,7 +33,7 @@ def employee_menu(user):
 def view_students():
     '''
     prints list of every student assigned to course
-    print needs grade so mentor will know how student perform
+    print needs email so employees can contact with student
 
     should use students_controller.get_students() to get list of all students
 
