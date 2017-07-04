@@ -95,5 +95,12 @@ def is_user_in_system(status, login, password):
     if status == 'Student':
         return student_controller.match_login_and_password(login, password)
     
-    pass
+    if status == 'Employee':
+        return employee_controller.match_login_and_password(login, password)
+
+    if status == 'Mentor':
+        return mentor_controller.match_login_and_password(login, password)
+
+    if status == 'Manager':
+        return manager_controller.match_login_and_password(login, password)
     
