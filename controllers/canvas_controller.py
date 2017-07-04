@@ -85,12 +85,23 @@ def load_lists_from_file(status):
     if status in ['Manager', 'Mentor']:
         mentor_controller.load_mentors_from_file()
 
-    if status == ['Manager']:
+    if status == 'Manager':
         manager_controller.load_managers_from_file()
 
 
 def log_in_as_user(status):
     '''
+    holds loging to system:
+
+    if user provided login and password were assosiated with existing 
+    Codecooler obj. instance, fucntion returns fallowing object 
+    otherwise will retry loging user to system
+
+    Parameters:
+        status : str - representing grout to serch in
+
+    Returns:
+        user : Codecooler obj. instance
     '''
     attempt = 1
     is_user = None
