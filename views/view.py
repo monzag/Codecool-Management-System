@@ -47,9 +47,10 @@ def print_table(table, title_list):
 
     outer_row = create_border_row(table, columns_amount, title_list, 'outer', MIN_COLUMN_WIDTH, CELL_PADDING)
     middle_row = create_border_row(table, columns_amount, title_list, 'middle', MIN_COLUMN_WIDTH, CELL_PADDING)
-    title_row = create_data_row(table, , title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=True)
+    title_row = create_data_row(table, 1, title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=True)
 
     print(outer_row)
+    print(title_row)
     for i in range(len(table)):
         data_row = create_data_row(table, i, title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=False)
         print(middle_row)
@@ -106,7 +107,7 @@ def find_max_string_length(table, item_index, title_list):
     if len(str(title_list[item_index])) > len(longest_string):
         longest_string = str(title_list[item_index])
 
-    return len(longest_value)
+    return len(longest_string)
 
 
 def create_border_row(table, columns_amount, title_list, row_type, MIN_COLUMN_WIDTH, CELL_PADDING):
@@ -157,7 +158,9 @@ def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDIN
         data_row: string ready to be printed
     '''
 
-    for column in range(len(table[title_list])):
+    data_row = '|'
+
+    for column in range(len(table[list_index])):
         max_string_length = find_max_string_length(table, column, title_list)
         if max_string_length >= MIN_COLUMN_WIDTH:
             cell_width = max_string_length + CELL_PADDING
@@ -165,9 +168,9 @@ def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDIN
             cell_width = MIN_COLUMN_WIDTH
 
         if is_title == False:
-            data_row = '|' + (table[list_index][i].center(cell_width, ' ')) + '|'
+            data_row = data_row + (table[list_index][column].center(cell_width, ' ')) + '|'
         else:
-            data_row = '|' + (title_list[column].center(cell_width, ' ')) + '|'
+            data_row = data_row + (title_list[column].center(cell_width, ' ')) + '|'
 
     return data_row
 
@@ -282,3 +285,10 @@ input_login()
 input_password()
 print_end_screen()
 wait_until_key_pressed()
+
+table = [['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'],
+['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s']]
+
+title_list = ['costam', 'nictam', '3453sfsdfsfds', 'guwno', 'blablaasf']
+
+print_table(table, title_list)
