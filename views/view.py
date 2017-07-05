@@ -13,21 +13,7 @@ def print_menu(title, options, exit_message):
         exit_message (str) - string to be printed as the last option to quit
 
     Returns:
-        Nothing, it just prints the menu in the console.import os
-import sys
-
-from views import view
-
-from models.codecooler import Codecooler
-from models.student import Student
-from models.employee import Employee
-from models.mentor import Mentor
-from models.manager import Manager
-
-from controllers import student_controller
-from controllers import employee_controller
-from controllers import mentor_controller
-from controllers import manager_controller
+        Nothing, it just prints the menu in the console.
     '''
 
     option_number = 1
