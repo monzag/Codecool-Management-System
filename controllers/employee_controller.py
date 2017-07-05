@@ -1,9 +1,8 @@
 import os
 
-import views.view
-import controllers.student_controller
+from view import view
 
-from models.employee import Employee
+from controllers import student_controller
 
 
 def employee_menu(user):
