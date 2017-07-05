@@ -1,7 +1,5 @@
 class Assigment:
 
-    list_of_assigments = []
-
     def __init__(self, name, creation_date, deadline, max_grade):
         self.name = name
         self.status = 'undone'
@@ -10,5 +8,3 @@ class Assigment:
         self.submit_date = None
         self.grade = 0 # acually not sure bout that!
         self.max_grade = max_grade
-
-        Assigment.list_of_assigments.append(self)
