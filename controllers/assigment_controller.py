@@ -27,7 +27,12 @@ def calculate_total_grade(list_of_assigments):
 
     Paramters:
         list_of_assigments : list of Assigment obj.
+    
+    Returns:
+        total_grade : int representing percents
     '''
+    total_grade = 0
+
     if len(assigemnts) > 0:
         grades = 0
         max_grades = 0
@@ -36,7 +41,14 @@ def calculate_total_grade(list_of_assigments):
             grades += assigment.grade
             max_grades += assigment.max_grade
         
-        return grades/max_grades * 100
-            
-    else:
-        return 0
+        total_grade = grades/max_grades * 100
+
+    return total_grade
+
+
+def submit_assigment(assigment, submit_date):
+    '''
+    '''
+    if assigment.status == 'undone':
+        assigment.status = 'done'
+        assigment.submit_date = submit_date
