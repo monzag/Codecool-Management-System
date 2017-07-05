@@ -1,6 +1,7 @@
 import os
 import sys
 import termios
+import getpass
 
 
 def print_menu(title, options, exit_message):
@@ -70,6 +71,20 @@ def print_welcome_screen():
      ''')
 
 
+def input_login():
+    print('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
+    login = input("  LOGIN:  ")
+
+    return login
+
+
+def input_password():
+    print('\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
+    password = getpass.getpass("  PASSWORD:  ")
+
+    return password
+
+
 def wait_until_key_pressed():
     ''' Waits for a key press on the console and returns it. '''
 
@@ -103,5 +118,7 @@ def print_end_screen():
 
 print_welcome_screen()
 wait_until_key_pressed()
+input_login()
+input_password()
 print_end_screen()
 wait_until_key_pressed()
