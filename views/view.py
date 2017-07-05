@@ -278,7 +278,7 @@ def print_end_screen():
                      PRESS ANY KEY TO QUIT
     ''')
 
-
+'''
 print_welcome_screen()
 wait_until_key_pressed()
 input_login()
@@ -292,3 +292,4 @@ table = [['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s']
 title_list = ['costam', 'nictam', '3453sfsdfsfds', 'guwno', 'blablaasf']
 
 print_table(table, title_list)
+'''
