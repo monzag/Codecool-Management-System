@@ -253,18 +253,3 @@ def print_end_screen():
         for line in startup:
             print(line, end='')
     print('''''')
-
-
-print_welcome_screen()
-wait_until_key_pressed()
-input_login()
-input_password()
-print_end_screen()
-wait_until_key_pressed()
-
-table = [['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'],
-['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s'], ['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s']]
-
-title_list = ['costam', 'nictam', '3453sfsdfsfds', 'guwno', 'blablaasf']
-
-print_table(table, title_list)
