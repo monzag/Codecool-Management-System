@@ -16,7 +16,8 @@ def manager_menu(user):
         None
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
-    otions = ['View students', 'View mentors', 'Add mentor', 'Remove mentor', 'Edit mentor data', 'Exit']
+    otions = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
+              'Edit mentor data', 'Exit']
 
     end = False
     while end:
@@ -24,7 +25,7 @@ def manager_menu(user):
 
         view.print_menu(title, options)
         option = view.input_number()
-        
+
         if option == 1:
             view_students()
         if option == 2:
@@ -41,25 +42,39 @@ def manager_menu(user):
 
 def view_students():
     '''
-    prints list of every student assigned to course
-    print needs grade so mentor will know how student perform
+    Prints list of every student's name, surname, e-mail, attendance, grade.
 
-    should use students_controller.get_students() to get list of all students
-
-    should use views.view.print_students() for printing
+    Returns:
+            None
     '''
-    pass
+    students = students_controller.get_students()
+    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    all_students_info = []
+
+    for student in students:
+        all_students_info.append([student.name, student.surname,
+                                  student.email, student.attendance,
+                                  student.grade])
+
+    views.view.print_table(all_students_info, titles)
 
 
 def view_mentors():
     '''
-    prints list of every mentor
+    Prints list of every mentor's name, surname and e-mail.
 
-    should use smentor_controller.get_mentors() to get list of all mentors
-
-    should use views.view.print_mentors() for printing
+    Returns:
+            None
     '''
-    pass
+
+    mentors = mentor.controller.get_mentors()
+    titles = ["Name", "Surname", "e-mail"]
+    all_mentors_info = []
+
+    for mentor in mentors:
+        all_mentors_info.append([mentor.name, mentor.surname, mentor.email])
+
+    views.view.print_table(all_mentors_info, titles)
 
 
 def add_mentor():
@@ -75,7 +90,7 @@ def remove_mentor():
     '''
     should use controllers.mentor_controller to get list of all mentors
         (along with numbers)
-    
+
     should use views.view.print_mentors() to print all mentors
 
     should use views.view.get_number() to detrmine which mentor should be deleted
@@ -89,7 +104,7 @@ def edit_mentor():
     '''
     should use controllers.mentor_controller to get list of all mentors
         (along with numbers)
-    
+
     should use views.view.print_mentors() to print all mentors
 
     should use views.view.get_number() to detrmine which mentor should be edited
