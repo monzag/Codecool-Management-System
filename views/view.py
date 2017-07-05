@@ -20,6 +20,32 @@ def print_table():
     pass
 
 
+def error_check(table, title_list):
+    '''
+    Checks if table is empty, has different amount of entries in lists
+    or has different amount of entries between lists and titles.
+
+    Args:
+        table: list of lists with data
+        title_list: list containing table headers
+
+    Returns:
+        boolean
+    '''
+    if table == []:
+        print_message("The table is empty! Check if CSV exists in a current folder.")
+        return True
+    for row in table:
+        if len(table[0]) != len(row):
+            print_message("Rows has different amount of data. Check the CSV file.")
+            return True
+    if len(title_list) != len(table[0]):
+        print_message("The table has wrong amount of data! Compare title_list with CSV file.")
+        return True
+
+    return False
+
+
 def get_inputs(labels, title):
 
     inputs = []
