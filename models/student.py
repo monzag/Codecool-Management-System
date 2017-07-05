@@ -5,9 +5,9 @@ class Student(Codecooler):
 
     list_of_students = []
 
-    def __init__(self, *args):
+    def __init__(self, assigments_list, *args):
         super().__init__(*args)
+        self.total_grade = 0
+        self.assigments_list = assigments_list
+
         Student.list_of_students.append(self)
-    
-    def __str__(self):
-        return '{} {}'.format(self.name, self.surname)
