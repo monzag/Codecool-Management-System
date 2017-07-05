@@ -82,36 +82,7 @@ def load_lists_from_file(status):
     if status in ['Manager', 'Employee']:
         employee_controller.load_employees_from_file()
 
-    if status in ['Manager', 'Mentor']:def choose_status():
-    '''
-    Asks user about his privilige in accessing cerain program
-    features, and determining fallowing logging system
-
-    Returns:
-        status : str - representing privilige
-    '''
-    title = 'Do you want to log as'
-    otions = ['Student', 'Employee', 'Mentor', 'Manager', 'Exit']
-
-    status = None
-    while status:
-        os.system('clear')
-
-        view.print_menu(title, options)
-        option = view.input_number()
-        
-        if option == 1:
-            status = 'Student'
-        if option == 2:
-            status = 'Employee'
-        if option == 3:
-            status = 'Mentor'
-        if option == 4:
-            status = 'Manager'
-        if option == 0:
-            sys.exit()
-    
-    return status
+    if status in ['Manager', 'Mentor']:
         mentor_controller.load_mentors_from_file()
 
     if status == 'Manager':
@@ -171,7 +142,8 @@ def is_user_in_system(status, login, password):
 
     Returns:
         Codecooler obj. instance
-        or
+        or    login = view.input_login()
+    password = view.input_password()
         None - if password and login doesn't match
     '''
     if status == 'Student':
@@ -201,7 +173,7 @@ def operate_on_user(user):
     Returns:
         None
     '''
-    if isinstance(user, Studen):
+    if isinstance(user, Student):
         student_controller.student_menu(user)
     if isinstance(user, Employee):
         employee_controller.employee_menu(user)
