@@ -2,26 +2,6 @@ import os
 import sys
 import termios
 
-def wait_until_key_pressed():
-    ''' Waits for a key press on the console and returns it. '''
-
-    result = None
-    fd = sys.stdin.fileno()
-
-    oldterm = termios.tcgetattr(fd)
-    newattr = termios.tcgetattr(fd)
-    newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
-    termios.tcsetattr(fd, termios.TCSANOW, newattr)
-
-    try:
-        result = sys.stdin.read(1)
-    except IOError:
-        pass
-    finally:
-        termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
-
-    return result
-
 
 def print_menu(title, options, exit_message):
 
@@ -89,5 +69,39 @@ def print_welcome_screen():
                                      PRESS ANY KEY TO CONTINUE
      ''')
 
+
+def wait_until_key_pressed():
+    ''' Waits for a key press on the console and returns it. '''
+
+    result = None
+    fd = sys.stdin.fileno()
+
+    oldterm = termios.tcgetattr(fd)
+    newattr = termios.tcgetattr(fd)
+    newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
+    termios.tcsetattr(fd, termios.TCSANOW, newattr)
+
+    try:
+        result = sys.stdin.read(1)
+    except IOError:
+        pass
+    finally:
+        termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
+
+    os.system("clear")
+    return result
+
+def print_end_screen():
+    print('''
+    +-+-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+-+-+
+    |T|H|A|N|K|S| |F|O|R| |U|S|I|N|G| |O|U|R| |P|R|O|G|R|A|M|
+    +-+-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+-+-+
+
+                     PRESS ANY KEY TO QUIT
+    ''')
+
+
 print_welcome_screen()
+wait_until_key_pressed()
+print_end_screen()
 wait_until_key_pressed()
