@@ -24,7 +24,7 @@ def mentor_menu(user):
 
         view.print_menu(title, options)
         option = view.input_number()
-        
+
         if option == 1:
             view_students()
         if option == 2:
@@ -102,21 +102,20 @@ def remove_student():
     '''
     should use controllers.student_controller to get list of all students
         (along with numbers)
-    
+
     should use views.view.print_students() to print all students
 
     should use views.view.get_number() to dtermine which student should be deleted
 
-    should use controllers.student_controler.remove_student() to remove student 
+    should use controllers.student_controler.remove_student() to remove student
     '''
-    pass
 
 
 def edit_student():
     '''
     should use controllers.student_controller to get list of all students
         (along with numbers)
-    
+
     should use views.view.print_students() to print all students
 
     should use views.view.get_number() to detrmine which student should be edited

@@ -3,6 +3,12 @@ import sys
 
 import views.view
 
+from models.codecooler import Codecooler
+from models.student import Student
+from models.employee import Employee
+from models.mentor import Mentor
+from models.manager import Manager
+
 from controllers import student_controller
 from controllers import employee_controller
 from controllers import mentor_controller
