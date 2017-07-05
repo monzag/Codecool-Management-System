@@ -27,7 +27,14 @@ def get_inputs(labels, title):
     return inputs
 
 
-def print_error_message(message):
+def print_message(message):
 
     print(message)
     print('')
+
+
+def print_welcome_screen():
+    print('''''')
+    
+def view.wait_until_key_pressed():
+    input("PRESS ANY KEY TO CONTINUE")
