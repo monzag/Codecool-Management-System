@@ -34,7 +34,7 @@ def student_menu(user):
             end = True
 
 
-def add_new_student():
+def add_new_student(name, surname, login, password, email):
     '''
     '''
     
