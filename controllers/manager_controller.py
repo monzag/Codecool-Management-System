@@ -1,10 +1,9 @@
 import os
 
-import views.view
-import controllers.student_controller
-import controllers.mentor_controller
+from views import view
 
-from models.manager import Manager
+from controllers import student_controller
+from controllers import mentor_controller
 
 
 def manager_menu(user):
