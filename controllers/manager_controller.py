@@ -24,7 +24,7 @@ def manager_menu(user):
 
         view.print_menu(title, options)
         option = view.input_number()
-        
+
         if option == 1:
             view_students()
         if option == 2:
@@ -48,7 +48,18 @@ def view_students():
 
     should use views.view.print_students() for printing
     '''
-    pass
+    students = students_controller.get_students()
+    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    all_students_info = []
+
+    for student in students:
+        all_students_info.append([student.name, student.surname,
+                                  student.email, student.attendance,
+                                  student.grade])
+
+    views.view.print_students(all_students_info, titles)
+
+
 
 
 def view_mentors():
@@ -75,7 +86,7 @@ def remove_mentor():
     '''
     should use controllers.mentor_controller to get list of all mentors
         (along with numbers)
-    
+
     should use views.view.print_mentors() to print all mentors
 
     should use views.view.get_number() to detrmine which mentor should be deleted
@@ -89,7 +100,7 @@ def edit_mentor():
     '''
     should use controllers.mentor_controller to get list of all mentors
         (along with numbers)
-    
+
     should use views.view.print_mentors() to print all mentors
 
     should use views.view.get_number() to detrmine which mentor should be edited
