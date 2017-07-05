@@ -1,4 +1,18 @@
+from datetime import datetime
+
 import controllers.student_controller 
+
+
+def load_assigments_from_file():
+    '''
+    '''
+    pass
+
+
+def save_assigments_to_file():
+    '''
+    '''
+    pass
 
 
 def create_assigment():
@@ -46,9 +60,19 @@ def calculate_total_grade(list_of_assigments):
     return total_grade
 
 
-def submit_assigment(assigment, submit_date):
+def change_assigment_to_done(assigment):
     '''
+    Change undone assigment to done, and adds datetime
+    obj. representing today date as it's sumbit date
+
+    Paramateres:
+        assigment: Assigment obj.
+    
+    Returns:
+        None
     '''
+    submit_date = datetime.today()
+
     if assigment.status == 'undone':
         assigment.status = 'done'
         assigment.submit_date = submit_date
