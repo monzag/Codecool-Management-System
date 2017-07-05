@@ -35,6 +35,37 @@ def student_menu(user):
 
 
 def submit_assigment(student):
+    '''
+    Choose assignment from list and change status assignment 'done'.
+    '''
+    table = get_assignment_data()
+    tittle_list = ['Lp', 'Assignment', 'status', 'deadline']
+    views.view.print_table(table, tittle_list)
+    labels = ['Write number of assignment: ']
+    title = 'Input data'
+    number_assignment = views.view.get_inputs(labels, title)
+    assignment = student.assignments_list[number_assignment - 1]
+    assignment_controller.change_assignment_to_done(assignment)
+
+
+def load_students_from_file():
+    filename = 'students.csv'
+    if not os.path.exists(filename):
+        raise FileNotFoundError("There is no such a file")
+
+    else:
+        with open(filename, 'r') as csvfile:
+            read_data = csvfile.readlines()
+            splitted = [line.replace('\n', '').split('|') for line in read_data]
+
+    return splitted
+
+
+def get_assignment_data():
+    '''Wypakuj obiekty i utwór listę list'''
+
+    student.assignments_list
+    # assignments_list -
     pass
 
 
@@ -72,8 +103,13 @@ def remove_student(index):
     return Student.list_of_students
 
 
-def edit_student():
-    pass
+def get_students():
+    '''
+    Returns list of students
+    '''
+
+    return Student.list_of_students
+
 
 '''
 def list_student_with_grades():
@@ -83,11 +119,9 @@ def list_student_with_grades():
 def list_student_with_attendance():
     pass'''
 
+# Add id's assignment to list
+# 
 
-def get_students():
-    '''
-    Returns list of students
-    '''
 
-    return Student.list_of_students
+
 
