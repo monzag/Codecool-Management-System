@@ -203,38 +203,14 @@ def print_message(message):
 
 
 def print_welcome_screen():
-    print('''
 
-                                           ``-://++ooo/.
-                                         -o+++ssssooooss+:`
-                                       `/++///+ososssosy++o+-`
-                                      -o++++o+:.`  `-:+so+//+o-
-                                     /sssyy+            /+//+o+
-                                    /soooss`             /oossy.
-                                    :sooss-               +ysss:
-                                    `sssys`              `ssoos+
-                                     osso+o`             osoooso
-                                     :o+//+o`          `:yysss+
-                                     `+++/+oyo/:.` `-:+o++++o-
-                                       .:+++ssoosssys++//+o/`
-                                          -/syoooosssso++o-
-                                            `-+o+//::--``
-
-
-
-
-     `:+oo+:     -/+oo+:`    /++++/:`    :+++++.    `:+oo+:     .:+oo+:`      -/+oo/-     /+.
-    /hy/--:.    ohs:.-+hy-   sho--/yy:   +hs---`   -yy+--::    +hy:../yy:   `shs-.-ohy.   sh:
-    hh:        :hh`    ohs   sh+   /hy   +hyyyo    sh+        `hh:    /hh   :hh     sh+   sh:
-    ohy-` ``   `yh+`  :yh:   sh+``-yh+   +hs       /hy:` `.    ohs.  .yh+   .yh/` `:hy-   sh:
-     :osyyy+    `:oyyys+.    oyyyso+-    /yyyyy/    -+syyys`    :osyyso:     `/oyyys+.    oyyyyy
-
-
-                                     PRESS ANY KEY TO CONTINUE
-     ''')
+    with open("start_message.txt", "r") as startup:
+        for line in startup:
+            print(line, end='')
 
 
 def input_login():
+
     print('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     login = input("  LOGIN:  ")
 
@@ -242,6 +218,7 @@ def input_login():
 
 
 def input_password():
+
     print('\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     password = getpass.getpass("  PASSWORD:  ")
 
@@ -270,15 +247,13 @@ def wait_until_key_pressed():
     return result
 
 def print_end_screen():
-    print('''
-    +-+-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+-+-+
-    |T|H|A|N|K|S| |F|O|R| |U|S|I|N|G| |O|U|R| |P|R|O|G|R|A|M|
-    +-+-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+-+-+
 
-                     PRESS ANY KEY TO QUIT
-    ''')
+    with open("quit_message.txt", "r") as startup:
+        for line in startup:
+            print(line, end='')
+    print('''''')
 
-'''
+
 print_welcome_screen()
 wait_until_key_pressed()
 input_login()
@@ -292,4 +267,3 @@ table = [['asdfageg', 'adafewg', 'w,a', '34235', '3424 4524 sdfsdf2 wedsdasd s']
 title_list = ['costam', 'nictam', '3453sfsdfsfds', 'guwno', 'blablaasf']
 
 print_table(table, title_list)
-'''
