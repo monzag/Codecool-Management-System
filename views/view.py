@@ -13,7 +13,21 @@ def print_menu(title, options, exit_message):
         exit_message (str) - string to be printed as the last option to quit
 
     Returns:
-        Nothing, it just prints the menu in the console.
+        Nothing, it just prints the menu in the console.import os
+import sys
+
+from views import view
+
+from models.codecooler import Codecooler
+from models.student import Student
+from models.employee import Employee
+from models.mentor import Mentor
+from models.manager import Manager
+
+from controllers import student_controller
+from controllers import employee_controller
+from controllers import mentor_controller
+from controllers import manager_controller
     '''
 
     option_number = 1
@@ -204,7 +218,8 @@ def print_message(message):
 
 def print_welcome_screen():
 
-    with open("start_message.txt", "r") as startup:
+    file_path = os.getcwd() + "/views/start_message.txt"
+    with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
 

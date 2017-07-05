@@ -1,7 +1,7 @@
 import os
 import sys
 
-import views.view
+from views import view
 
 from models.codecooler import Codecooler
 from models.student import Student
