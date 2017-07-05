@@ -45,7 +45,8 @@ def print_table(table, title_list):
     CELL_PADDING = 2
     columns_number = len(table[0])
 
-    outer_row = create_outer_row(table, columns_number, title_list, MIN_COLUMN_WIDTH, CELL_PADDING)
+    outer_row = create_border_row(table, columns_number, title_list, 'outer', MIN_COLUMN_WIDTH, CELL_PADDING)
+    middle_row = create_border_row(table, columns_number, title_list, 'middle', MIN_COLUMN_WIDTH, CELL_PADDING)
 
 
 def is_table_wrong(table, title_list):
@@ -100,7 +101,7 @@ def find_max_string_length(table, item_index, title_list):
     return len(longest_value)
 
 
-def create_outer_row(table, columns_number, title_list, MIN_COLUMN_WIDTH, CELL_PADDING):
+def create_border_row(table, columns_number, title_list, row_type, MIN_COLUMN_WIDTH, CELL_PADDING):
     '''
     Generates a string to be later printed as an outer row in a table.
 
@@ -108,26 +109,28 @@ def create_outer_row(table, columns_number, title_list, MIN_COLUMN_WIDTH, CELL_P
         table (list) - list of lists of all the strings
         columns_number (int) - number of columns
         title_list (list) - list containing table headers
+        row_type (str) - 'outer' or 'middle'
         MIN_COLUMN_WIDTH (int)
         CELL_PADDING (int)
 
     Returns:
-        outer_row (str) - string ready to be printed
+        border_row (str) - string ready to be printed
     '''
 
-    outer_row = ''
+    border_row = ''
 
     for column in range(columns_number):
         dashes_to_add = find_max_string_length(table, column, title_list)
         if dashes_to_add >= MIN_COLUMN_WIDTH:
-            outer_row = outer_row + ('-' * (dashes_to_add + CELL_PADDING))
+            border_row = border_row + ('-' * (dashes_to_add + CELL_PADDING) + '|')
         else:
-            outer_row = outer_row + ('-' * MIN_COLUMN_WIDTH)
+            border_row = border_row + ('-' * MIN_COLUMN_WIDTH + '|')
 
-    additional_dashes = columns_number - 1
-    outer_row = outer_row + ('-' * additional_dashes)
+    if row_type == 'outer':
+        for char in border_row:
+            border_row.replace('|', '-')
 
-    return outer_row
+    return border_row
 
 
 def get_inputs(labels, title):
