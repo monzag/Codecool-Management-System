@@ -34,15 +34,42 @@ def student_menu(user):
             end = True
 
 
-def add_new_student(name, surname, login, password, email):
-    '''
-    '''
-    
+def submit_assigment(student):
     pass
 
 
-def remove_student():
+def view_grades():
     pass
+
+
+def create_new_student(name, surname, login, password, email):
+    '''
+    Create new object Student. 
+
+    Returns:
+        new_student - obj
+    '''
+
+    new_student = Student(name, surname, login, password, email)
+    return new_student
+
+
+def remove_student(index):
+    '''
+    Remove object Student from list by index.
+    Raise IndexError when index out of range.
+
+    Returns:
+        list of students
+    '''
+
+    if index not in range(len(Student.list_of_students) - 1):
+        raise IndexError('Student with this number not exist!')
+
+    else:
+        del Student.list_of_students[index]
+
+    return Student.list_of_students
 
 
 def edit_student():
