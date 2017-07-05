@@ -1,6 +1,8 @@
 class Assigment:
 
-    def __init__(self, name, creation_date, deadline, max_grade):
+    assigments_list = []
+
+    def __init__(self, login, name, creation_date, deadline, max_grade):
         self.name = name
         self.status = 'undone'
         self.creation_date = creation_date # datetime obj.
