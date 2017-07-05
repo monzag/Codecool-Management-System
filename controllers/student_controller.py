@@ -32,3 +32,35 @@ def student_menu(user):
             submit_assigment(user)
         if option == 0:
             end = True
+
+
+def add_new_student():
+    '''
+    '''
+    
+    pass
+
+
+def remove_student():
+    pass
+
+
+def edit_student():
+    pass
+
+'''
+def list_student_with_grades():
+    pass
+
+
+def list_student_with_attendance():
+    pass'''
+
+
+def get_students():
+    '''
+    Returns list of students
+    '''
+
+    return Student.list_of_students
+
