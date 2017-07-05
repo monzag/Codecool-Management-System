@@ -1,10 +1,8 @@
 import os
 
-import views.view
-import controllers.assigment_controller
+from views import view
 
-from models.student import Student
-from models.assigemnt import Assigment
+from controllers import assigment_controller
 
 
 def student_menu(user):
