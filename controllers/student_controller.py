@@ -49,6 +49,14 @@ def submit_assigment(student):
 
 
 def load_students_from_file():
+    '''
+    Read students data from csv file.
+    Raise error if file not exist.
+
+    Returns:
+        splitted - list of lists
+    '''
+
     filename = 'students.csv'
     if not os.path.exists(filename):
         raise FileNotFoundError("There is no such a file")
@@ -59,6 +67,13 @@ def load_students_from_file():
             splitted = [line.replace('\n', '').split('|') for line in read_data]
 
     return splitted
+
+
+def save_data_to_file():
+    filename = 'students.csv'
+    with open(filename, 'a') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(list_to_save)
 
 
 def get_assignment_data():
