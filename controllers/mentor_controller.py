@@ -109,23 +109,7 @@ def remove_student():
 
     should use controllers.student_controler.remove_student() to remove student
     '''
-    pass
 
-
-def create_new_mentor():
-    """
-    Creates new mentor and adds mentor to the mentor's list
-
-    Return:
-            None
-    """
-    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
-    title = "Provide informations about new mentor"
-    inputs = views.view.get_inputs(labels, title)
-
-    new_mentor = Mentor(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
-
-    Mentor.list_of_mentors.append(new_mentor)
 
 def edit_student():
     '''
