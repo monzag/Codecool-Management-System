@@ -1,10 +1,10 @@
 import os
 
 import views.view
-import controllers.assigment_controller
+# import controllers.assigment_controller
 
 from models.student import Student
-from models.assigemnt import Assigment
+# from models.assigemnt import Assigment
 
 
 def student_menu(user):
@@ -34,9 +34,34 @@ def student_menu(user):
             end = True
 
 
+def get_user_by_login_and_password(login, password, students):
+    '''
+    Search proper Student object in list_of_students by login and password.
+    If find any match will return student obj., otherwise None.
+
+    Args:
+        login: str
+        password: str
+        students: list of Student obj.
+
+    Returns:
+        student - obj
+    '''
+
+    for student in Student.list_of_students:
+        if student.login == login and student.password == password:
+            return student
+
+    return None
+
+
 def submit_assigment(student):
     '''
     Choose assignment from list and change status assignment 'done'.
+    Save change to file'
+
+    Args:
+        student - obj
     '''
     table = get_assignment_data()
     tittle_list = ['Lp', 'Assignment', 'status', 'deadline']
@@ -46,43 +71,20 @@ def submit_assigment(student):
     number_assignment = views.view.get_inputs(labels, title)
     assignment = student.assignments_list[number_assignment - 1]
     assignment_controller.change_assignment_to_done(assignment)
-
-
-def load_students_from_file():
-    filename = 'students.csv'
-    if not os.path.exists(filename):
-        raise FileNotFoundError("There is no such a file")
-
-    else:
-        with open(filename, 'r') as csvfile:
-            read_data = csvfile.readlines()
-            splitted = [line.replace('\n', '').split('|') for line in read_data]
-
-    return splitted
+    # zdecydować czy w pliku students.csv będą dane dotyczące assignmentu? Co zapisywać do pliku!!
 
 
 def get_assignment_data():
     '''Wypakuj obiekty i utwór listę list'''
-
+    # TO DO!!
     student.assignments_list
     # assignments_list -
     pass
 
 
 def view_grades():
+    # powiązane z assignmentami! W jakiej formie w końcu będą te pliki?
     pass
-
-
-def create_new_student(name, surname, login, password, email):
-    '''
-    Create new object Student. 
-
-    Returns:
-        new_student - obj
-    '''
-
-    new_student = Student(name, surname, login, password, email)
-    return new_student
 
 
 def remove_student(index):
@@ -100,7 +102,7 @@ def remove_student(index):
     else:
         del Student.list_of_students[index]
 
-    return Student.list_of_students
+    save_data_to_file(Student.list_of_students)
 
 
 def get_students():
@@ -120,7 +122,6 @@ def list_student_with_attendance():
     pass'''
 
 # Add id's assignment to list
-# 
 
 
 
