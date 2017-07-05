@@ -43,10 +43,18 @@ def print_table(table, title_list):
 
     MIN_COLUMN_WIDTH = 8
     CELL_PADDING = 2
-    columns_number = len(table[0])
+    columns_amount = len(table[0])
 
-    outer_row = create_border_row(table, columns_number, title_list, 'outer', MIN_COLUMN_WIDTH, CELL_PADDING)
-    middle_row = create_border_row(table, columns_number, title_list, 'middle', MIN_COLUMN_WIDTH, CELL_PADDING)
+    outer_row = create_border_row(table, columns_amount, title_list, 'outer', MIN_COLUMN_WIDTH, CELL_PADDING)
+    middle_row = create_border_row(table, columns_amount, title_list, 'middle', MIN_COLUMN_WIDTH, CELL_PADDING)
+    title_row = create_data_row(table, , title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=True)
+
+    print(outer_row)
+    for i in range(len(table)):
+        data_row = create_data_row(table, i, title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=False)
+        print(middle_row)
+        print(data_row)
+    print(outer_row)
 
 
 def is_table_wrong(table, title_list):
@@ -101,13 +109,13 @@ def find_max_string_length(table, item_index, title_list):
     return len(longest_value)
 
 
-def create_border_row(table, columns_number, title_list, row_type, MIN_COLUMN_WIDTH, CELL_PADDING):
+def create_border_row(table, columns_amount, title_list, row_type, MIN_COLUMN_WIDTH, CELL_PADDING):
     '''
     Generates a string to be later printed as an outer row in a table.
 
     Args:
         table (list) - list of lists of all the strings
-        columns_number (int) - number of columns
+        columns_amount (int) - number of columns
         title_list (list) - list containing table headers
         row_type (str) - 'outer' or 'middle'
         MIN_COLUMN_WIDTH (int)
@@ -117,9 +125,9 @@ def create_border_row(table, columns_number, title_list, row_type, MIN_COLUMN_WI
         border_row (str) - string ready to be printed
     '''
 
-    border_row = ''
+    border_row = '|'
 
-    for column in range(columns_number):
+    for column in range(columns_amount):
         dashes_to_add = find_max_string_length(table, column, title_list)
         if dashes_to_add >= MIN_COLUMN_WIDTH:
             border_row = border_row + ('-' * (dashes_to_add + CELL_PADDING) + '|')
@@ -131,6 +139,37 @@ def create_border_row(table, columns_number, title_list, row_type, MIN_COLUMN_WI
             border_row.replace('|', '-')
 
     return border_row
+
+
+def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=False):
+    '''
+    Generates a string to be later printed as a row with data in a table.
+
+    Args:
+        table (list) - list of lists of all the strings
+        list_index (int) - index of a specific row (list) in a table
+        title_list (list) - list containing table headers
+        MIN_COLUMN_WIDTH (int)
+        CELL_PADDING (int)
+        is_title: boolean (if True, creates title row, if False, creates data row)
+
+    Returns:
+        data_row: string ready to be printed
+    '''
+
+    for column in range(len(table[title_list])):
+        max_string_length = find_max_string_length(table, column, title_list)
+        if max_string_length >= MIN_COLUMN_WIDTH:
+            cell_width = max_string_length + CELL_PADDING
+        else:
+            cell_width = MIN_COLUMN_WIDTH
+
+        if is_title == False:
+            data_row = '|' + (table[list_index][i].center(cell_width, ' ')) + '|'
+        else:
+            data_row = '|' + (title_list[column].center(cell_width, ' ')) + '|'
+
+    return data_row
 
 
 def get_inputs(labels, title):
@@ -147,7 +186,7 @@ def get_inputs(labels, title):
 
     print(title)
     for label in labels:
-        answer = (input('{} '.format(label)))
+        answer = (input('{}:  '.format(label)))
         inputs.append(answer)
     print('')
 
