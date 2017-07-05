@@ -1,4 +1,4 @@
-from codecooler import Codecooler
+from models.codecooler import Codecooler
 
 
 class Student(Codecooler):
@@ -8,3 +8,6 @@ class Student(Codecooler):
     def __init__(self, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
+    
+    def __str__(self):
+        return '{} {}'.format(self.name, self.surname)

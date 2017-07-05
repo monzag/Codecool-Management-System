@@ -1,7 +1,7 @@
 import os
 import sys
 
-from views import view
+import views.view
 
 from controllers import student_controller
 from controllers import employee_controller
@@ -142,7 +142,8 @@ def is_user_in_system(status, login, password):
 
     Returns:
         Codecooler obj. instance
-        or
+        or    login = view.input_login()
+    password = view.input_password()
         None - if password and login doesn't match
     '''
     if status == 'Student':
@@ -172,14 +173,14 @@ def operate_on_user(user):
     Returns:
         None
     '''
-    if isinstance(user, Studen):
-        student_controller.student_menu()
+    if isinstance(user, Student):
+        student_controller.student_menu(user)
     if isinstance(user, Employee):
-        employee_controller.employee_menu()
+        employee_controller.employee_menu(user)
     if isinstance(user, Mentor):
-        mentor_controller.mentor_menu()
+        mentor_controller.mentor_menu(user)
     if isinstance(user, Manager):
-        manager_controller.manager_menu()
+        manager_controller.manager_menu(user)
 
 
 def close_program():
