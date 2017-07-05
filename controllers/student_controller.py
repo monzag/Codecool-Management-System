@@ -1,6 +1,6 @@
 import os
 
-# import views.view
+import views.view
 # import controllers.assigment_controller
 
 from models.student import Student
@@ -34,10 +34,15 @@ def student_menu(user):
             end = True
 
 
-def get_user_by_login_and_password(login, password):
+def get_user_by_login_and_password(login, password, students):
     '''
-    Find proper Student object in list_of_students by login and password.
-    Raise AttributeError if user enter bad login/password.
+    Search proper Student object in list_of_students by login and password.
+    If find any match will return student obj., otherwise None.
+
+    Args:
+        login: str
+        password: str
+        students: list of Student obj.
 
     Returns:
         student - obj
@@ -47,7 +52,7 @@ def get_user_by_login_and_password(login, password):
         if student.login == login and student.password == password:
             return student
 
-    raise AttributeError('Bad login/password')
+    return None
 
 
 def submit_assigment(student):
@@ -78,6 +83,7 @@ def get_assignment_data():
 
 
 def view_grades():
+    # powiązane z assignmentami! W jakiej formie w końcu będą te pliki?
     pass
 
 
@@ -106,8 +112,8 @@ def get_students():
 
     return Student.list_of_students
 
-'''
 
+'''
 def list_student_with_grades():
     pass
 
