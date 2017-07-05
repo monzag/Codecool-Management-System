@@ -1,10 +1,10 @@
 import os
 
-import views.view
-import controllers.assigment_controller
+# import views.view
+# import controllers.assigment_controller
 
 from models.student import Student
-from models.assigemnt import Assigment
+# from models.assigemnt import Assigment
 
 
 def student_menu(user):
@@ -34,6 +34,22 @@ def student_menu(user):
             end = True
 
 
+def get_user_by_login_and_password(login, password):
+    '''
+    Find proper Student object in list_of_students by login and password.
+    Raise AttributeError if user enter bad login/password.
+
+    Returns:
+        student - obj
+    '''
+
+    for student in Student.list_of_students:
+        if student.login == login and student.password == password:
+            return student
+
+    raise AttributeError('Bad login/password')
+
+
 def submit_assigment(student):
     '''
     Choose assignment from list and change status assignment 'done'.
@@ -53,38 +69,6 @@ def submit_assigment(student):
     # zdecydować czy w pliku students.csv będą dane dotyczące assignmentu? Co zapisywać do pliku!!
 
 
-'''def load_students_from_file():
-    '''
-    '''Read students data from csv file.
-    Raise error if file not exist.
-
-    Returns:
-        splitted - list of lists'''
-    '''
-
-    filename = 'students.csv'
-    if not os.path.exists(filename):
-        raise FileNotFoundError("There is no such a file")
-
-    else:
-        with open(filename, 'r') as csvfile:
-            read_data = csvfile.readlines()
-            splitted = [line.replace('\n', '').split('|') for line in read_data]
-
-    return splitted'''
-
-
-'''def save_data_to_file(list_to_save):
-    '''
-    '''Save students data to csv file. If file not exist, create file.'''
-    '''
-
-    filename = 'students.csv'
-    with open(filename, 'a') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerows(list_to_save)'''
-
-
 def get_assignment_data():
     '''Wypakuj obiekty i utwór listę list'''
     # TO DO!!
@@ -95,18 +79,6 @@ def get_assignment_data():
 
 def view_grades():
     pass
-
-
-def create_new_student(name, surname, login, password, email):
-    '''
-    Create new object Student. 
-
-    Returns:
-        new_student - obj
-    '''
-
-    new_student = Student(name, surname, login, password, email)
-    return new_student
 
 
 def remove_student(index):
@@ -125,16 +97,6 @@ def remove_student(index):
         del Student.list_of_students[index]
 
     save_data_to_file(Student.list_of_students)
-
-    def get_students_from_file():
-        '''
-        '''
-        data_all_students = Student.load_students_from_file()
-        for student in data_all_students:
-            name, surname, login, password, email = student[0], student[1], student[2], student[3], student[4]
-            create_new_student(name, surname, login, password, email)
-
-        return Student.list_of_students
 
 
 def get_students():
