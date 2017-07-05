@@ -37,6 +37,10 @@ def student_menu(user):
 def submit_assigment(student):
     '''
     Choose assignment from list and change status assignment 'done'.
+    Save change to file'
+
+    Args:
+        student - obj
     '''
     table = get_assignment_data()
     tittle_list = ['Lp', 'Assignment', 'status', 'deadline']
@@ -46,15 +50,16 @@ def submit_assigment(student):
     number_assignment = views.view.get_inputs(labels, title)
     assignment = student.assignments_list[number_assignment - 1]
     assignment_controller.change_assignment_to_done(assignment)
+    # zdecydować czy w pliku students.csv będą dane dotyczące assignmentu? Co zapisywać do pliku!!
 
 
-def load_students_from_file():
+'''def load_students_from_file():
     '''
-    Read students data from csv file.
+    '''Read students data from csv file.
     Raise error if file not exist.
 
     Returns:
-        splitted - list of lists
+        splitted - list of lists'''
     '''
 
     filename = 'students.csv'
@@ -66,19 +71,23 @@ def load_students_from_file():
             read_data = csvfile.readlines()
             splitted = [line.replace('\n', '').split('|') for line in read_data]
 
-    return splitted
+    return splitted'''
 
 
-def save_data_to_file():
+'''def save_data_to_file(list_to_save):
+    '''
+    '''Save students data to csv file. If file not exist, create file.'''
+    '''
+
     filename = 'students.csv'
     with open(filename, 'a') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerows(list_to_save)
+        writer.writerows(list_to_save)'''
 
 
 def get_assignment_data():
     '''Wypakuj obiekty i utwór listę list'''
-
+    # TO DO!!
     student.assignments_list
     # assignments_list -
     pass
@@ -115,7 +124,17 @@ def remove_student(index):
     else:
         del Student.list_of_students[index]
 
-    return Student.list_of_students
+    save_data_to_file(Student.list_of_students)
+
+    def get_students_from_file():
+        '''
+        '''
+        data_all_students = Student.load_students_from_file()
+        for student in data_all_students:
+            name, surname, login, password, email = student[0], student[1], student[2], student[3], student[4]
+            create_new_student(name, surname, login, password, email)
+
+        return Student.list_of_students
 
 
 def get_students():
@@ -125,8 +144,8 @@ def get_students():
 
     return Student.list_of_students
 
-
 '''
+
 def list_student_with_grades():
     pass
 
@@ -135,7 +154,6 @@ def list_student_with_attendance():
     pass'''
 
 # Add id's assignment to list
-# 
 
 
 
