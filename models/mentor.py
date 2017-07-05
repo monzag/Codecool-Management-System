@@ -33,6 +33,7 @@ def load_data_from_file():
 def create_mentors():
     """
     Creates objects with data from splitted list.
+    Objects are self-adding to the list of mentors
 
     Returns:
             None
