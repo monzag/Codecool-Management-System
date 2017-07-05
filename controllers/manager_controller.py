@@ -78,12 +78,17 @@ def view_mentors():
 
 
 def add_mentor():
-    '''
-    should use views.view.get_new_mentor_data() to get inputs about new mentor
+    """
+    Creates new mentor and adds mentor to the mentor's list
 
-    should use controllers.mentor_controller.create_new_mentor() to create mentor
-    '''
-    pass
+    Return:
+            None
+    """
+    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
+    title = "Provide informations about new mentor"
+    inputs = views.view.get_inputs(labels, title)
+
+    new_mentor = Mentor(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
 
 
 def remove_mentor():
