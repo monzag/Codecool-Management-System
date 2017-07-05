@@ -16,7 +16,7 @@ def manager_menu(user):
         None
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
-    otions = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
+    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
               'Edit mentor data', 'Exit']
 
     end = False
@@ -47,16 +47,16 @@ def view_students():
     Returns:
             None
     '''
-    students = students_controller.get_students()
-    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
-    all_students_info = []
 
-    for student in students:
+    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    students_info = []
+
+    for student in Student.list_of_students:
         all_students_info.append([student.name, student.surname,
                                   student.email, student.attendance,
                                   student.grade])
 
-    views.view.print_table(all_students_info, titles)
+    views.view.print_table(students_info, titles)
 
 
 def view_mentors():
@@ -67,14 +67,13 @@ def view_mentors():
             None
     '''
 
-    mentors = mentor.controller.get_mentors()
     titles = ["Name", "Surname", "e-mail"]
-    all_mentors_info = []
+    mentors_info = []
 
-    for mentor in mentors:
-        all_mentors_info.append([mentor.name, mentor.surname, mentor.email])
+    for mentor in Mentors.list_of_mentors:
+        mentors_info.append([mentor.name, mentor.surname, mentor.email])
 
-    views.view.print_table(all_mentors_info, titles)
+    views.view.print_table(mentors_info, titles)
 
 
 def add_mentor():
@@ -93,16 +92,25 @@ def add_mentor():
 
 def remove_mentor():
     '''
-    should use controllers.mentor_controller to get list of all mentors
-        (along with numbers)
-
-    should use views.view.print_mentors() to print all mentors
-
-    should use views.view.get_number() to detrmine which mentor should be deleted
-
-    should use controllers.mentor_controler.remove_mentor() to remove mentor
+    Remove object Mentor from list by index.
+    Raise IndexError when index out of range.
+    Returns:
+            None
     '''
-    pass
+    labels = ["Index"]
+    title = "Type index number of mentor to remove"
+    index = views.view.get_inputs(labels, title)[0]
+
+    if not index.isdigit():
+        raise ValueError("Please type in only numbers!")
+
+    elif int(index) not in range(len(Mentor.list_of_students)):
+        raise IndexError('Mentor with given index does not exist!')
+
+    else:
+        del Mentor.list_of_mentors[int(index)]
+
+
 
 
 def edit_mentor():
