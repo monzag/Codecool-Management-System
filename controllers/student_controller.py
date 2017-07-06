@@ -1,5 +1,3 @@
-import os
-
 from views import view
 from controllers import assignment_controller
 
@@ -22,7 +20,6 @@ def student_menu(user):
 
     end = False
     while not end:
-        os.system('clear')
 
         view.print_menu(title, options, exit_message)
         option = view.input_number()
