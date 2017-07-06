@@ -2,10 +2,10 @@ from datetime import datetime
 
 from views import view
 
+from controllers import student_controller
+
 from models.assignment import Assignment
 from models.student import Student
-
-import controllers.student_controller
 
 
 def get_assignments_to_table(student):
@@ -20,8 +20,10 @@ def get_assignments_to_table(student):
     '''
     table = []
     for assignment in student.assignments_list:
-        table.append([assignment.name,     assignment.status,     assignment.submit_date,
-                      assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
+        row = [assignment.name,     assignment.status,     assignment.submit_date,
+               assignment.deadline, str(assignment.grade), str(assignment.max_grade)]
+
+        table.append(row)
 
     return table
 
@@ -31,7 +33,7 @@ def create_assignment():
     Creates new assignment from data provided by mentor.
 
     Returns:
-            None
+        None
     '''
     deadline = get_deadline()
     max_grade = get_max_grade()
@@ -42,20 +44,6 @@ def create_assignment():
                                         add_date, deadline, max_grade))
 
     Assignment.save_assignments_to_file()
-
-
-def add_assignment(assigment):
-    '''
-    Adds new assigemnt for every student stored in system
-
-    Parameters:
-        assigment : Assigment obj.
-
-    Returns:
-        None
-    '''
-    for student in student_controller.get_students():
-        student.assigments_list.append(assigment)
 
 
 def calculate_total_grade(list_of_assigments):
@@ -70,11 +58,11 @@ def calculate_total_grade(list_of_assigments):
     '''
     total_grade = 0
 
-    if len(assigemnts) > 0:
+    if len(list_of_assigments) > 0:
         grades = 0
         max_grades = 0
 
-        for assigment in assigments:
+        for assigment in list_of_assigments:
             grades += assigment.grade
             max_grades += assigment.max_grade
 
@@ -103,6 +91,13 @@ def change_assignment_to_done(assignment):
 
 def view_student_assignments(student):
     '''
+    Prints Student obj. own assigments
+
+    Parametrs:
+        student: Student obj.
+
+    Return:
+        None
     '''
     labels = ['name', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
     table = get_assignments_to_table(student)

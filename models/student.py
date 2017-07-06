@@ -1,5 +1,6 @@
-from models.codecooler import Codecooler
 import os
+
+from models.codecooler import Codecooler
 from models.assignment import Assignment
 
 
