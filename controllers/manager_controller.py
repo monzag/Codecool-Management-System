@@ -20,11 +20,18 @@ def manager_menu(user):
 
     show_menu = True
 
-    while show_menu:
+
+    title = "Manager menu"
+    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor']
+    exit_message = "Exit"
+
+    end = False
+
+    while not end:
         os.system('clear')
 
-        option = views.view.get_inputs(labels, title)[0]
-        views.view.print_table(options, titles)
+        views.view.print_menu(title, options, exit_message)
+        option = views.view.input_number()
 
         if option == 1:
             view_students()
@@ -47,7 +54,7 @@ def manager_menu(user):
                 print ('Mentor with given index does not exist!')
 
         if option == 0:
-            show_menu = False
+            end = True
 
 
 def view_students():
@@ -62,7 +69,7 @@ def view_students():
     students_info = []
 
     for student in Student.list_of_students:
-        all_students_info.append([student.name, student.surname,
+        students_info.append([student.name, student.surname,
                                   student.email, student.attendance,
                                   student.grade])
 
@@ -80,7 +87,7 @@ def view_mentors():
     titles = ["Name", "Surname", "e-mail"]
     mentors_info = []
 
-    for mentor in Mentors.list_of_mentors:
+    for mentor in Mentor.list_of_mentors:
         mentors_info.append([mentor.name, mentor.surname, mentor.email])
 
     views.view.print_table(mentors_info, titles)
@@ -114,7 +121,7 @@ def remove_mentor():
     if not index.isdigit():
         raise ValueError
 
-    elif int(index) not in range(len(Mentor.list_of_students)):
+    elif int(index) not in range(len(Mentor.list_of_mentors)):
         raise IndexError
 
     else:
