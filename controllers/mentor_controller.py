@@ -37,10 +37,7 @@ def mentor_menu(user):
         if option == 5:
             add_student()
         if option == 6:
-            try:
-                remove_student()
-            except ValueError, IndexError:
-                views.view.print_message('Index does not exist!')
+            remove_student()
         if option == 0:
             end = True
 
@@ -50,7 +47,7 @@ def view_students():
     Prints list of every student's name, surname, e-mail, attendance, grade.
 
     Returns:
-            None
+        Nothing, it just prints the student list.
     '''
 
     titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
@@ -72,7 +69,7 @@ def add_assigment():
 
 
 def grade_assigment():
-    '''emove
+    '''
     should use controllers.assigment_controller to create
         list of assigments
 
@@ -87,14 +84,22 @@ def grade_assigment():
 
 
 def check_attendance():
+    """
+    Chooses student by login and grades its attendance for today.
+    Adds one day to days_passed after checking.
+    """
+    try:
+        index = get_student_index()
+    except ValueError, IndexError:
+        return views.view.print_message('Index does not exist!')
 
 
 def add_student():
     """
-    Creates new student and adds it to the students list
+    Creates new student and adds it to the students list.
 
     Returns:
-            None
+            Nothing, it just adds the student to the list.
     """
     labels = ["Name", "Surname", "Login", "Password", "e-mail"]
     title = "Provide informations about new student"
@@ -106,11 +111,25 @@ def add_student():
 def remove_student():
     """
     Removes object Student from list by index.
+
+    Returns:
+        Nothing, it just removes the student.
+    """
+    try:
+        index = get_student_index()
+    except ValueError, IndexError:
+        return views.view.print_message('Index does not exist!')
+
+    del Mentor.list_of_mentors[int(index)]
+
+def get_student_index():
+    """
+    Gets an index of student from student's list.
     Raises IndexError when index out of range.
     Raises ValueError when index is not int.
 
     Returns:
-            None
+        index (int)
     """
     labels = ["Index"]
     title = "Type index number of student to remove"
@@ -123,4 +142,4 @@ def remove_student():
         raise IndexError('Mentor with given index does not exist!')
 
     else:
-        del Mentor.list_of_mentors[int(index)]
+        return int(index)
