@@ -86,6 +86,8 @@ def grade_assignment():
                         new_grade = get_new_grade(assignment.max_grade)
                         student.assignments_list[assignment_id - 1].grade = new_grade
 
+                        student.total_grade = student.calculate_total_grade()
+                        Student.save_students()
                         Assignment.save_assignments_to_file()
 
 
