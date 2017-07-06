@@ -2,6 +2,7 @@ import os
 
 from views import view
 
+from models.assignment import Assignment
 from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
@@ -30,8 +31,10 @@ def mentor_menu(user):
 
         if option == 1:
             view_students()
+            view.print_message("Press any key to continue.")
+            view.wait_until_key_pressed()
         elif option == 2:
-            add_assigment()
+            assignment_controller.create_assignment()
         elif option == 3:
             grade_assignment()
         elif option == 4:
@@ -59,46 +62,52 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
-    # view.print_message("Press any key to continue.")
-    # view.wait_until_key_pressed()
-
-
-def add_assignment():
-    '''
-    Creates new assignment and adds it to assignment list.
-    '''
-    pass
 
 
 def grade_assignment():
     '''
-    should use controllers.assigment_controller to create
-        list of assigments
-
-    should use view.print_assigments to print assigments
-        (along with numbers to call exact assigment)
-
-    should use view.input_umber() to select assigment
-
-    should use controllers.assigment_controller.change_grade() to change grade
+    Prints the list of students to choose a student.
+    Then prints assignments of the student.
+    Then asks the user for the choice and changing the grade.
     '''
     view_students()
-    student_number = None
-    while not student_number:
-        student_number = view.input_number()
+    student_id = None
+    while not student_id:
+        student_id = view.input_number()
 
-    if student_number <= len(Student.list_of_students):
-        student_number -= 1
-        assignment_controller.view_student_assignments(Student.list_of_students[student_number])
+    for student in Student.list_of_students:
+        if Student.list_of_students.index(student) == student_id - 1:
+            assignment_controller.view_student_assignments(student)
 
-        assignment_number = None
-        while not assignment_number:
-            assignment_number = view.input_number()
+            assignment_id = None
+            while not assignment_id:
+                assignment_id = view.input_number()
 
-        if assignment_number <= len(Student.list_of_students[student_number].assignments_list):
-            assignment_number -= 1
-            new_value = 10
-            Student.list_of_students[student_number].assignments_list[assignment_number].grade = new_value
+                for assignment in student.assignments_list:
+                    if student.assignments_list.index(assignment) == assignment_id - 1:
+                        new_grade = get_new_grade(assignment.max_grade)
+                        student.assignments_list[assignment_id - 1].grade = new_grade
+
+                        Assignment.save_assignments_to_file()
+
+
+def get_new_grade(max_grade):
+    '''
+    Asks the user to enter the new grade.
+    Checks if it's positive int and not greater than max_grade.
+
+    Args:
+        max_grade (int) - max possible grade of assignment
+
+    Returns:
+        new_grade (int) - new grade to change to
+    '''
+    new_grade = None
+    while new_grade not in range(0, max_grade + 1):
+        view.print_message("Please provide new grade value.")
+        new_grade = view.input_number()
+
+    return new_grade
 
 
 def check_attendance():
@@ -126,8 +135,10 @@ def check_attendance():
                 today_attendance = options[option - 1]
                 student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
             elif option == 0:
+                Student.get_codecoolers_from_file('students.csv')
                 break
-                pass # load data again
+
+    Student.save_students()
 
 
 def update_attendance(index, days_passed, attendance, today_attendance):
@@ -158,7 +169,7 @@ def update_attendance(index, days_passed, attendance, today_attendance):
     if attendance > 100:
         attendance = 100
 
-    return attendance
+    return int(attendance)
 
 def add_student():
     """
@@ -183,6 +194,8 @@ def remove_student():
     Returns:
         Nothing, it just removes the student.
     """
+    view_students()
+
     try:
         index = get_student_index()
     except (ValueError, IndexError):
