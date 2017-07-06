@@ -30,6 +30,8 @@ def mentor_menu(user):
 
         if option == 1:
             view_students()
+            view.print_message("Press any key to continue.")
+            view.wait_until_key_pressed()
         elif option == 2:
             add_assigment()
         elif option == 3:
@@ -59,8 +61,6 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
-    view.print_message("Press any key to continue.")
-    view.wait_until_key_pressed()
 
 
 def add_assigment():
