@@ -55,12 +55,8 @@ class Student(Codecooler):
         filename = 'students.csv'
         file_path = os.getcwd() + '/data/' + filename
 
-        if not os.path.exists(file_path):
-            raise FileNotFoundError("There is no such a file")
-
-        else:
-            with open(file_path, 'w') as csvfile:
-                csvfile.write(cls.data_to_save())
+        with open(file_path, 'w') as csvfile:
+            csvfile.write(cls.data_to_save())
 
     @classmethod
     def data_to_save(cls):
