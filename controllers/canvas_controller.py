@@ -165,11 +165,9 @@ def operate_on_user(user):
 
     if status == 'Mentor':
         mentor_controller.mentor_menu(user)
-        # mentor_controller.mentor_menu(user, Student.list_of_students)
 
     if status == 'Manager':
         manager_controller.manager_menu(user)
-        # manager_controller.manager_menu(user, Student.list_of_students, Mentor.list_of_mentors)
 
 
 def close_program():
