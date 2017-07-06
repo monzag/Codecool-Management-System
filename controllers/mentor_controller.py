@@ -1,10 +1,9 @@
 import os
 
-import views.view
-import controllers.student_controller
-import controllers.assigment_controller
+from views import view
 
-from models.mentor import Mentor
+from controllers import student_controller
+from controllers import assigment_controller
 
 
 def mentor_menu(user):
@@ -16,13 +15,14 @@ def mentor_menu(user):
         None
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
-    otions = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student', 'Exit']
+    exit_message = 'Exit'
+    options = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student']
 
     end = False
-    while end:
+    while not end:
         os.system('clear')
 
-        view.print_menu(title, options)
+        view.print_menu(title, options, exit_message)
         option = view.input_number()
 
         if option == 1:
@@ -109,23 +109,7 @@ def remove_student():
 
     should use controllers.student_controler.remove_student() to remove student
     '''
-    pass
 
-
-def create_new_mentor():
-    """
-    Creates new mentor and adds mentor to the mentor's list
-
-    Return:
-            None
-    """
-    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
-    title = "Provide informations about new mentor"
-    inputs = views.view.get_inputs(labels, title)
-
-    new_mentor = Mentor(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
-
-    Mentor.list_of_mentors.append(new_mentor)
 
 def edit_student():
     '''

@@ -1,4 +1,4 @@
-from models.mentor import Employee
+from models.employee import Employee
 
 
 class Mentor(Employee):
