@@ -44,12 +44,18 @@ def submit_assigment(student):
         student - obj
     '''
     table = assignment_controller.get_assignments_to_table(student)
-    tittle_list = ['Assignment', 'status', 'deadline', 'grade', 'max_grade']
+    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
     view.print_table(table, tittle_list)
+    '''
     labels = ['Write number of assignment']
     title = 'Input data'
-    number_assignment = view.get_inputs(labels, title)
-    assignment = student.assignments_list[number_assignment - 1]
+     number_assignment = view.get_inputs(labels, title)
+    '''
+    number = None
+    while not number:
+        number = view.input_number()
+
+    assignment = student.assignments_list[number - 1]
     assignment_controller.change_assignment_to_done(assignment)
     # Save
 
