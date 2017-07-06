@@ -56,12 +56,6 @@ class Student(Codecooler):
         cls.save_data(filename)
 
     @classmethod
-    def save_assignment(cls):
-        list_to_save = cls.convert_list_of_assignments_to_data()
-        filename = 'assignments.csv'
-        cls.save_data(filename)
-
-    @classmethod
     def save_data(cls, filename):
         '''
         Save data to proper filename. Raise error if file not exist.
