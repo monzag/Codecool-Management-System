@@ -1,6 +1,6 @@
+import os
 from models.codecooler import Codecooler
 from models.assignment import Assignment
-import os
 
 
 class Student(Codecooler):

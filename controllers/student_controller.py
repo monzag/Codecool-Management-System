@@ -1,4 +1,5 @@
 from views import view
+
 from controllers import assignment_controller
 
 from models.student import Student

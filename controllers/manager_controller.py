@@ -33,24 +33,25 @@ def manager_menu(user):
 
         if option == 1:
             view_students()
+            views.view.print_message("Press any key to continue.")
+            views.view.wait_until_key_pressed()
 
         if option == 2:
             view_mentors()
+            views.view.print_message("Press any key to continue.")
+            views.view.wait_until_key_pressed()
 
         if option == 3:
             add_mentor()
             Mentor.save_data_to_file()
 
         if option == 4:
-
             try:
                 remove_mentor()
-                Mentor.save_data_to_file()
             except ValueError:
                 print("Please type in only numbers!")
             except IndexError:
                 print('Mentor with given index does not exist!')
-            views.view.wait_until_key_pressed()
 
         if option == 0:
             end = True
@@ -72,7 +73,6 @@ def view_students():
                              student.email, str(student.attendance)])
 
     views.view.print_table(students_info, titles)
-    views.view.wait_until_key_pressed()
 
 
 def view_mentors():
@@ -90,7 +90,6 @@ def view_mentors():
         mentors_info.append([mentor.name, mentor.surname, mentor.email])
 
     views.view.print_table(mentors_info, titles)
-    views.view.wait_until_key_pressed()
 
 
 def add_mentor():
@@ -114,15 +113,19 @@ def remove_mentor():
     Returns:
             None
     '''
+    view_mentors()
+
     labels = ["Index"]
     title = "Type index number of mentor to remove"
-    index = views.view.get_inputs(labels, title)[0]
+    user_input = views.view.get_inputs(labels, title)[0]
 
-    if not index.isdigit():
+    if not user_input.isdigit():
         raise ValueError
 
-    elif int(index) not in range(len(Mentor.list_of_mentors)):
+    elif int(user_input) - 1 not in range(len(Mentor.list_of_mentors)):
         raise IndexError
 
     else:
-        del Mentor.list_of_mentors[int(index)]
+        index = int(user_input) - 1
+        del Mentor.list_of_mentors[index]
+        Mentor.save_data_to_file()
