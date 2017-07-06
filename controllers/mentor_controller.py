@@ -41,8 +41,6 @@ def mentor_menu(user):
             remove_student()
         elif option == 0:
             end = True
-        else:
-            view.print_message('There is no such option.')
 
 def view_students():
     '''
@@ -60,6 +58,8 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
+    view.print_message("Press any key to continue.")
+    view.wait_until_key_pressed()
 
 
 def add_assigment():
@@ -102,11 +102,9 @@ def check_attendance():
         except (ValueError, IndexError):
             return view.print_message('Index does not exist!')
 
-        fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
         attendance = Student.list_of_students[int(index)].attendance
         days_passed = Student.list_of_students[int(index)].days_passed
 
-        view.print_message("{}\nAttendance:  {}".format(fullname, attendance))
         view.print_menu(title, options, exit_message)
         option = view.input_number()
 
@@ -122,6 +120,7 @@ def check_attendance():
 
 
 def update_attendance(index, days_passed, attendance, today_attendance):
+    
     if today_attendance == 'Present':
         days_of_presence = (attendance * 0.01) * days_passed
         attendance += (days_of_presence + 1) / (days_passed + 1)
@@ -133,6 +132,9 @@ def update_attendance(index, days_passed, attendance, today_attendance):
         attendance -= todays_value
 
     Student.list_of_students[int(index)].days_passed += 1
+
+    if attendance > 100:
+        attendance = 100
 
     return attendance
 
