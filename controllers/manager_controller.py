@@ -49,7 +49,8 @@ def manager_menu(user):
             except ValueError:
                 print("Please type in only numbers!")
             except IndexError:
-                print ('Mentor with given index does not exist!')
+                print('Mentor with given index does not exist!')
+            views.view.wait_until_key_pressed()
 
         if option == 0:
             end = True
