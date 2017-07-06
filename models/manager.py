@@ -7,4 +7,4 @@ class Manager(Employee):
 
     def __init__(self, *args):
         super().__init__(*args)
-        Manager.list_of_mentors.append(self)
+        Manager.list_of_managers.append(self)
