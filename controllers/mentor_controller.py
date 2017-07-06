@@ -30,8 +30,6 @@ def mentor_menu(user):
 
         if option == 1:
             view_students()
-            view.print_message("Press any key to continue.")
-            view.wait_until_key_pressed()
         elif option == 2:
             add_assigment()
         elif option == 3:
@@ -61,6 +59,8 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
+    view.print_message("Press any key to continue.")
+    view.wait_until_key_pressed()
 
 
 def add_assignment():
@@ -95,22 +95,23 @@ def check_attendance():
     options = ['Present', 'Late', 'Absent']
 
     for student in Student.list_of_students:
+        os.system('clear')
+
         index = Student.list_of_students.index(student)
         fullname = student.name + ' ' + student.surname
 
         view.print_message(fullname)
         view.print_menu(title, options, exit_message)
-        option = view.input_number()
+        option = None
 
-        if option in range(1, len(options) + 1):
-            today_attendance = options[option - 1]
-            student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
-        elif option == 0:
-            pass # load data again
-        else:
-            # load data again
-            view.print_message('There is no such option. Press any key to start again.')
-            view.wait_until_key_pressed()
+        while option not in range(0, len(options) + 1):
+            option = view.input_number()
+            if option in range(1, len(options) + 1):
+                today_attendance = options[option - 1]
+                student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
+            elif option == 0:
+                break
+                pass # load data again
 
 
 def update_attendance(index, days_passed, attendance, today_attendance):
