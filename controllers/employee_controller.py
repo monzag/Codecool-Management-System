@@ -1,6 +1,6 @@
 import os
 
-from view import view
+import views import view
 
 from controllers import student_controller
 
