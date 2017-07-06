@@ -207,6 +207,11 @@ def hold_session():
     '''
     Holds procedural logic of program
     '''
+    Student.get_codecoolers_from_file()
+    Employee.get_codecoolers_from_file()
+    Mentor.get_codecoolers_from_file()
+    Manager.get_codecoolers_from_file()
+
     user = start_up()
     operate_on_user(user)
     close_program()
