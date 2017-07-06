@@ -121,7 +121,7 @@ def remove_mentor():
     if not index.isdigit():
         raise ValueError
 
-    elif int(index) not in range(len(Mentor.list_of_students)):
+    elif int(index) not in range(len(Mentor.list_of_mentors)):
         raise IndexError
 
     else:
