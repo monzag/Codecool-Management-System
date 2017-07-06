@@ -33,7 +33,7 @@ def mentor_menu(user):
         elif option == 2:
             add_assigment()
         elif option == 3:
-            grade_assigment()
+            grade_assignment()
         elif option == 4:
             check_attendance()
         elif option == 5:
@@ -59,8 +59,8 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
-    view.print_message("Press any key to continue.")
-    view.wait_until_key_pressed()
+    # view.print_message("Press any key to continue.")
+    # view.wait_until_key_pressed()
 
 
 def add_assignment():
@@ -82,7 +82,23 @@ def grade_assignment():
 
     should use controllers.assigment_controller.change_grade() to change grade
     '''
-    pass
+    view_students()
+    student_number = None
+    while not student_number:
+        student_number = view.input_number()
+
+    if student_number <= len(Student.list_of_students):
+        student_number -= 1
+        assignment_controller.view_student_assignments(Student.list_of_students[student_number])
+
+        assignment_number = None
+        while not assignment_number:
+            assignment_number = view.input_number()
+
+        if assignment_number <= len(Student.list_of_students[student_number].assignments_list):
+            assignment_number -= 1
+            new_value = 10
+            Student.list_of_students[student_number].assignments_list[assignment_number].grade = new_value
 
 
 def check_attendance():
