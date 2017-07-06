@@ -33,14 +33,13 @@ def create_assignment():
     Returns:
             None
     '''
-    labels = ["Deadline", "Max grade"]
-    title = "Provide informations about new assignments"
-    inputs = view.get_inputs(labels, title)
+    deadline = get_deadline()
+    max_grade = get_max_grade()
     add_date = get_add_date()
 
     for student in Student.list_of_students:
         student.assignments_list.append(Assignment(student.login, student.name,
-                                        add_date, inputs[0], inputs[1]))
+                                        add_date, deadline, max_grade))
 
     Assignment.save_assignments_to_file()
 
@@ -113,3 +112,35 @@ def view_student_assignments(student):
 
 def get_add_date():
     return '{}:{}:{}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
+
+def get_deadline():
+
+    deadline = None
+
+    while deadline == None:
+
+        deadline_labels = ["Day", "Month", "Year"]
+        deadline_title = "Type deadline"
+        deadline_input = view.get_inputs(deadline_labels, deadline_title)
+
+        if all([item.isdigit() for item in deadline_input]):
+            deadline = deadline_input[0] + "-" + deadline_input[1] + "-" + deadline_input[2]
+            return deadline
+        else:
+            deadline = None
+
+def get_max_grade():
+
+    max_grade = None
+
+    while max_grade == None:
+
+        labels = [ "Max grade"]
+        title = "Type maximal grade"
+        inputs = view.get_inputs(labels, title)
+
+        if inputs[0].isdigit():
+            max_grade = int(inputs[0])
+            return max_grade
+        else:
+            max_grade = None
