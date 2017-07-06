@@ -23,8 +23,14 @@ def manager_menu(user):
     while show_menu:
         os.system('clear')
 
+        title = "Manager menu"
+        options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor']
+        exit_message = "Go back to main menu"
+        views.view.print_menu(title, options, exit_message)
+
+        labels = ["Option number"]
+        title = "Chose option from menu"
         option = views.view.get_inputs(labels, title)[0]
-        views.view.print_table(options, titles)
 
         if option == 1:
             view_students()
