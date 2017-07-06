@@ -1,18 +1,19 @@
 from models.codecooler import Codecooler
-import os
 from models.assignment import Assignment
+import os
 
 
 class Student(Codecooler):
 
     list_of_students = []
 
-    def __init__(self, attendance, days_passed, *args):
+    def __init__(self, attendance, days_passed, total_grade, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
         self.attendance = attendance
         self.days_passed = days_passed
         self.assignments_list = self.get_assignment_list()
+        self.total_grade = self.calculate_total_grade()
 
     @classmethod
     def get_codecoolers_from_file(cls, file_name):
@@ -26,10 +27,11 @@ class Student(Codecooler):
         splitted_data_list = cls.load_data_from_file(file_name)
 
         for element in splitted_data_list:
-            name, surname, login, password, mail, attendance, days_passed = element
+            name, surname, login, password, mail, attendance, days_passed, total_grade = element
             attendance = int(attendance)
             days_passed = int(days_passed)
-            cls(attendance, days_passed, name, surname, login, password, mail)
+            total_grade = int(total_grade)
+            cls(attendance, days_passed, total_grade, name, surname, login, password, mail)
 
     def get_assignment_list(self):
         '''
@@ -70,8 +72,32 @@ class Student(Codecooler):
 
         string_to_save = []
         for student in cls.list_of_students:
-            row = [student.name, student.surname, student.login, student.password, student.email, str(student.attendance), str(student.days_passed)]
+            row = [student.name, student.surname, student.login, student.password, student.email, str(student.attendance), str(student.days_passed), str(student.total_grade)]
             string_to_save.append(row)
 
         print(string_to_save)
         return '\n'.join('|'.join(row) for row in string_to_save)
+
+    def calculate_total_grade(self):
+        '''
+        Given list of assigments calculates total grade
+
+        Paramters:
+            list_of_assigments : list of Assigment obj.
+
+        Returns:
+            total_grade : int representing percents
+        '''
+        total_grade = 0
+
+        if len(self.assignments_list) > 0:
+            grades = 0
+            max_grades = 0
+
+            for assignment in self.assignments_list:
+                grades += assignment.grade
+                max_grades += assignment.max_grade
+
+            total_grade = grades/max_grades * 100
+
+        return total_grade
