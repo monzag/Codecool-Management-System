@@ -155,18 +155,19 @@ def operate_on_user(user):
     Returns:
         None
     '''
-    if isinstance(user, Student):
+    status = user.__class__.__name__
+
+    if status == 'Student':
         student_controller.student_menu(user)
 
-    if isinstance(user, Employee):
-        employee_controller.employee_menu(user)
-        # employee_controller.employee_menu(user, Student.list_of_students)
+    if status == 'Employee':
+        employee_controller.employee_menu(user, Student.list_of_students)
 
-    if isinstance(user, Mentor):
+    if status == 'Mentor':
         mentor_controller.mentor_menu(user)
         # mentor_controller.mentor_menu(user, Student.list_of_students)
 
-    if isinstance(user, Manager):
+    if status == 'Manager':
         manager_controller.manager_menu(user)
         # manager_controller.manager_menu(user, Student.list_of_students, Mentor.list_of_mentors)
 
