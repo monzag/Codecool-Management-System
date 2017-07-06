@@ -157,7 +157,7 @@ def remove_student():
     """
     try:
         index = get_student_index()
-    except ValueError, IndexError:
+    except (ValueError, IndexError):
         return views.view.print_message('Index does not exist!')
 
     del Mentor.list_of_mentors[int(index)]

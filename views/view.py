@@ -271,12 +271,3 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
-
-table = [['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t']]
-title_list = ['454fwr', '4r43', 'ewrfwer', '43t34t3terfs']
-print_table(table, title_list)
