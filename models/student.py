@@ -28,6 +28,7 @@ class Student(Codecooler):
         for element in splitted_data_list:
             name, surname, login, password, mail, attendance, days_passed = element
             attendance = int(attendance)
+            days_passed = int(days_passed)
             cls(attendance, days_passed, name, surname, login, password, mail)
 
     def get_assignment_list(self):
@@ -46,30 +47,35 @@ class Student(Codecooler):
         return assignment_list
 
     @classmethod
-    def save_data_to_file(cls):
+    def save_students(cls):
         '''
         Save students data to csv file. If file not exist, create file.
         '''
-        list_to_save = cls.convert_list_of_object_to_data()
+
         filename = 'students.csv'
-        with open(filename, 'w') as csvfile:
-            for record in list_to_save:
-                row = '|'.join(record)
-                csvfile.write(row + "\n")
+        file_path = os.getcwd() + '/data/' + filename
+
+        if not os.path.exists(file_path):
+            raise FileNotFoundError("There is no such a file")
+
+        else:
+            with open(file_path, 'w') as csvfile:
+                csvfile.write(cls.data_to_save())
 
     @classmethod
-    def convert_list_of_object_to_data(cls):
+    def data_to_save(cls):
         '''
-        Unpack attributes of Student object as data to student_data list and add it to list_to_save.
+        Unpack attributes of all Students, each to row list and append it to string_to_save list'
+        Change lists to string.
 
         Returns:
-            list_to_save - list of lists
+            string
         '''
 
-        list_to_save = []
+        string_to_save = []
         for student in cls.list_of_students:
-            name, surname, login, password, email, attendance, days_passed = student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_list
-            student_data = [name, surname, login, password, email, attendance, days_passed]
-            list_to_save.append(student_data)
+            row = [student.name, student.surname, student.login, student.password, student.email, str(student.attendance), str(student.days_passed)]
+            string_to_save.append(row)
 
-        return list_to_save
+        print(string_to_save)
+        return '\n'.join('|'.join(row) for row in string_to_save)

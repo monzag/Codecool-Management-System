@@ -4,6 +4,7 @@ from views import view
 from controllers import assignment_controller
 
 from models.student import Student
+from models.assignment import Assignment
 
 
 def student_menu(user):
@@ -48,10 +49,11 @@ def submit_assigment(student):
     while not number:
         number = view.input_number()
 
-    if number < len(student.assignments_list):
+    if number <= len(student.assignments_list):
         assignment = student.assignments_list[number - 1]
         assignment_controller.change_assignment_to_done(assignment)
-        # Save
+        Assignment.save_assignments_to_file()
+
     else:
         view.print_message('Assignment does not exist!')
 
@@ -64,24 +66,6 @@ def view_grades(student):
     table = assignment_controller.get_assignments_to_table(student)
     tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
     view.print_table(table, tittle_list)
-
-
-def remove_student(index):
-    '''
-    Remove object Student from list by index.
-    Raise IndexError when index out of range.
-
-    Returns:
-        list of students
-    '''
-
-    if index not in range(len(Student.list_of_students) - 1):
-        raise IndexError('Student with this number not exist!')
-
-    else:
-        del Student.list_of_students[index]
-
-    save_data_to_file(Student.list_of_students)
 
 
 def get_students():

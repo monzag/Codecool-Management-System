@@ -25,6 +25,7 @@ def print_menu(title, options, exit_message):
     print('    (0) {}'.format(exit_message))
     print('')
 
+    '''wait_until_key_pressed()'''
 
 def input_number():
     '''

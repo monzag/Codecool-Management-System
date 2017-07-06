@@ -5,7 +5,7 @@ from views import view
 from models.assignment import Assignment
 from models.student import Student
 
-import controllers.student_controller 
+import controllers.student_controller
 
 
 def get_assignments_to_table(student):
@@ -20,10 +20,43 @@ def get_assignments_to_table(student):
     '''
     table = []
     for assignment in student.assignments_list:
-        table.append([assignment.name,     assignment.status,     assignment.submit_date, 
+        table.append([assignment.name,     assignment.status,     assignment.submit_date,
                       assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
 
     return table
+
+
+def create_assignment():
+    '''
+    Creates new assignment from data provided by mentor.
+
+    Returns:
+            None
+    '''
+    labels = ["Deadline", "Max grade"]
+    title = "Provide informations about new assignments"
+    inputs = view.get_inputs(labels, title)
+    add_date = get_add_date()
+
+    for student in Student.list_of_students:
+        student.assignments_list.append(Assignment(student.login, student.name,
+                                        add_date, inputs[0], inputs[1]))
+
+    Assignment.save_assignments_to_file()
+
+
+def add_assignment(assigment):
+    '''
+    Adds new assigemnt for every student stored in system
+
+    Parameters:
+        assigment : Assigment obj.
+
+    Returns:
+        None
+    '''
+    for student in student_controller.get_students():
+        student.assigments_list.append(assigment)
 
 
 def calculate_total_grade(list_of_assigments):
@@ -76,3 +109,7 @@ def view_student_assignments(student):
     table = get_assignments_to_table(student)
 
     view.print_table(table, labels)
+
+
+def get_add_date():
+    return '{}:{}:{}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
