@@ -35,17 +35,3 @@ def get_codecoolers_with_mails(codecoolers):
         table.append([codecooler.name, codecooler.surname, codecooler.email])
 
     return table
-
-
-def remove_codecooler(codecooler, codecoolers):
-    '''
-    Given list of Codecoolers instance objs. and Codecooler instance obj.
-    Deletes codecooler from system
-
-    Parameters:
-        codecoolers: list of Codecooler instance objs.
-
-    Return:
-        codecoolers: list of Codecooler instance objs.
-    '''
-    return codecoolers
