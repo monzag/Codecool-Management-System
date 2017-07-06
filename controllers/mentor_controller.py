@@ -30,8 +30,6 @@ def mentor_menu(user):
 
         if option == 1:
             view_students()
-            view.print_message("Press any key to continue.")
-            view.wait_until_key_pressed()
         elif option == 2:
             add_assigment()
         elif option == 3:
@@ -61,16 +59,18 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
+    view.print_message("Press any key to continue.")
+    view.wait_until_key_pressed()
 
 
-def add_assigment():
+def add_assignment():
     '''
     Creates new assignment and adds it to assignment list.
     '''
     pass
 
 
-def grade_assigment():
+def grade_assignment():
     '''
     should use controllers.assigment_controller to create
         list of assigments
@@ -91,33 +91,27 @@ def check_attendance():
     Adds one day to days_passed after checking.
     """
     title = "Student attendance for today"
-    exit_message = 'Back to Main Menu'
+    exit_message = 'Back to Main Menu (NOTICE: You will have to check whole attendance again for today!)'
     options = ['Present', 'Late', 'Absent']
 
-    menu = True
-    while menu:
-        view_students()
+    for student in Student.list_of_students:
+        os.system('clear')
 
-        try:
-            index = get_student_index()
-        except (ValueError, IndexError):
-            return view.print_message('Index does not exist!')
+        index = Student.list_of_students.index(student)
+        fullname = student.name + ' ' + student.surname
 
-        attendance = Student.list_of_students[int(index)].attendance
-        days_passed = Student.list_of_students[int(index)].days_passed
-
+        view.print_message(fullname)
         view.print_menu(title, options, exit_message)
-        option = view.input_number()
+        option = None
 
-        if option in range(1, len(options) + 1):
-            today_attendance = options[option - 1]
-            Student.list_of_students[int(index)].attendance = update_attendance(index, days_passed, attendance,
-                                                                                today_attendance)
-        elif option == 0:
-            menu = False
-        else:
-            view.print_message('There is no such option. Press any key to start again.')
-            view.wait_until_key_pressed()
+        while option not in range(0, len(options) + 1):
+            option = view.input_number()
+            if option in range(1, len(options) + 1):
+                today_attendance = options[option - 1]
+                student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
+            elif option == 0:
+                break
+                pass # load data again
 
 
 def update_attendance(index, days_passed, attendance, today_attendance):
@@ -202,4 +196,4 @@ def get_student_index():
         raise IndexError('Mentor with given index does not exist!')
 
     else:
-        return int(index)
+        return int(index) - 1
