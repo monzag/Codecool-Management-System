@@ -8,6 +8,3 @@ class Mentor(Employee):
     def __init__(self, *args):
         super().__init__(*args)
         Mentor.list_of_mentors.append(self)
-
-
-
