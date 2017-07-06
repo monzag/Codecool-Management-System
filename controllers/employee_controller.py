@@ -2,13 +2,16 @@ import os
 
 from views import view
 
-from controllers import student_controller
+from controllers import codecooler_controller
 
 
-def employee_menu(user):
+def employee_menu(user, students):
     '''
     Prints user specific features and asks him for operation
     to perform. Resolve all interacions, util user diecides to exit.
+
+    Parameters:
+        students: list of Student objs.
 
     Returns:
         None
@@ -30,13 +33,18 @@ def employee_menu(user):
             end = True
 
 
-def view_students():
+def view_students(students):
     '''
-    prints list of every student assigned to course
-    print needs email so employees can contact with student
+    Given list of Student obj. prints table consicting
+    of their names, surnames, and mails
 
-    should use students_controller.get_students() to get list of all students
+    Parameters:
+        students: list of Student objs.
 
-    should use views.view.print_students() for printing
+    Returns:
+        None
     '''
-    pass
+    lables = ['name', 'surname', 'email']
+    table = codecooler_controller.get_codecoolers_with_mails(students)
+    view.print_table(table, lables)
+    view.wait_until_key_pressed()
