@@ -120,7 +120,18 @@ def check_attendance():
 
 
 def update_attendance(index, days_passed, attendance, today_attendance):
-    
+    """
+    Updates the attendance value.
+
+    Args:
+        index (int) - index of a student
+        days_passed (int) - number of days passed in school so far
+        attendance (int) - attendance value
+        today_attendance (str) - option chosen (Present/Late/Absent)
+
+    Returns:
+        attendance (int) - updated attendance
+    """
     if today_attendance == 'Present':
         days_of_presence = (attendance * 0.01) * days_passed
         attendance += (days_of_presence + 1) / (days_passed + 1)
