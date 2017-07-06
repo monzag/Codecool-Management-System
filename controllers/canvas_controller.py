@@ -188,6 +188,7 @@ def hold_session():
     Employee.get_codecoolers_from_file('employees.csv')
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
+    Assigment.get_assigments_from_file('assigments.csv')
 
     user = start_up()
     operate_on_user(user)
