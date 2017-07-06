@@ -58,7 +58,7 @@ def print_table(table, title_list):
 
     outer_row = create_border_row(table, columns_amount, title_list, 'outer', MIN_COLUMN_WIDTH, CELL_PADDING)
     middle_row = create_border_row(table, columns_amount, title_list, 'middle', MIN_COLUMN_WIDTH, CELL_PADDING)
-    title_row = create_data_row(table, 1, title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=True)
+    title_row = create_data_row(table, 0, title_list, MIN_COLUMN_WIDTH, CELL_PADDING, is_title=True)
 
     print(outer_row)
     print(title_row)
@@ -266,4 +266,3 @@ def print_end_screen():
         for line in startup:
             print(line, end='')
     print('''''')
-
