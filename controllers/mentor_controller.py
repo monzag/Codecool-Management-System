@@ -17,30 +17,31 @@ def mentor_menu(user):
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
-    options = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student']
+    options = ['View students', 'Add assignment', 'Grade assignment',
+               'Check attendance', 'Add student', 'Remove student']
 
     end = False
     while not end:
-        os.system('clear')
 
         views.view.print_menu(title, options, exit_message)
-        option = view.input_number()
+        option = is_option_valid(len(options))
 
         if option == 1:
             view_students()
-        if option == 2:
+        elif option == 2:
             add_assigment()
-        if option == 3:
+        elif option == 3:
             grade_assigment()
-        if option == 4:
+        elif option == 4:
             check_attendance()
-        if option == 5:
+        elif option == 5:
             add_student()
-        if option == 6:
+        elif option == 6:
             remove_student()
-        if option == 0:
+        elif option == 0:
             end = True
-
+        else:
+            views.view.print_message('There is no such option.')
 
 def view_students():
     '''
@@ -53,10 +54,10 @@ def view_students():
     titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
     students_info = []
 
+
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                                  student.email, student.attendance,
-                                  student.grade])
+                              student.email, student.attendance])
 
     views.view.print_table(students_info, titles)
 
@@ -109,24 +110,29 @@ def check_attendance():
         views.view.print_menu(title, options, exit_message)
         option = is_option_valid(len(options))
 
-        if option == 1:
-            Student.list_of_students[int(index)].days_passed += 1
-        elif option == 2:
-            todays_value = 100 / days_passed
-            attendance -= todays_value * 0.2
-            Student.list_of_students[int(index)].attendance = attendance
-            Student.list_of_students[int(index)].days_passed += 1
-        elif option == 3:
-            todays_value = 100 / days_passed
-            attendance = -= todays_value
-            Student.list_of_students[int(index)].attendance = attendance
-            Student.list_of_students[int(index)].days_passed += 1
+        if option in range(1, len(options) + 1):
+            today_attendance = options[option - 1]
+            Student.list_of_students[int(index)].attendance = update_attendance(index, days_passed, today_attendance)
         elif option == 0:
             end = True
         else:
             views.view.print_message('There is no such option. Press any key to start again.')
             views.view.wait_until_key_pressed()
 
+
+def update_attendance(index, days_passed, today_attendance):
+    if today_attendance = 'Present':
+        pass
+    elif today_attendance = 'Late':
+        todays_value = 100 / days_passed
+        attendance -= todays_value * 0.2
+    elif today_attendance = 'Absent':
+        todays_value = 100 / days_passed
+        attendance = -= todays_value
+
+    Student.list_of_students[int(index)].days_passed += 1
+
+    return attendance
 
 def add_student():
     """
