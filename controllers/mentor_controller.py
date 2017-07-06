@@ -198,10 +198,9 @@ def remove_student():
 
     try:
         index = get_student_index()
+        del Student.list_of_students[int(index)]
     except (ValueError, IndexError):
         view.print_message('Index does not exist!')
-
-    del Student.list_of_students[int(index)]
 
     Student.save_students()
 
@@ -221,7 +220,7 @@ def get_student_index():
     if not index.isdigit():
         raise ValueError("Please type only numbers!")
 
-    elif int(index) not in range(len(Student.list_of_students)):
+    elif int(index) - 1 not in range(len(Student.list_of_students)):
         raise IndexError('Mentor with given index does not exist!')
 
     else:
