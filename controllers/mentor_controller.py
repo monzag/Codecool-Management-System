@@ -3,7 +3,7 @@ import os
 from views import view
 
 from controllers import student_controller
-from controllers import assigment_controller
+from controllers import assignment_controller
 from controllers import codecooler_controller
 
 
@@ -99,7 +99,7 @@ def check_attendance():
 
         try:
             index = get_student_index()
-        except ValueError, IndexError:
+        except (ValueError, IndexError):
             return views.view.print_message('Index does not exist!')
 
         fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
@@ -121,14 +121,14 @@ def check_attendance():
 
 
 def update_attendance(index, days_passed, today_attendance):
-    if today_attendance = 'Present':
-        pass
-    elif today_attendance = 'Late':
+    if today_attendance == 'Present':
+        attendance = Student.list_of_students[int(index)].attendance
+    elif today_attendance == 'Late':
         todays_value = 100 / days_passed
         attendance -= todays_value * 0.2
-    elif today_attendance = 'Absent':
+    elif today_attendance == 'Absent':
         todays_value = 100 / days_passed
-        attendance = -= todays_value
+        attendance -= todays_value
 
     Student.list_of_students[int(index)].days_passed += 1
 
@@ -157,8 +157,8 @@ def remove_student():
     """
     try:
         index = get_student_index()
-    except ValueError, IndexError:
-        return views.view.print_message('Index does not exist!')
+    except (ValueError, IndexError):
+        views.view.print_message('Index does not exist!')
 
     del Mentor.list_of_mentors[int(index)]
 
