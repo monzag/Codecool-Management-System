@@ -59,16 +59,16 @@ class Assignment:
         '''
         '''
         file_path = os.getcwd() + '/data/assignments.csv'
-        with open() as data:
-            data.write(cls.csv_string)
+        with open(file_path, 'w') as data:
+            data.write(cls.csv_string())
 
-    @property
-    def csv_string(self):
+    @classmethod
+    def csv_string(cls):
         csv_string = []
-        for assignment in self.list_of_assignments:
+        for assignment in cls.list_of_assignments:
             row = [assignment.name, assignment.owner, assignment.status, assignment.add_date, 
                    assignment.deadline, assignment.submit_date, str(assignment.grade), str(assignment.max_grade)]
 
             csv_string.append(row)
 
-        return = '\n'.join('|'.join(row) for row in csv_string)
+        return '\n'.join('|'.join(row) for row in csv_string)
