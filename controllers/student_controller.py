@@ -4,7 +4,6 @@ from views import view
 from controllers import assignment_controller
 
 from models.student import Student
-# from models.assigemnt import Assigment
 
 
 def student_menu(user):
@@ -43,26 +42,28 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
-    table = assignment_controller.get_assignments_to_table(student)
-    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
-    view.print_table(table, tittle_list)
-    '''
-    labels = ['Write number of assignment']
-    title = 'Input data'
-     number_assignment = view.get_inputs(labels, title)
-    '''
+    view_grades(student)
+
     number = None
     while not number:
         number = view.input_number()
 
-    assignment = student.assignments_list[number - 1]
-    assignment_controller.change_assignment_to_done(assignment)
-    # Save
+    if number < len(student.assignments_list):
+        assignment = student.assignments_list[number - 1]
+        assignment_controller.change_assignment_to_done(assignment)
+        # Save
+    else:
+        view.print_message('Assignment does not exist!')
 
 
-def view_grades():
-    # powiązane z assignmentami! W jakiej formie w końcu będą te pliki?
-    pass
+def view_grades(student):
+    '''
+    Show table with data about assignment-grades'
+    '''
+
+    table = assignment_controller.get_assignments_to_table(student)
+    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
+    view.print_table(table, tittle_list)
 
 
 def remove_student(index):
@@ -90,16 +91,6 @@ def get_students():
 
     return Student.list_of_students
 
-
-'''
-def list_student_with_grades():
-    pass
-
-
-def list_student_with_attendance():
-    pass'''
-
-# Add id's assignment to list
 
 
 
