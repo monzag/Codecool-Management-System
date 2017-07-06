@@ -52,7 +52,7 @@ def choose_status():
         status : str - representing privilige
     '''
     title = 'Do you want to log as'
-    exit_message = 'Change status'
+    exit_message = 'Exit program'
     options = ['Student', 'Employee', 'Mentor', 'Manager']
 
     status = None
@@ -71,7 +71,8 @@ def choose_status():
         if option == 4:
             status = 'Manager'
         if option == 0:
-            status = None
+            close_program()
+            sys.exit()
 
     return status
 
