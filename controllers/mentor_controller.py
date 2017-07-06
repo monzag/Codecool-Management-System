@@ -1,10 +1,9 @@
 import os
 
-import views.view
-import controllers.student_controller
-import controllers.assigment_controller
+from views import view
 
-from models.mentor import Mentor
+from controllers import student_controller
+from controllers import assigment_controller
 
 
 def mentor_menu(user):
@@ -16,13 +15,14 @@ def mentor_menu(user):
         None
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
-    otions = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student', 'Exit']
+    exit_message = 'Exit'
+    options = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student']
 
     end = False
-    while end:
+    while not end:
         os.system('clear')
 
-        view.print_menu(title, options)
+        view.print_menu(title, options, exit_message)
         option = view.input_number()
 
         if option == 1:

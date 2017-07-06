@@ -1,18 +1,21 @@
 import os
 import sys
 
-import views.view
+from views import view
 
 from models.codecooler import Codecooler
 from models.student import Student
 from models.employee import Employee
 from models.mentor import Mentor
 from models.manager import Manager
+from models.assigment import Assigment
 
+from controllers import codecooler_controller
 from controllers import student_controller
 from controllers import employee_controller
 from controllers import mentor_controller
 from controllers import manager_controller
+from controllers import assigment_controller
 
 
 def start_up():
@@ -45,15 +48,16 @@ def choose_status():
         status : str - representing privilige
     '''
     title = 'Do you want to log as'
-    otions = ['Student', 'Employee', 'Mentor', 'Manager', 'Exit']
+    exit_message = 'Exit'
+    options = ['Student', 'Employee', 'Mentor', 'Manager']
 
     status = None
-    while status:
+    while not status:
         os.system('clear')
 
-        view.print_menu(title, options)
+        view.print_menu(title, options, exit_message)
         option = view.input_number()
-        
+
         if option == 1:
             status = 'Student'
         if option == 2:
@@ -64,35 +68,8 @@ def choose_status():
             status = 'Manager'
         if option == 0:
             sys.exit()
-    
+
     return status
-
-
-def load_lists_from_file(status):
-    '''
-    Depending on user privilige loads certain data into a program:
-    
-    -> for each group program will load group own users, to find one
-       who is trying to access program
-    -> employees and mentors have access to list of students
-    -> manager have access to all
-
-    Parameters:
-        status: str - representing privilige
-
-    Return:
-        None
-    '''
-    student_controller.load_students_from_file()
-
-    if status in ['Manager', 'Employee']:
-        employee_controller.load_employees_from_file()
-
-    if status in ['Manager', 'Mentor']:
-        mentor_controller.load_mentors_from_file()
-
-    if status == 'Manager':
-        manager_controller.load_managers_from_file()
 
 
 def log_in_as_user(status):
@@ -110,11 +87,10 @@ def log_in_as_user(status):
         user : Codecooler obj. instance
     '''
     attempt = 1
-    is_user = None
-    while user:
+    user = None
+    while not user:
         os.system('clear')
 
-        view.print_login_screen(status, attempt)
         login, password = get_password_and_login()
 
         attempt += 1
@@ -153,16 +129,16 @@ def is_user_in_system(status, login, password):
         None - if password and login doesn't match
     '''
     if status == 'Student':
-        return student_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Student.list_of_students)
 
     if status == 'Employee':
-        return employee_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Employee.list_of_employees)
 
     if status == 'Mentor':
-        return mentor_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Mentor.list_of_mentors)
 
     if status == 'Manager':
-        return manager_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Manager.list_of_managers)
 
 
 def operate_on_user(user):
@@ -179,14 +155,21 @@ def operate_on_user(user):
     Returns:
         None
     '''
-    if isinstance(user, Student):
+    status = user.__class__.__name__
+
+    if status == 'Student':
         student_controller.student_menu(user)
-    if isinstance(user, Employee):
-        employee_controller.employee_menu(user)
-    if isinstance(user, Mentor):
+
+    if status == 'Employee':
+        employee_controller.employee_menu(user, Student.list_of_students)
+
+    if status == 'Mentor':
         mentor_controller.mentor_menu(user)
-    if isinstance(user, Manager):
+        # mentor_controller.mentor_menu(user, Student.list_of_students)
+
+    if status == 'Manager':
         manager_controller.manager_menu(user)
+        # manager_controller.manager_menu(user, Student.list_of_students, Mentor.list_of_mentors)
 
 
 def close_program():
@@ -201,6 +184,11 @@ def hold_session():
     '''
     Holds procedural logic of program
     '''
+    Student.get_codecoolers_from_file('students.csv')
+    Employee.get_codecoolers_from_file('employees.csv')
+    Mentor.get_codecoolers_from_file('mentors.csv')
+    Manager.get_codecoolers_from_file('managers.csv')
+
     user = start_up()
     operate_on_user(user)
     close_program()

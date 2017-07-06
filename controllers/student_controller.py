@@ -7,6 +7,7 @@ from models.student import Student
 # from models.assigemnt import Assigment
 
 
+
 def student_menu(user):
     '''
     Prints user specific features and asks him for operation
@@ -17,13 +18,14 @@ def student_menu(user):
     '''
 
     title = 'Hi {}! What would you like to do'.format(user.name)
-    otions = ['View grades', 'Submit assigment', 'Exit']
+    exit_message = 'Exit'
+    options = ['View grades', 'Submit assigment']
 
     end = False
-    while end:
+    while not end:
         os.system('clear')
 
-        view.print_menu(title, options)
+        view.print_menu(title, options, exit_message)
         option = view.input_number()
 
         if option == 1:
