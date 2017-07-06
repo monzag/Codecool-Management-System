@@ -160,12 +160,15 @@ def operate_on_user(user):
 
     if isinstance(user, Employee):
         employee_controller.employee_menu(user)
+        # employee_controller.employee_menu(user, Student.list_of_students)
 
     if isinstance(user, Mentor):
         mentor_controller.mentor_menu(user)
+        # mentor_controller.mentor_menu(user, Student.list_of_students)
 
     if isinstance(user, Manager):
         manager_controller.manager_menu(user)
+        # manager_controller.manager_menu(user, Student.list_of_students, Mentor.list_of_mentors)
 
 
 def close_program():
@@ -188,34 +191,3 @@ def hold_session():
     user = start_up()
     operate_on_user(user)
     close_program()
-
-
-def student_menu(user):
-    '''
-    Prints user specific features and asks him for operation
-    to perform. Resolve all interacions, until user diecides to exit.
-
-    Returns:
-        None
-    '''
-
-    title = 'Hi {}! What would you like to do'.format(user.name)
-    exit_message = 'Exit'
-    options = ['View grades', 'Submit assigment']
-
-    end = False
-    while end:
-        os.system('clear')
-
-        view.print_menu(title, options, exit_message)
-        option = view.input_number()
-
-        if option == 1:
-            student_controller.view_grades(user)
-        if option == 2:
-            # user = assigment_controller.submit_assigment(user)
-            pass
-        if option == 0:
-            end = True
-
-
