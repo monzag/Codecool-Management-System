@@ -24,6 +24,7 @@ def mentor_menu(user):
     end = False
     while not end:
 
+        os.system('clear')
         view.print_menu(title, options, exit_message)
         option = view.input_number()
 
