@@ -26,23 +26,26 @@ def get_assignments_to_table(student):
     return table
 
 
-def create_assigment():
+def create_assignment():
     '''
     Creates new assignment from data provided by mentor.
 
     Returns:
             None
     '''
-    labels = ["Add date", "Deadline", "Max grade"]
+    labels = ["Deadline", "Max grade"]
     title = "Provide informations about new assignments"
-    inputs = views.view.get_inputs(labels, title)
+    inputs = view.get_inputs(labels, title)
+    add_date = get_add_date()
 
     for student in Student.list_of_students:
         student.assignments_list.append(Assignment(student.login, student.name,
-                                        inputs[0], inputs[1], inputs[2]))
+                                        add_date, inputs[0], inputs[1]))
+
+    Assignment.save_assignments_to_file()
 
 
-def add_assigment(assigment):
+def add_assignment(assigment):
     '''
     Adds new assigemnt for every student stored in system
 
@@ -54,7 +57,6 @@ def add_assigment(assigment):
     '''
     for student in student_controller.get_students():
         student.assigments_list.append(assigment)
-
 
 
 def calculate_total_grade(list_of_assigments):
@@ -107,3 +109,7 @@ def view_student_assignments(student):
     table = get_assignments_to_table(student)
 
     view.print_table(table, labels)
+
+
+def get_add_date():
+    return '{}:{}:{}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
