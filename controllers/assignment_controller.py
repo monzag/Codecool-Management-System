@@ -20,8 +20,10 @@ def get_assignments_to_table(student):
     '''
     table = []
     for assignment in student.assignments_list:
-        table.append([assignment.name,     assignment.status,     assignment.submit_date,
-                      assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
+        row = [assignment.name,     assignment.status,     assignment.submit_date,
+               assignment.deadline, str(assignment.grade), str(assignment.max_grade)]
+
+        table.append(row)
 
     return table
 
