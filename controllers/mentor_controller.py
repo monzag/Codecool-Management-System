@@ -88,33 +88,44 @@ def check_attendance():
     Chooses student by login and grades its attendance for today.
     Adds one day to days_passed after checking.
     """
-    try:
-        index = get_student_index()
-    except ValueError, IndexError:
-        return views.view.print_message('Index does not exist!')
-
-    fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
-    attendance = Student.list_of_students[int(index)].attendance
-    days_passed = int(Student.list_of_students[int(index)].days_passed)
-    views.view.print_message(fullname)
-    views.view.print_message("Attendance: ", attendance)
-
     title = "Student attendance for today"
-    exit_message = 'Exit'
+    exit_message = 'Back to Main Menu'
     options = ['Present', 'Late', 'Absent']
-    views.view.print_menu(title, options, exit_message)
-    option = view.input_number()
 
-    if option == 1:
-        return attendance
-    if option == 2:
-        todays_value = 100 / days_passed
-        attendance -= todays_value * 0.2
-        return attendance
-    if option == 3:
-        todays_value = 100 / days_passed
-        attendance = -= todays_value
-        return attendance
+    end = False
+    while not end:
+        view_students()
+
+        try:
+            index = get_student_index()
+        except ValueError, IndexError:
+            return views.view.print_message('Index does not exist!')
+
+        fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
+        attendance = Student.list_of_students[int(index)].attendance
+        days_passed = Student.list_of_students[int(index)].days_passed
+
+        views.view.print_message(fullname, "\nAttendance: ", attendance)
+        views.view.print_menu(title, options, exit_message)
+        option = is_option_valid(len(options))
+
+        if option == 1:
+            Student.list_of_students[int(index)].days_passed += 1
+        elif option == 2:
+            todays_value = 100 / days_passed
+            attendance -= todays_value * 0.2
+            Student.list_of_students[int(index)].attendance = attendance
+            Student.list_of_students[int(index)].days_passed += 1
+        elif option == 3:
+            todays_value = 100 / days_passed
+            attendance = -= todays_value
+            Student.list_of_students[int(index)].attendance = attendance
+            Student.list_of_students[int(index)].days_passed += 1
+        elif option == 0:
+            end = True
+        else:
+            views.view.print_message('There is no such option. Press any key to start again.')
+            views.view.wait_until_key_pressed()
 
 
 def add_student():
@@ -166,3 +177,15 @@ def get_student_index():
 
     else:
         return int(index)
+
+
+def is_option_valid(options_number):
+
+    try:
+        option = input_number()
+        if option in range(options_number + 1):
+            return option
+        else:
+            return False
+    except ValueError:
+        return False
