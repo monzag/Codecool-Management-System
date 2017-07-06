@@ -34,7 +34,7 @@ def mentor_menu(user):
             view.print_message("Press any key to continue.")
             view.wait_until_key_pressed()
         elif option == 2:
-            Assignment.create_assignment()
+            assignment_controller.create_assignment()
         elif option == 3:
             grade_assignment()
         elif option == 4:
@@ -66,15 +66,9 @@ def view_students():
 
 def grade_assignment():
     '''
-    should use controllers.assigment_controller to create
-        list of assigments
-
-    should use view.print_assigments to print assigments
-        (along with numbers to call exact assigment)
-
-    should use view.input_umber() to select assigment
-
-    should use controllers.assigment_controller.change_grade() to change grade
+    Prints the list of students to choose a student.
+    Then prints assignments of the student.
+    Then asks the user for the choice and changing the grade.
     '''
     view_students()
     student_id = None
@@ -98,7 +92,16 @@ def grade_assignment():
 
 
 def get_new_grade(max_grade):
+    '''
+    Asks the user to enter the new grade.
+    Checks if it's positive int and not greater than max_grade.
 
+    Args:
+        max_grade (int) - max possible grade of assignment
+
+    Returns:
+        new_grade (int) - new grade to change to
+    '''
     new_grade = None
     while new_grade not in range(0, max_grade + 1):
         view.print_message("Please provide new grade value.")
@@ -135,6 +138,8 @@ def check_attendance():
                 Student.get_codecoolers_from_file('students.csv')
                 break
 
+    Student.save_students()
+
 
 def update_attendance(index, days_passed, attendance, today_attendance):
     """
@@ -164,7 +169,7 @@ def update_attendance(index, days_passed, attendance, today_attendance):
     if attendance > 100:
         attendance = 100
 
-    return attendance
+    return int(attendance)
 
 def add_student():
     """
@@ -189,6 +194,8 @@ def remove_student():
     Returns:
         Nothing, it just removes the student.
     """
+    view_students()
+
     try:
         index = get_student_index()
     except (ValueError, IndexError):
