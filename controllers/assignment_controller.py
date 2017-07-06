@@ -33,7 +33,7 @@ def create_assignment():
     Creates new assignment from data provided by mentor.
 
     Returns:
-            None
+        None
     '''
     labels = ["Deadline", "Max grade"]
     title = "Provide informations about new assignments"
@@ -92,6 +92,13 @@ def change_assignment_to_done(assignment):
 
 def view_student_assignments(student):
     '''
+    Prints Student obj. own assigments
+
+    Parametrs:
+        student: Student obj.
+
+    Return:
+        None
     '''
     labels = ['name', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
     table = get_assignments_to_table(student)
