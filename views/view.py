@@ -15,7 +15,6 @@ def print_menu(title, options, exit_message):
     Returns:
         Nothing, it just prints the menu in the console.
     '''
-    os.system('clear')
 
     option_number = 1
 
@@ -49,6 +48,7 @@ def print_table(table, title_list):
         Nothing, it just prints the table in the console.
         If table is empty or its data is invalid, then returns None.
     '''
+    os.system('clear')
 
     if is_table_wrong(table, title_list):
         return None
