@@ -66,24 +66,6 @@ def view_grades(student):
     view.print_table(table, tittle_list)
 
 
-def remove_student(index):
-    '''
-    Remove object Student from list by index.
-    Raise IndexError when index out of range.
-
-    Returns:
-        list of students
-    '''
-
-    if index not in range(len(Student.list_of_students) - 1):
-        raise IndexError('Student with this number not exist!')
-
-    else:
-        del Student.list_of_students[index]
-
-    save_data_to_file(Student.list_of_students)
-
-
 def get_students():
     '''
     Returns list of students
