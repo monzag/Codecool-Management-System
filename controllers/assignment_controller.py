@@ -1,7 +1,7 @@
 from models.assignment import Assignment
 from models.student import Student
 
-import controllers.student_controller 
+import controllers.student_controller
 
 
 def get_assignments_to_table(student):
@@ -35,8 +35,18 @@ def save_assigments_to_file():
 
 def create_assigment():
     '''
+    Creates new assignment from data provided by mentor.
+
+    Returns:
+            None
     '''
-    pass
+    labels = ["Add date", "Deadline", "Max grade"]
+    title = "Provide informations about new assignments"
+    inputs = views.view.get_inputs(labels, title)
+
+    for student in Student.list_of_students:
+        student.assignments_list.append(Assignment(student.login, student.name,
+                                        inputs[0], inputs[1], inputs[2]))
 
 
 def add_assigment(assigment):
@@ -93,4 +103,4 @@ def change_assignment_to_done(assignment):
 
     if assignment.status == 'undone':
         assignment.status = 'done'
-        assignment.submit_date = '01:01:2016' # submit_date
+        assignment.submit_date = '01:01:2016'  # submit_date
