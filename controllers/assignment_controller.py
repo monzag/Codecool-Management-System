@@ -59,11 +59,11 @@ def calculate_total_grade(list_of_assigments):
     '''
     total_grade = 0
 
-    if len(assigemnts) > 0:
+    if len(list_of_assigments) > 0:
         grades = 0
         max_grades = 0
 
-        for assigment in assigments:
+        for assigment in list_of_assigments:
             grades += assigment.grade
             max_grades += assigment.max_grade
 
