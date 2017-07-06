@@ -1,11 +1,10 @@
 import os
 
-import views.view
-# import controllers.assigment_controller
+from views import view
+from controllers import assignment_controller
 
 from models.student import Student
 # from models.assigemnt import Assigment
-
 
 
 def student_menu(user):
@@ -36,27 +35,6 @@ def student_menu(user):
             end = True
 
 
-def get_user_by_login_and_password(login, password, students):
-    '''
-    Search proper Student object in list_of_students by login and password.
-    If find any match will return student obj., otherwise None.
-
-    Args:
-        login: str
-        password: str
-        students: list of Student obj.
-
-    Returns:
-        student - obj
-    '''
-
-    for student in Student.list_of_students:
-        if student.login == login and student.password == password:
-            return student
-
-    return None
-
-
 def submit_assigment(student):
     '''
     Choose assignment from list and change status assignment 'done'.
@@ -65,23 +43,21 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
-    table = get_assignment_data()
-    tittle_list = ['Lp', 'Assignment', 'status', 'deadline']
-    views.view.print_table(table, tittle_list)
-    labels = ['Write number of assignment: ']
+    table = assignment_controller.get_assignments_to_table(student)
+    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
+    view.print_table(table, tittle_list)
+    '''
+    labels = ['Write number of assignment']
     title = 'Input data'
-    number_assignment = views.view.get_inputs(labels, title)
-    assignment = student.assignments_list[number_assignment - 1]
+     number_assignment = view.get_inputs(labels, title)
+    '''
+    number = None
+    while not number:
+        number = view.input_number()
+
+    assignment = student.assignments_list[number - 1]
     assignment_controller.change_assignment_to_done(assignment)
-    # zdecydować czy w pliku students.csv będą dane dotyczące assignmentu? Co zapisywać do pliku!!
-
-
-def get_assignment_data():
-    '''Wypakuj obiekty i utwór listę list'''
-    # TO DO!!
-    student.assignments_list
-    # assignments_list -
-    pass
+    # Save
 
 
 def view_grades():

@@ -2,10 +2,12 @@ import os
 
 from views import view
 
+from models.student import Student
+
 from controllers import codecooler_controller
 
 
-def employee_menu(user, students):
+def employee_menu(user):
     '''
     Prints user specific features and asks him for operation
     to perform. Resolve all interacions, util user diecides to exit.
@@ -28,7 +30,7 @@ def employee_menu(user, students):
         option = view.input_number()
 
         if option == 1:
-            view_students(students)
+            view_students(Student.list_of_students)
         if option == 0:
             end = True
 
@@ -44,7 +46,7 @@ def view_students(students):
     Returns:
         None
     '''
-    lables = ['name', 'surname', 'email']
+    lables = ['name', 'surname', 'email', 'attendance']
     table = codecooler_controller.get_codecoolers_with_mails(students)
     view.print_table(table, lables)
     view.wait_until_key_pressed()

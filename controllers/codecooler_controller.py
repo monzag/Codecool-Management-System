@@ -32,6 +32,6 @@ def get_codecoolers_with_mails(codecoolers):
     '''
     table = []
     for codecooler in codecoolers:
-        table.append([codecooler.name, codecooler.surname, codecooler.email])
+        table.append([codecooler.name, codecooler.surname, codecooler.email, '{}%'.format(codecooler.attendance)])
 
     return table
