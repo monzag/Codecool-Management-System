@@ -43,6 +43,7 @@ def mentor_menu(user):
         elif option == 0:
             end = True
 
+
 def view_students():
     '''
     Prints list of every student's name, surname, e-mail, attendance, grade.
@@ -168,6 +169,7 @@ def update_attendance(index, days_passed, attendance, today_attendance):
 
     return int(attendance)
 
+
 def add_student():
     """
     Creates new student and adds it to the students list.
@@ -200,6 +202,7 @@ def remove_student():
         view.print_message('Index does not exist!')
 
     Student.save_students()
+
 
 def get_student_index():
     """
