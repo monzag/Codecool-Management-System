@@ -43,15 +43,15 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
-    table = get_assignment_data()
-    tittle_list = ['Lp', 'Assignment', 'status', 'deadline']
+    table = assignment_controller.get_assignments_to_table(student)
+    tittle_list = ['Assignment', 'status', 'deadline', 'grade', 'max_grade']
     views.view.print_table(table, tittle_list)
-    labels = ['Write number of assignment: ']
+    labels = ['Write number of assignment']
     title = 'Input data'
     number_assignment = views.view.get_inputs(labels, title)
     assignment = student.assignments_list[number_assignment - 1]
     assignment_controller.change_assignment_to_done(assignment)
-    # zdecydować czy w pliku students.csv będą dane dotyczące assignmentu? Co zapisywać do pliku!!
+    # Save
 
 
 def view_grades():
