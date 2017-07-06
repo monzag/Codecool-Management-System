@@ -16,7 +16,6 @@ def print_menu(title, options, exit_message):
         Nothing, it just prints the menu in the console.
     '''
 
-    os.system('clear')
     option_number = 1
 
     print('{}:'.format(title))
@@ -172,7 +171,7 @@ def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDIN
     '''
     if not is_title:
         # Adds the index number to the first column of a table.
-        data_row = '|' + str(list_index).center(MIN_COLUMN_WIDTH, ' ') + '|'
+        data_row = '|' + str(list_index + 1).center(MIN_COLUMN_WIDTH, ' ') + '|'
     else:
         data_row = '|' + 'ID'.center(MIN_COLUMN_WIDTH, ' ') + '|'
 
@@ -260,7 +259,6 @@ def wait_until_key_pressed():
     finally:
         termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
 
-    os.system("clear")
     return result
 
 
