@@ -1,16 +1,19 @@
+import os
+
+
 class Assigment:
 
     # all ssigments ever created and match with student
     list_of_assigments = []
 
-    def __init__(self, login, name, add_date, deadline, max_grade):
+    def __init__(self, login, name, add_date, deadline, max_grade, grade=0, status='undone', submit_date='not submitted'):
         self.name = name
         self.owner = login
-        self.status = 'undone'
-        self.add_date = creation_date
+        self.status = status
+        self.add_date = add_date
         self.deadline = deadline
-        self.submit_date = 'not submitted'
-        self.grade = 0
+        self.submit_date = submit_date
+        self.grade = grade
         self.max_grade = max_grade
 
         Assigment.list_of_assigments.append(self)
@@ -41,7 +44,7 @@ class Assigment:
         Creates objects with data from splitted list.
 
         Returns:
-                None
+            None
         """
         splitted_data_list = cls.load_data_from_file(file_name)
 
@@ -49,4 +52,4 @@ class Assigment:
             name, owner, status, add_date, deadline, submit_date, grade, max_grade = element
             grade = int(grade)
             max_grade = int(max_grade)
-            cls(name, owner, status, add_date, deadline, submit_date, grade, max_grade)
+            cls(owner, name, add_date, deadline, max_grade, grade, status, submit_date)
