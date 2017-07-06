@@ -156,17 +156,16 @@ def operate_on_user(user):
         None
     '''
     if isinstance(user, Student):
-        # student_controller.student_menu(user)
-        students = Student.get_students_from_file()
+        student_controller.student_menu(user)
+
     if isinstance(user, Employee):
-        employees = Employee.get_employees_from_file()
-        # employee_controller.employee_menu(user)
+        employee_controller.employee_menu(user)
+
     if isinstance(user, Mentor):
-        mentors = Mentor.get_mentors_from_file()
-        # mentor_controller.mentor_menu(user)
+        mentor_controller.mentor_menu(user)
+
     if isinstance(user, Manager):
-        managers = Manager.get_managers_from_file()
-        # manager_controller.manager_menu(user)
+        manager_controller.manager_menu(user)
 
 
 def close_program():
