@@ -4,6 +4,7 @@ from views import view
 from controllers import assignment_controller
 
 from models.student import Student
+from models.assignment import Assignment
 
 
 def student_menu(user):
@@ -48,10 +49,11 @@ def submit_assigment(student):
     while not number:
         number = view.input_number()
 
-    if number < len(student.assignments_list):
+    if number <= len(student.assignments_list):
         assignment = student.assignments_list[number - 1]
         assignment_controller.change_assignment_to_done(assignment)
-        Student.save_students()
+        Assignment.save_assignments_to_file()
+
     else:
         view.print_message('Assignment does not exist!')
 
