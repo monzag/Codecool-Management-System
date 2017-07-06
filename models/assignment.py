@@ -1,10 +1,10 @@
 import os
 
 
-class Assigment:
+class Assignment:
 
     # all ssigments ever created and match with student
-    list_of_assigments = []
+    list_of_assignments = []
 
     def __init__(self, login, name, add_date, deadline, max_grade, grade=0, status='undone', submit_date='not submitted'):
         self.name = name
@@ -16,7 +16,7 @@ class Assigment:
         self.grade = grade
         self.max_grade = max_grade
 
-        Assigment.list_of_assigments.append(self)
+        Assignment.list_of_assignments.append(self)
 
     @staticmethod
     def load_data_from_file(file_name):
@@ -39,7 +39,7 @@ class Assigment:
         return splitted_data_list
 
     @classmethod
-    def get_assigments_from_file(cls, file_name):
+    def get_assignments_from_file(cls, file_name):
         """
         Creates objects with data from splitted list.
 

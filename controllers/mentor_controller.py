@@ -3,7 +3,7 @@ import os
 from views import view
 
 from controllers import student_controller
-from controllers import assigment_controller
+from controllers import assignment_controller
 
 
 def mentor_menu(user):

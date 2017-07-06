@@ -40,7 +40,7 @@ class Student(Codecooler):
         '''
 
         assignment_list = []
-        for assignment in Assignment.list_of_assignment:
+        for assignment in Assignment.list_of_assignments:
             if assignment.owner == self.login:
                 assignment_list.append(assignment)
 

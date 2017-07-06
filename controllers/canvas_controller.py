@@ -8,14 +8,14 @@ from models.student import Student
 from models.employee import Employee
 from models.mentor import Mentor
 from models.manager import Manager
-from models.assigment import Assigment
+from models.assignment import Assignment
 
 from controllers import codecooler_controller
 from controllers import student_controller
 from controllers import employee_controller
 from controllers import mentor_controller
 from controllers import manager_controller
-from controllers import assigment_controller
+from controllers import assignment_controller
 
 
 def start_up():
@@ -188,7 +188,7 @@ def hold_session():
     Employee.get_codecoolers_from_file('employees.csv')
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
-    Assigment.get_assigments_from_file('assigments.csv')
+    Assignment.get_assignments_from_file('assignments.csv')
 
     user = start_up()
     operate_on_user(user)
