@@ -28,6 +28,7 @@ class Student(Codecooler):
         for element in splitted_data_list:
             name, surname, login, password, mail, attendance, days_passed = element
             attendance = int(attendance)
+            days_passed = int(days_passed)
             cls(attendance, days_passed, name, surname, login, password, mail)
 
     def get_assignment_list(self):
@@ -46,19 +47,38 @@ class Student(Codecooler):
         return assignment_list
 
     @classmethod
-    def save_data_to_file(cls):
+    def save_students(cls):
         '''
         Save students data to csv file. If file not exist, create file.
         '''
-        list_to_save = cls.convert_list_of_object_to_data()
+        list_to_save = cls.convert_list_of_students_to_data()
         filename = 'students.csv'
-        with open(filename, 'w') as csvfile:
-            for record in list_to_save:
-                row = '|'.join(record)
-                csvfile.write(row + "\n")
+        cls.save_data(filename)
+
+    def save_assignment(cls):
+        pass
 
     @classmethod
-    def convert_list_of_object_to_data(cls):
+    def save_data(cls, filename):
+        '''
+        Save data to proper filename. Raise error if file not exist.
+
+        Args:
+            filename - string
+        '''
+        file_path = os.getcwd() + '/data/' + filename
+
+        if not os.path.exists(file_path):
+            raise FileNotFoundError("There is no such a file")
+
+        else:
+            with open(file_path, 'w') as csvfile:
+                for record in list_to_save:
+                    row = '|'.join(record)
+                    csvfile.write(row + "\n")
+
+    @classmethod
+    def convert_list_of_students_to_data(cls):
         '''
         Unpack attributes of Student object as data to student_data list and add it to list_to_save.
 
@@ -73,3 +93,5 @@ class Student(Codecooler):
             list_to_save.append(student_data)
 
         return list_to_save
+
+    
