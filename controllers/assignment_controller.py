@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from models.assignment import Assignment
 from models.student import Student
 
@@ -58,8 +60,8 @@ def change_assignment_to_done(assignment):
     Returns:
         None
     '''
-    # submit_date = datetime.today()
+    submit_date '{}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
     if assignment.status == 'undone':
         assignment.status = 'done'
-        assignment.submit_date = '01:01:2016' # submit_date
+        assignment.submit_date = submit_date
