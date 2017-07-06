@@ -10,6 +10,7 @@ from models.mentor import Mentor
 from models.manager import Manager
 from models.assigment import Assigment
 
+from controllers import codecooler_controller
 from controllers import student_controller
 from controllers import employee_controller
 from controllers import mentor_controller
@@ -71,33 +72,6 @@ def choose_status():
     return status
 
 
-def load_lists_from_file(status):
-    '''
-    Depending on user privilige loads certain data into a program:
-
-    -> for each group program will load group own users, to find one
-       who is trying to access program
-    -> employees and mentors have access to list of students
-    -> manager have access to all
-
-    Parameters:
-        status: str - representing privilige
-
-    Return:
-        None
-    '''
-    student_controller.load_students_from_file()
-
-    if status in ['Manager', 'Employee']:
-        employee_controller.load_employees_from_file()
-
-    if status in ['Manager', 'Mentor']:
-        mentor_controller.load_mentors_from_file()
-
-    if status == 'Manager':
-        manager_controller.load_managers_from_file()
-
-
 def log_in_as_user(status):
     '''
     holds loging to system:
@@ -113,11 +87,10 @@ def log_in_as_user(status):
         user : Codecooler obj. instance
     '''
     attempt = 1
-    is_user = None
+    user = None
     while not user:
         os.system('clear')
 
-        view.print_login_screen(status, attempt)
         login, password = get_password_and_login()
 
         attempt += 1
@@ -156,16 +129,16 @@ def is_user_in_system(status, login, password):
         None - if password and login doesn't match
     '''
     if status == 'Student':
-        return student_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Student.list_of_students)
 
     if status == 'Employee':
-        return employee_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Employee.list_of_employees)
 
     if status == 'Mentor':
-        return mentor_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Mentor.list_of_mentors)
 
     if status == 'Manager':
-        return manager_controller.get_user_by_login_and_password(login, password)
+        return codecooler_controller.get_user_by_login_and_password(login, password, Manager.list_of_managers)
 
 
 def operate_on_user(user):
