@@ -1,3 +1,5 @@
+import os
+
 class Codecooler:
 
 	def __init__(self, name, surname, login, password, email):
@@ -7,45 +9,35 @@ class Codecooler:
 		self.password = password
 		self.email = email
 
-    @staticmethod
-    def load_codecoolers_from_file(file_name):
-        '''
-        Read Codecooler obj data from csv file.
-        Raise error if file not exist.
+def load_data_from_file():
+    """
+    Loads Codecooler obj. instance information from csv file, splits them, and
+    creates a list.
 
-        Returns:
-            splitted - list of lists
-        '''
+    Return:
+        list: list with Codecooler obj. instance data
+    """
 
-        file_path = os.getcwd() + '/data/' + file_name
-        if not os.path.exists(file_path):
-            raise FileNotFoundError("There is no such a file")
+    file_path = os.getcwd() + '/data/' + file_name
+    if not os.path.exists(file_path):
+        raise FileNotFoundError("There is no such a file")
 
-        else:
-            with open(file_path, 'r') as csvfile:
-                read_data = csvfile.readlines()
-                splitted = [line.replace('\n', '').split(',') for line in read_data]
+    else:
+        with open(file_path, 'r') as csvfile:
+            read_data = csvfile.readlines()
+            splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
 
-        return splitted
+    return splitted_data_list
 
-    @classmethod
-    def get_codecooler_from_file(cls, file_name):
-        '''
-        Get data all codecoolers and create each Codecooler object (automatically append to list_of_codecoolers)
-        '''
-        data_all_codecoolers = cls.load_codecoolers_from_file(file_name)
-        for codecooler in data_all_codecoolers:
-            name, surname, login, password, email = codecooler[0], codecooler[1], codecooler[2], codecooler[3], codecooler[4]
-            cls.create_new_codecooler(name, surname, login, password, email)
+@classmethod
+def get_codecoolers_from_file(file_name):
+    """
+    Creates objects with data from splitted list.
 
-    @classmethod
-    def create_new_codecooler(cls, name, surname, login, password, email):
-        '''
-        Create new object Student.
+    Returns:
+            None
+    """
+    splitted_data_list = load_data_from_file(file_name)
 
-        Returns:
-            new_student - obj
-        '''
-
-        new_student = Student(name, surname, login, password, email)
-        return new_student
+    for element in splitted_data_list:
+        cls(element[0], element[1], element[2], element[3], element[4])
