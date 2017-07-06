@@ -20,7 +20,6 @@ def manager_menu(user):
 
     show_menu = True
 
-
     title = "Manager menu"
     options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor']
     exit_message = "Exit"
@@ -28,7 +27,6 @@ def manager_menu(user):
     end = False
 
     while not end:
-        os.system('clear')
 
         views.view.print_menu(title, options, exit_message)
         option = views.view.input_number()
@@ -65,15 +63,15 @@ def view_students():
             None
     '''
 
-    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    titles = ["Name", "Surname", "e-mail", "Attendance"]
     students_info = []
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                                  student.email, student.attendance,
-                                  student.grade])
+                             student.email, str(student.attendance)])
 
     views.view.print_table(students_info, titles)
+    views.view.wait_until_key_pressed()
 
 
 def view_mentors():
@@ -91,6 +89,7 @@ def view_mentors():
         mentors_info.append([mentor.name, mentor.surname, mentor.email])
 
     views.view.print_table(mentors_info, titles)
+    views.view.wait_until_key_pressed()
 
 
 def add_mentor():
@@ -104,7 +103,7 @@ def add_mentor():
     title = "Provide informations about new mentor"
     inputs = views.view.get_inputs(labels, title)
 
-    new_mentor = Mentor(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+    new_mentor = Mentor(inputs[2], inputs[3], inputs[0], inputs[1], inputs[4])
 
 
 def remove_mentor():
