@@ -51,8 +51,8 @@ class Student(Codecooler):
         '''
         Save students data to csv file. If file not exist, create file.
         '''
-        '''list_to_save = cls.convert_list_of_students_to_data()'''
 
+        filename = 'students.csv'
         file_path = os.getcwd() + '/data/' + filename
 
         if not os.path.exists(file_path):
