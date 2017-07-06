@@ -271,3 +271,5 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
+
+    wait_until_key_pressed()

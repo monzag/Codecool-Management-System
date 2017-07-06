@@ -60,7 +60,7 @@ def change_assignment_to_done(assignment):
     Returns:
         None
     '''
-    submit_date '{}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
+    submit_date = '{}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
     if assignment.status == 'undone':
         assignment.status = 'done'
