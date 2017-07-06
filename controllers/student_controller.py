@@ -43,14 +43,8 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
-    table = assignment_controller.get_assignments_to_table(student)
-    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
-    view.print_table(table, tittle_list)
-    '''
-    labels = ['Write number of assignment']
-    title = 'Input data'
-     number_assignment = view.get_inputs(labels, title)
-    '''
+    view_grades()
+
     number = None
     while not number:
         number = view.input_number()
@@ -61,8 +55,13 @@ def submit_assigment(student):
 
 
 def view_grades():
-    # powiązane z assignmentami! W jakiej formie w końcu będą te pliki?
-    pass
+    '''
+    Show table with data about assignment-grades'
+    '''
+
+    table = assignment_controller.get_assignments_to_table(student)
+    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
+    view.print_table(table, tittle_list)
 
 
 def remove_student(index):
