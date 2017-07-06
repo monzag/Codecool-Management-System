@@ -5,7 +5,7 @@ from views import view
 from models.assignment import Assignment
 from models.student import Student
 
-import controllers.student_controller
+from controllers import student_controller
 
 
 def get_assignments_to_table(student):
@@ -54,32 +54,6 @@ def add_assigment(assigment):
     '''
     for student in student_controller.get_students():
         student.assigments_list.append(assigment)
-
-
-
-def calculate_total_grade(list_of_assigments):
-    '''
-    Given list of assigments calculates total grade
-
-    Paramters:
-        list_of_assigments : list of Assigment obj.
-
-    Returns:
-        total_grade : int representing percents
-    '''
-    total_grade = 0
-
-    if len(assigemnts) > 0:
-        grades = 0
-        max_grades = 0
-
-        for assigment in assigments:
-            grades += assigment.grade
-            max_grades += assigment.max_grade
-
-        total_grade = grades/max_grades * 100
-
-    return total_grade
 
 
 def change_assignment_to_done(assignment):
