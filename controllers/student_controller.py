@@ -54,14 +54,6 @@ def submit_assigment(student):
     # zdecydować czy w pliku students.csv będą dane dotyczące assignmentu? Co zapisywać do pliku!!
 
 
-def get_assignment_data():
-    '''Wypakuj obiekty i utwór listę list'''
-    # TO DO!!
-    student.assignments_list
-    # assignments_list -
-    pass
-
-
 def view_grades():
     # powiązane z assignmentami! W jakiej formie w końcu będą te pliki?
     pass
