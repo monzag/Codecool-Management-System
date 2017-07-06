@@ -2,6 +2,7 @@ import os
 
 from views import view
 
+from models.assignment import Assignment
 from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
@@ -30,6 +31,8 @@ def mentor_menu(user):
 
         if option == 1:
             view_students()
+            view.print_message("Press any key to continue.")
+            view.wait_until_key_pressed()
         elif option == 2:
             add_assigment()
         elif option == 3:
@@ -59,8 +62,6 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
-    # view.print_message("Press any key to continue.")
-    # view.wait_until_key_pressed()
 
 
 def add_assignment():
@@ -83,22 +84,34 @@ def grade_assignment():
     should use controllers.assigment_controller.change_grade() to change grade
     '''
     view_students()
-    student_number = None
-    while not student_number:
-        student_number = view.input_number()
+    student_id = None
+    while not student_id:
+        student_id = view.input_number()
 
-    if student_number <= len(Student.list_of_students):
-        student_number -= 1
-        assignment_controller.view_student_assignments(Student.list_of_students[student_number])
+    for student in Student.list_of_students:
+        if Student.list_of_students.index(student) == student_id - 1:
+            assignment_controller.view_student_assignments(student)
 
-        assignment_number = None
-        while not assignment_number:
-            assignment_number = view.input_number()
+            assignment_id = None
+            while not assignment_id:
+                assignment_id = view.input_number()
 
-        if assignment_number <= len(Student.list_of_students[student_number].assignments_list):
-            assignment_number -= 1
-            new_value = 10
-            Student.list_of_students[student_number].assignments_list[assignment_number].grade = new_value
+                for assignment in student.assignments_list:
+                    if student.assignments_list.index(assignment) == assignment_id - 1:
+                        new_grade = get_new_grade(assignment.max_grade)
+                        student.assignments_list[assignment_id - 1].grade = new_grade
+
+                        Assignment.save_assignments_to_file()
+
+
+def get_new_grade(max_grade):
+
+    new_grade = None
+    while new_grade not in range(0, max_grade + 1):
+        view.print_message("Please provide new grade value.")
+        new_grade = view.input_number()
+
+    return new_grade
 
 
 def check_attendance():
