@@ -2,10 +2,10 @@ from datetime import datetime
 
 from views import view
 
+from controllers import student_controller
+
 from models.assignment import Assignment
 from models.student import Student
-
-import controllers.student_controller
 
 
 def get_assignments_to_table(student):
