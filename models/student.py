@@ -1,5 +1,6 @@
 from models.codecooler import Codecooler
 import os
+from models.assignment import Assignment
 
 
 class Student(Codecooler):
@@ -10,7 +11,7 @@ class Student(Codecooler):
         super().__init__(*args)
         Student.list_of_students.append(self)
         self.attendance = attendance
-        '''self.assignments_list = assignments.list'''
+        self.assignments_list = self.get_assignment_list()
 
     @classmethod
     def get_codecoolers_from_file(cls, file_name):
@@ -28,6 +29,21 @@ class Student(Codecooler):
             name, surname, login, password, mail, attendance = element
             attendance = int(attendance)
             cls(attendance, name, surname, login, password, mail)
+
+    def get_assignment_list(self):
+        '''
+        Add Assignment objects to list if assignment's owner equal to Student login. 
+
+        Returns:
+            assignment_list - list with Assignment obj.
+        '''
+
+        assignment_list = []
+        for assignment in Assignment.list_of_assignment:
+            if assignment.owner == self.login:
+                assignment_list.append(assignment)
+
+        return assignment_list
 
     @classmethod
     def save_data_to_file(cls):
