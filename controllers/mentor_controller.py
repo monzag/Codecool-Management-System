@@ -4,6 +4,7 @@ from views import view
 
 from controllers import student_controller
 from controllers import assigment_controller
+from controllers import codecooler_controller
 
 
 def mentor_menu(user):
@@ -32,32 +33,40 @@ def mentor_menu(user):
         if option == 3:
             grade_assigment()
         if option == 4:
-            check_attendence()
+            check_attendance()
         if option == 5:
             add_student()
         if option == 6:
-            remove_student()
+            try:
+                remove_student()
+            except ValueError, IndexError:
+                views.view.print_message('Index does not exist!')
         if option == 0:
             end = True
 
 
 def view_students():
     '''
-    prints list of every student assigned to course
-    print needs grade so mentor will know how student perform
+    Prints list of every student's name, surname, e-mail, attendance, grade.
 
-    should use students_controller.get_students() to get list of all students
-
-    should use views.view.print_students() for printing
+    Returns:
+            None
     '''
-    pass
+
+    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    students_info = []
+
+    for student in Student.list_of_students:
+        students_info.append([student.name, student.surname,
+                                  student.email, student.attendance,
+                                  student.grade])
+
+    views.view.print_table(students_info, titles)
 
 
 def add_assigment():
     '''
-    should use views.view.get_assigment_inputs() to gather necessery data
-
-    should use controllers.assigment_controller.create_new_assigment()
+    Creates new assignment and adds it to assignment list.
     '''
     pass
 
@@ -77,49 +86,41 @@ def grade_assigment():
     pass
 
 
-def view_students():
-    '''
-    prints list of every student assigned to course
-    print needs attendence so mentor will know how student perform
-
-    should use students_controller.get_students() to get list of all students
-
-    should use views.view.print_students() for printing
-    '''
-    pass
+def check_attendance():
 
 
 def add_student():
-    '''
-    should use views.view.get_new_student_data() to get inputs about new student
+    """
+    Creates new student and adds it to the students list
 
-    should use controllers.student_controller.create_new_student() to create student
-    '''
-    pass
+    Returns:
+            None
+    """
+    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
+    title = "Provide informations about new student"
+    inputs = views.view.get_inputs(labels, title)
+
+    new_student = Student(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
 
 
 def remove_student():
-    '''
-    should use controllers.student_controller to get list of all students
-        (along with numbers)
+    """
+    Removes object Student from list by index.
+    Raises IndexError when index out of range.
+    Raises ValueError when index is not int.
 
-    should use views.view.print_students() to print all students
+    Returns:
+            None
+    """
+    labels = ["Index"]
+    title = "Type index number of student to remove"
+    index = views.view.get_inputs(labels, title)[0]
 
-    should use views.view.get_number() to dtermine which student should be deleted
+    if not index.isdigit():
+        raise ValueError("Please type only numbers!")
 
-    should use controllers.student_controler.remove_student() to remove student
-    '''
+    elif int(index) not in range(len(Mentor.list_of_students)):
+        raise IndexError('Mentor with given index does not exist!')
 
-
-def edit_student():
-    '''
-    should use controllers.student_controller to get list of all students
-        (along with numbers)
-
-    should use views.view.print_students() to print all students
-
-    should use views.view.get_number() to detrmine which student should be edited
-
-    should use controllers.student_controler.edit_student() to edit students data
-    '''
-    pass
+    else:
+        del Mentor.list_of_mentors[int(index)]

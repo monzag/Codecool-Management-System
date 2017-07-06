@@ -198,7 +198,7 @@ def get_inputs(labels, title):
     '''
     inputs = []
 
-    print(title)
+    print(title + ':')
     for label in labels:
         answer = (input('{}:  '.format(label)))
         inputs.append(answer)
@@ -265,4 +265,3 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
-    print('''''')
