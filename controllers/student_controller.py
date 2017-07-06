@@ -43,18 +43,21 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
-    view_grades()
+    view_grades(student)
 
     number = None
     while not number:
         number = view.input_number()
 
-    assignment = student.assignments_list[number - 1]
-    assignment_controller.change_assignment_to_done(assignment)
-    # Save
+    if number < len(student.assignments_list):
+        assignment = student.assignments_list[number - 1]
+        assignment_controller.change_assignment_to_done(assignment)
+        # Save
+    else:
+        view.print_message('Assignment does not exist!')
 
 
-def view_grades():
+def view_grades(student):
     '''
     Show table with data about assignment-grades'
     '''
