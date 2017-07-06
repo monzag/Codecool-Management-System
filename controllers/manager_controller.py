@@ -1,9 +1,8 @@
 import os
 
-from views import view
-
-from controllers import student_controller
-from controllers import mentor_controller
+import views.view
+from models.student import Student
+from models.mentor import Mentor
 
 
 def manager_menu(user):
@@ -14,17 +13,18 @@ def manager_menu(user):
     Returns:
         None
     '''
-    title = 'Hi {}! What would you like to do'.format(user.name)
-    exit_message = 'Exit'
+
+    titles = 'Hi {}! What would you like to do'.format(user.name)
     options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
-               'Edit mentor data']
+               'Edit mentor data', 'Exit']
 
     end = False
+
     while not end:
         os.system('clear')
 
-        view.print_menu(title, options, exit_message)
-        option = view.input_number()
+        option = views.view.get_inputs(labels, title)[0]
+        views.view.print_table(options, titles)
 
         if option == 1:
             view_students()
@@ -34,8 +34,6 @@ def manager_menu(user):
             add_mentor()
         if option == 4:
             remove_mentor()
-        if option == 5:
-            edit_mentor()
         if option == 0:
             end = True
 
@@ -109,19 +107,3 @@ def remove_mentor():
 
     else:
         del Mentor.list_of_mentors[int(index)]
-
-
-
-
-def edit_mentor():
-    '''
-    should use controllers.mentor_controller to get list of all mentors
-        (along with numbers)
-
-    should use views.view.print_mentors() to print all mentors
-
-    should use views.view.get_number() to detrmine which mentor should be edited
-
-    should use controllers.mentor_controller.edit_student() to edit mentors data
-    '''
-    pass
