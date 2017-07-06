@@ -225,6 +225,8 @@ def print_welcome_screen():
         for line in startup:
             print(line, end='')
 
+    wait_until_key_pressed()
+
 
 def input_login():
 
