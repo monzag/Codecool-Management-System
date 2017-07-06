@@ -26,7 +26,7 @@ def print_menu(title, options, exit_message):
     print('    (0) {}'.format(exit_message))
     print('')
 
-    wait_until_key_pressed()
+    '''wait_until_key_pressed()'''
 
 def input_number():
     '''
@@ -251,7 +251,7 @@ def wait_until_key_pressed():
 
     oldterm = termios.tcgetattr(fd)
     newattr = termios.tcgetattr(fd)
-    newattr[3] = newattr[3] & ~termios.IC print('\n+-+-+-+-+-+-+-+ANON & ~termios.ECHO
+    newattr[3] = newattr[3]
     termios.tcsetattr(fd, termios.TCSANOW, newattr)
 
     try:
