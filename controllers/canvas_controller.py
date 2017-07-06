@@ -1,18 +1,20 @@
 import os
 import sys
 
-import views.view
+from views import view
 
 from models.codecooler import Codecooler
 from models.student import Student
 from models.employee import Employee
 from models.mentor import Mentor
 from models.manager import Manager
+from models.assigment import Assigment
 
 from controllers import student_controller
 from controllers import employee_controller
 from controllers import mentor_controller
 from controllers import manager_controller
+from controllers import assigment_controller
 
 
 def start_up():
@@ -180,13 +182,17 @@ def operate_on_user(user):
         None
     '''
     if isinstance(user, Student):
-        student_controller.student_menu(user)
+        # student_controller.student_menu(user)
+        students = Student.get_students_from_file()
     if isinstance(user, Employee):
-        employee_controller.employee_menu(user)
+        employees = Employee.get_employees_from_file()
+        # employee_controller.employee_menu(user)
     if isinstance(user, Mentor):
-        mentor_controller.mentor_menu(user)
+        mentors = Mentor.get_mentors_from_file()
+        # mentor_controller.mentor_menu(user)
     if isinstance(user, Manager):
-        manager_controller.manager_menu(user)
+        managers = Manager.get_managers_from_file()
+        # manager_controller.manager_menu(user)
 
 
 def close_program():
@@ -204,3 +210,34 @@ def hold_session():
     user = start_up()
     operate_on_user(user)
     close_program()
+
+
+def student_menu(user):
+    '''
+    Prints user specific features and asks him for operation
+    to perform. Resolve all interacions, until user diecides to exit.
+
+    Returns:
+        None
+    '''
+
+    title = 'Hi {}! What would you like to do'.format(user.name)
+    exit_message = 'Exit'
+    options = ['View grades', 'Submit assigment']
+
+    end = False
+    while end:
+        os.system('clear')
+
+        view.print_menu(title, options, exit_message)
+        option = view.input_number()
+
+        if option == 1:
+            student_controller.view_grades(user)
+        if option == 2:
+            # user = assigment_controller.submit_assigment(user)
+            pass
+        if option == 0:
+            end = True
+
+
