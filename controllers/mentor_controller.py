@@ -34,7 +34,7 @@ def mentor_menu(user):
             view.print_message("Press any key to continue.")
             view.wait_until_key_pressed()
         elif option == 2:
-            add_assigment()
+            Assignment.create_assignment()
         elif option == 3:
             grade_assignment()
         elif option == 4:
@@ -62,13 +62,6 @@ def view_students():
                              student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
-
-
-def add_assignment():
-    '''
-    Creates new assignment and adds it to assignment list.
-    '''
-    pass
 
 
 def grade_assignment():
@@ -139,8 +132,8 @@ def check_attendance():
                 today_attendance = options[option - 1]
                 student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
             elif option == 0:
+                Student.get_codecoolers_from_file('students.csv')
                 break
-                pass # load data again
 
 
 def update_attendance(index, days_passed, attendance, today_attendance):
