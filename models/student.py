@@ -9,8 +9,6 @@ class Student(Codecooler):
     def __init__(self, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
-        '''self.attendance = attendance
-        self.assignments_list = assignments.list'''
 
     @classmethod
     def save_data_to_file(cls):
