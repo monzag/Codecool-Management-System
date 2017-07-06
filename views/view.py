@@ -35,8 +35,8 @@ def input_number():
     number = input('\nProvide number: ')
     if number.isdigit():
         return int(number)
-    else:
-        raise ValueError
+
+    return number
 
 
 def print_table(table, title_list):
@@ -251,7 +251,7 @@ def wait_until_key_pressed():
 
     oldterm = termios.tcgetattr(fd)
     newattr = termios.tcgetattr(fd)
-    newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
+    newattr[3] = newattr[3] & ~termios.IC print('\n+-+-+-+-+-+-+-+ANON & ~termios.ECHO
     termios.tcsetattr(fd, termios.TCSANOW, newattr)
 
     try:
@@ -271,12 +271,3 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
-
-table = [['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
-['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t']]
-title_list = ['454fwr', '4r43', 'ewrfwer', '43t34t3terfs']
-print_table(table, title_list)
