@@ -28,14 +28,14 @@ def employee_menu(user, students):
         option = view.input_number()
 
         if option == 1:
-            view_students()
+            view_students(students)
         if option == 0:
             end = True
 
 
 def view_students(students):
     '''
-    Given list of Student obj. prints table consicting
+    Given list of Student objs. prints table consicting
     of their names, surnames, and mails
 
     Parameters:
