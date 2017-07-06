@@ -3,7 +3,8 @@ import os
 from views import view
 
 from controllers import student_controller
-from controllers import assignment_controller
+from controllers import assigment_controller
+from controllers import codecooler_controller
 
 
 def mentor_menu(user):
@@ -16,54 +17,60 @@ def mentor_menu(user):
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
-    options = ['View students', 'Add assigment', 'Grade assigment', 'Check attendence', 'Add student', 'Remove student']
+    options = ['View students', 'Add assignment', 'Grade assignment',
+               'Check attendance', 'Add student', 'Remove student']
 
     end = False
     while not end:
-        os.system('clear')
 
-        view.print_menu(title, options, exit_message)
-        option = view.input_number()
+        views.view.print_menu(title, options, exit_message)
+        option = is_option_valid(len(options))
 
         if option == 1:
             view_students()
-        if option == 2:
+        elif option == 2:
             add_assigment()
-        if option == 3:
+        elif option == 3:
             grade_assigment()
-        if option == 4:
-            check_attendence()
-        if option == 5:
+        elif option == 4:
+            check_attendance()
+        elif option == 5:
             add_student()
-        if option == 6:
+        elif option == 6:
             remove_student()
-        if option == 0:
+        elif option == 0:
             end = True
-
+        else:
+            views.view.print_message('There is no such option.')
 
 def view_students():
     '''
-    prints list of every student assigned to course
-    print needs grade so mentor will know how student perform
+    Prints list of every student's name, surname, e-mail, attendance, grade.
 
-    should use students_controller.get_students() to get list of all students
-
-    should use views.view.print_students() for printing
+    Returns:
+        Nothing, it just prints the student list.
     '''
-    pass
+
+    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    students_info = []
+
+
+    for student in Student.list_of_students:
+        students_info.append([student.name, student.surname,
+                              student.email, student.attendance])
+
+    views.view.print_table(students_info, titles)
 
 
 def add_assigment():
     '''
-    should use views.view.get_assigment_inputs() to gather necessery data
-
-    should use controllers.assigment_controller.create_new_assigment()
+    Creates new assignment and adds it to assignment list.
     '''
     pass
 
 
 def grade_assigment():
-    '''emove
+    '''
     should use controllers.assigment_controller to create
         list of assigments
 
@@ -77,49 +84,114 @@ def grade_assigment():
     pass
 
 
-def view_students():
-    '''
-    prints list of every student assigned to course
-    print needs attendence so mentor will know how student perform
+def check_attendance():
+    """
+    Chooses student by login and grades its attendance for today.
+    Adds one day to days_passed after checking.
+    """
+    title = "Student attendance for today"
+    exit_message = 'Back to Main Menu'
+    options = ['Present', 'Late', 'Absent']
 
-    should use students_controller.get_students() to get list of all students
+    end = False
+    while not end:
+        view_students()
 
-    should use views.view.print_students() for printing
-    '''
-    pass
+        try:
+            index = get_student_index()
+        except ValueError, IndexError:
+            return views.view.print_message('Index does not exist!')
 
+        fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
+        attendance = Student.list_of_students[int(index)].attendance
+        days_passed = Student.list_of_students[int(index)].days_passed
+
+        views.view.print_message(fullname, "\nAttendance: ", attendance)
+        views.view.print_menu(title, options, exit_message)
+        option = is_option_valid(len(options))
+
+        if option in range(1, len(options) + 1):
+            today_attendance = options[option - 1]
+            Student.list_of_students[int(index)].attendance = update_attendance(index, days_passed, today_attendance)
+        elif option == 0:
+            end = True
+        else:
+            views.view.print_message('There is no such option. Press any key to start again.')
+            views.view.wait_until_key_pressed()
+
+
+def update_attendance(index, days_passed, today_attendance):
+    if today_attendance = 'Present':
+        pass
+    elif today_attendance = 'Late':
+        todays_value = 100 / days_passed
+        attendance -= todays_value * 0.2
+    elif today_attendance = 'Absent':
+        todays_value = 100 / days_passed
+        attendance = -= todays_value
+
+    Student.list_of_students[int(index)].days_passed += 1
+
+    return attendance
 
 def add_student():
-    '''
-    should use views.view.get_new_student_data() to get inputs about new student
+    """
+    Creates new student and adds it to the students list.
 
-    should use controllers.student_controller.create_new_student() to create student
-    '''
-    pass
+    Returns:
+            Nothing, it just adds the student to the list.
+    """
+    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
+    title = "Provide informations about new student"
+    inputs = views.view.get_inputs(labels, title)
+
+    new_student = Student(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
 
 
 def remove_student():
-    '''
-    should use controllers.student_controller to get list of all students
-        (along with numbers)
+    """
+    Removes object Student from list by index.
 
-    should use views.view.print_students() to print all students
+    Returns:
+        Nothing, it just removes the student.
+    """
+    try:
+        index = get_student_index()
+    except ValueError, IndexError:
+        return views.view.print_message('Index does not exist!')
 
-    should use views.view.get_number() to dtermine which student should be deleted
+    del Mentor.list_of_mentors[int(index)]
 
-    should use controllers.student_controler.remove_student() to remove student
-    '''
+def get_student_index():
+    """
+    Gets an index of student from student's list.
+    Raises IndexError when index out of range.
+    Raises ValueError when index is not int.
+
+    Returns:
+        index (int)
+    """
+    labels = ["Index"]
+    title = "Type index number of student to remove"
+    index = views.view.get_inputs(labels, title)[0]
+
+    if not index.isdigit():
+        raise ValueError("Please type only numbers!")
+
+    elif int(index) not in range(len(Mentor.list_of_students)):
+        raise IndexError('Mentor with given index does not exist!')
+
+    else:
+        return int(index)
 
 
-def edit_student():
-    '''
-    should use controllers.student_controller to get list of all students
-        (along with numbers)
+def is_option_valid(options_number):
 
-    should use views.view.print_students() to print all students
-
-    should use views.view.get_number() to detrmine which student should be edited
-
-    should use controllers.student_controler.edit_student() to edit students data
-    '''
-    pass
+    try:
+        option = input_number()
+        if option in range(options_number + 1):
+            return option
+        else:
+            return False
+    except ValueError:
+        return False

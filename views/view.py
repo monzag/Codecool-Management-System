@@ -16,6 +16,7 @@ def print_menu(title, options, exit_message):
         Nothing, it just prints the menu in the console.
     '''
 
+    os.system('clear')
     option_number = 1
 
     print('{}:'.format(title))
@@ -25,6 +26,7 @@ def print_menu(title, options, exit_message):
     print('    (0) {}'.format(exit_message))
     print('')
 
+    wait_until_key_pressed()
 
 def input_number():
     '''
@@ -32,9 +34,9 @@ def input_number():
     '''
     number = input('\nProvide number: ')
     if number.isdigit():
-        number = int(number)
-
-    return number
+        return int(number)
+    else:
+        raise ValueError
 
 
 def print_table(table, title_list):
@@ -137,7 +139,8 @@ def create_border_row(table, columns_amount, title_list, row_type, MIN_COLUMN_WI
         border_row (str) - string ready to be printed
     '''
 
-    border_row = '|'
+    # Adds additional dashes for the first column with indexes
+    border_row = '|' + ('-' * MIN_COLUMN_WIDTH) + '|'
 
     for column in range(columns_amount):
         dashes_to_add = find_max_string_length(table, column, title_list)
@@ -168,8 +171,11 @@ def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDIN
     Returns:
         data_row: string ready to be printed
     '''
-
-    data_row = '|'
+    if not is_title:
+        # Adds the index number to the first column of a table.
+        data_row = '|' + str(list_index).center(MIN_COLUMN_WIDTH, ' ') + '|'
+    else:
+        data_row = '|' + 'ID'.center(MIN_COLUMN_WIDTH, ' ') + '|'
 
     for column in range(len(table[list_index])):
         max_string_length = find_max_string_length(table, column, title_list)
@@ -178,7 +184,7 @@ def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDIN
         else:
             cell_width = MIN_COLUMN_WIDTH
 
-        if is_title == False:
+        if not is_title:
             data_row = data_row + (table[list_index][column].center(cell_width, ' ')) + '|'
         else:
             data_row = data_row + (title_list[column].center(cell_width, ' ')) + '|'
@@ -198,7 +204,7 @@ def get_inputs(labels, title):
     '''
     inputs = []
 
-    print(title)
+    print(title + ':')
     for label in labels:
         answer = (input('{}:  '.format(label)))
         inputs.append(answer)
@@ -265,4 +271,12 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
-    print('''''')
+
+table = [['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
+['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'], ['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
+['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
+['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
+['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],
+['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t'],['3646363463463463', '363464747', 'tregdtbsy54', '4trege4t']]
+title_list = ['454fwr', '4r43', 'ewrfwer', '43t34t3terfs']
+print_table(table, title_list)
