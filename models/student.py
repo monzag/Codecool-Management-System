@@ -7,10 +7,11 @@ class Student(Codecooler):
 
     list_of_students = []
 
-    def __init__(self, attendance, *args):
+    def __init__(self, attendance, days_passed, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
         self.attendance = attendance
+        self.days_passed = days_passed
         self.assignments_list = self.get_assignment_list()
 
     @classmethod
@@ -26,9 +27,9 @@ class Student(Codecooler):
         print(splitted_data_list)
 
         for element in splitted_data_list:
-            name, surname, login, password, mail, attendance = element
+            name, surname, login, password, mail, attendance, days_passed = element
             attendance = int(attendance)
-            cls(attendance, name, surname, login, password, mail)
+            cls(attendance, days_passed, name, surname, login, password, mail)
 
     def get_assignment_list(self):
         '''
@@ -54,7 +55,7 @@ class Student(Codecooler):
         filename = 'students.csv'
         with open(filename, 'w') as csvfile:
             for record in list_to_save:
-                row = ','.join(record)
+                row = '|'.join(record)
                 csvfile.write(row + "\n")
 
     @classmethod
