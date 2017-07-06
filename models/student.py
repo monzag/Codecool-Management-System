@@ -69,8 +69,8 @@ class Student(Codecooler):
 
         list_to_save = []
         for student in cls.list_of_students:
-            name, surname, login, password, email = student.name, student.surname, student.login, student.password, student.email
-            student_data = [name, surname, login, password, email]
+            name, surname, login, password, email, attendance, days_passed = student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_list
+            student_data = [name, surname, login, password, email, attendance, days_passed]
             list_to_save.append(student_data)
 
         return list_to_save
