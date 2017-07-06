@@ -1,6 +1,24 @@
-from datetime import datetime
+from model.assigemnt import Assigment
+from model.student import Student
 
 import controllers.student_controller 
+
+
+def get_assignments_to_table(student):
+    '''
+    Given Student obj. creates table for view.print_table
+
+    Parameters:
+        student: Student obj.
+
+    Returns:
+        table: 2d list of table prints
+    '''
+    table = []
+    for assigment in student.assignments_list:
+        table.append([assigment.name, assigment.status, assignmet.deadline, assignment.grade, assigment.max_grade])
+
+    return table
 
 
 def load_assigments_from_file():
@@ -27,7 +45,7 @@ def add_assigment(assigment):
 
     Parameters:
         assigment : Assigment obj.
-    
+
     Returns:
         None
     '''
@@ -41,7 +59,7 @@ def calculate_total_grade(list_of_assigments):
 
     Paramters:
         list_of_assigments : list of Assigment obj.
-    
+
     Returns:
         total_grade : int representing percents
     '''
@@ -54,7 +72,7 @@ def calculate_total_grade(list_of_assigments):
         for assigment in assigments:
             grades += assigment.grade
             max_grades += assigment.max_grade
-        
+
         total_grade = grades/max_grades * 100
 
     return total_grade
@@ -67,7 +85,7 @@ def change_assigment_to_done(assigment):
 
     Paramateres:
         assigment: Assigment obj.
-    
+
     Returns:
         None
     '''
