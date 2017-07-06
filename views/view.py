@@ -26,7 +26,6 @@ def print_menu(title, options, exit_message):
     print('    (0) {}'.format(exit_message))
     print('')
 
-    wait_until_key_pressed()
 
 def input_number():
     '''
@@ -271,3 +270,5 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
+
+    wait_until_key_pressed()
