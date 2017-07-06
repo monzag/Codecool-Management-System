@@ -33,8 +33,12 @@ def start_up():
     view.print_welcome_screen()
     view.wait_until_key_pressed()
 
-    status = choose_status()
-    user = log_in_as_user(status)
+    user = None
+    while not user:
+        os.system('clear')
+
+        status = choose_status()
+        user = log_in_as_user(status)
 
     return user
 
@@ -48,7 +52,7 @@ def choose_status():
         status : str - representing privilige
     '''
     title = 'Do you want to log as'
-    exit_message = 'Exit'
+    exit_message = 'Change status'
     options = ['Student', 'Employee', 'Mentor', 'Manager']
 
     status = None
@@ -67,7 +71,7 @@ def choose_status():
         if option == 4:
             status = 'Manager'
         if option == 0:
-            sys.exit()
+            status = None
 
     return status
 
@@ -86,15 +90,9 @@ def log_in_as_user(status):
     Returns:
         user : Codecooler obj. instance
     '''
-    attempt = 1
-    user = None
-    while not user:
-        os.system('clear')
-
-        login, password = get_password_and_login()
-
-        attempt += 1
-        user = is_user_in_system(status, login, password)
+    os.system('clear')
+    login, password = get_password_and_login()
+    user = is_user_in_system(status, login, password)
 
     return user
 
