@@ -26,6 +26,17 @@ def print_menu(title, options, exit_message):
     print('')
 
 
+def input_number():
+    '''
+    Takes input from user and changes it to int if possible
+    '''
+    number = input('\nProvide number: ')
+    if number.isdigit():
+        number = int(number)
+
+    return number
+
+
 def print_table(table, title_list):
     '''Prints the table with provided data.
 
