@@ -1,7 +1,7 @@
 import os
 
-import views.view
-# import controllers.assigment_controller
+from views import view
+from controllers import assignment_controller
 
 from models.student import Student
 # from models.assigemnt import Assigment
@@ -45,10 +45,10 @@ def submit_assigment(student):
     '''
     table = assignment_controller.get_assignments_to_table(student)
     tittle_list = ['Assignment', 'status', 'deadline', 'grade', 'max_grade']
-    views.view.print_table(table, tittle_list)
+    view.print_table(table, tittle_list)
     labels = ['Write number of assignment']
     title = 'Input data'
-    number_assignment = views.view.get_inputs(labels, title)
+    number_assignment = view.get_inputs(labels, title)
     assignment = student.assignments_list[number_assignment - 1]
     assignment_controller.change_assignment_to_done(assignment)
     # Save
