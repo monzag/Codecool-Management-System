@@ -60,7 +60,7 @@ class Student(Codecooler):
 
         else:
             with open(file_path, 'w') as csvfile:
-                csvfile.write(cls.data_to_save)
+                csvfile.write(cls.data_to_save())
 
     @classmethod
     def data_to_save(cls):
@@ -74,7 +74,8 @@ class Student(Codecooler):
 
         string_to_save = []
         for student in cls.list_of_students:
-            row = [student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_passed]
+            row = [student.name, student.surname, student.login, student.password, student.email, str(student.attendance), str(student.days_passed)]
             string_to_save.append(row)
 
+        print(string_to_save)
         return '\n'.join('|'.join(row) for row in string_to_save)
