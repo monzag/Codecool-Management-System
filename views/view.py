@@ -35,8 +35,8 @@ def input_number():
     number = input('\nProvide number: ')
     if number.isdigit():
         return int(number)
-    else:
-        raise ValueError
+
+    return number
 
 
 def print_table(table, title_list):
@@ -251,7 +251,7 @@ def wait_until_key_pressed():
 
     oldterm = termios.tcgetattr(fd)
     newattr = termios.tcgetattr(fd)
-    newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
+    newattr[3] = newattr[3] & ~termios.IC print('\n+-+-+-+-+-+-+-+ANON & ~termios.ECHO
     termios.tcsetattr(fd, termios.TCSANOW, newattr)
 
     try:
