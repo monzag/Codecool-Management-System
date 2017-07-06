@@ -16,41 +16,10 @@ def get_assignments_to_table(student):
     '''
     table = []
     for assignment in student.assignments_list:
-        table.append([assignment.name, assignment.status, assignment.submit_date, assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
+        table.append([assignment.name,     assignment.status,     assignment.submit_date, 
+                      assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
 
     return table
-
-
-def load_assigments_from_file():
-    '''
-    '''
-    pass
-
-
-def save_assigments_to_file():
-    '''
-    '''
-    pass
-
-
-def create_assigment():
-    '''
-    '''
-    pass
-
-
-def add_assigment(assigment):
-    '''
-    Adds new assigemnt for every student stored in system
-
-    Parameters:
-        assigment : Assigment obj.
-
-    Returns:
-        None
-    '''
-    for student in student_controller.get_students():
-        student.assigments_list.append(assigment)
 
 
 def calculate_total_grade(list_of_assigments):
