@@ -16,7 +16,7 @@ def manager_menu(user):
 
     titles = 'Hi {}! What would you like to do'.format(user.name)
     options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
-               'Edit mentor data', 'Exit']
+               'Exit']
 
     show_menu = True
 
@@ -34,11 +34,13 @@ def manager_menu(user):
 
         if option == 3:
             add_mentor()
+            Mentor.save_data_to_file()
 
         if option == 4:
 
             try:
                 remove_mentor()
+                Mentor.save_data_to_file()
             except ValueError:
                 print("Please type in only numbers!")
             except IndexError:
