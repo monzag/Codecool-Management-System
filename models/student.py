@@ -35,7 +35,7 @@ class Student(Codecooler):
 
     def get_assignment_list(self):
         '''
-        Add Assignment objects to list if assignment's owner equal to Student login. 
+        Add Assignment objects to list if assignment's owner equal to Student login.
 
         Returns:
             assignment_list - list with Assignment obj.
@@ -75,7 +75,6 @@ class Student(Codecooler):
             row = [student.name, student.surname, student.login, student.password, student.email, str(student.attendance), str(student.days_passed), str(student.total_grade)]
             string_to_save.append(row)
 
-        print(string_to_save)
         return '\n'.join('|'.join(row) for row in string_to_save)
 
     def calculate_total_grade(self):
