@@ -55,8 +55,11 @@ class Student(Codecooler):
         filename = 'students.csv'
         cls.save_data(filename)
 
+    @classmethod
     def save_assignment(cls):
-        pass
+        list_to_save = cls.convert_list_of_assignments_to_data()
+        filename = 'assignments.csv'
+        cls.save_data(filename)
 
     @classmethod
     def save_data(cls, filename):
@@ -76,7 +79,7 @@ class Student(Codecooler):
                 for record in list_to_save:
                     row = '|'.join(record)
                     csvfile.write(row + "\n")
-
+g
     @classmethod
     def convert_list_of_students_to_data(cls):
         '''
@@ -93,5 +96,3 @@ class Student(Codecooler):
             list_to_save.append(student_data)
 
         return list_to_save
-
-    
