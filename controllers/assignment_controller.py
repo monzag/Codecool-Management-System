@@ -1,5 +1,5 @@
-from model.assigemnt import Assigment
-from model.student import Student
+from models.assignment import Assignment
+from models.student import Student
 
 import controllers.student_controller 
 
@@ -15,8 +15,8 @@ def get_assignments_to_table(student):
         table: 2d list of table prints
     '''
     table = []
-    for assigment in student.assignments_list:
-        table.append([assigment.name, assigment.status, assignmet.deadline, assignment.grade, assigment.max_grade])
+    for assignment in student.assignments_list:
+        table.append([assignment.name, assignment.status, assignment.deadline, assignment.grade, assignment.max_grade])
 
     return table
 
