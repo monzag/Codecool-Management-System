@@ -16,6 +16,7 @@ def print_menu(title, options, exit_message):
         Nothing, it just prints the menu in the console.
     '''
 
+    os.system('clear')
     option_number = 1
 
     print('{}:'.format(title))
@@ -32,9 +33,9 @@ def input_number():
     '''
     number = input('\nProvide number: ')
     if number.isdigit():
-        number = int(number)
-
-    return number
+        return int(number)
+    else:
+        raise ValueError
 
 
 def print_table(table, title_list):
