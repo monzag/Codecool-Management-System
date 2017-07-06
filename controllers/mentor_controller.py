@@ -63,14 +63,14 @@ def view_students():
     view.print_table(students_info, titles)
 
 
-def add_assigment():
+def add_assignment():
     '''
     Creates new assignment and adds it to assignment list.
     '''
     pass
 
 
-def grade_assigment():
+def grade_assignment():
     '''
     should use controllers.assigment_controller to create
         list of assigments
@@ -202,4 +202,4 @@ def get_student_index():
         raise IndexError('Mentor with given index does not exist!')
 
     else:
-        return int(index)
+        return int(index) - 1
