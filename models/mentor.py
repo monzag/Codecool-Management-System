@@ -1,4 +1,5 @@
 from models.employee import Employee
+import os
 
 
 class Mentor(Employee):
@@ -16,9 +17,11 @@ class Mentor(Employee):
         '''
         list_to_save = Mentor.convert_list_of_object_to_data()
         filename = 'mentors.csv'
-        with open(filename, 'w') as csvfile:
+        file_path = os.getcwd() + '/data/' + filename
+
+        with open(file_path, 'w') as csvfile:
             for record in list_to_save:
-                row = ' | '.join(record)
+                row = '|'.join(record)
                 csvfile.write(row + "\n")
 
     @classmethod
