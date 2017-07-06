@@ -53,3 +53,22 @@ class Assignment:
             grade = int(grade)
             max_grade = int(max_grade)
             cls(owner, name, add_date, deadline, max_grade, grade, status, submit_date)
+
+    @classmethod
+    def save_assignments_to_file(cls):
+        '''
+        '''
+        file_path = os.getcwd() + '/data/assignments.csv'
+        with open(file_path, 'w') as data:
+            data.write(cls.csv_string())
+
+    @classmethod
+    def csv_string(cls):
+        csv_string = []
+        for assignment in cls.list_of_assignments:
+            row = [assignment.name, assignment.owner, assignment.status, assignment.add_date, 
+                   assignment.deadline, assignment.submit_date, str(assignment.grade), str(assignment.max_grade)]
+
+            csv_string.append(row)
+
+        return '\n'.join('|'.join(row) for row in csv_string)

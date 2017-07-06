@@ -16,7 +16,6 @@ def print_menu(title, options, exit_message):
         Nothing, it just prints the menu in the console.
     '''
 
-    os.system('clear')
     option_number = 1
 
     print('{}:'.format(title))
@@ -26,7 +25,6 @@ def print_menu(title, options, exit_message):
     print('    (0) {}'.format(exit_message))
     print('')
 
-    wait_until_key_pressed()
 
 def input_number():
     '''
@@ -35,8 +33,8 @@ def input_number():
     number = input('\nProvide number: ')
     if number.isdigit():
         return int(number)
-    else:
-        raise ValueError
+
+    return number
 
 
 def print_table(table, title_list):
@@ -50,6 +48,7 @@ def print_table(table, title_list):
         Nothing, it just prints the table in the console.
         If table is empty or its data is invalid, then returns None.
     '''
+    os.system('clear')
 
     if is_table_wrong(table, title_list):
         return None
@@ -173,7 +172,7 @@ def create_data_row(table, list_index, title_list, MIN_COLUMN_WIDTH, CELL_PADDIN
     '''
     if not is_title:
         # Adds the index number to the first column of a table.
-        data_row = '|' + str(list_index).center(MIN_COLUMN_WIDTH, ' ') + '|'
+        data_row = '|' + str(list_index + 1).center(MIN_COLUMN_WIDTH, ' ') + '|'
     else:
         data_row = '|' + 'ID'.center(MIN_COLUMN_WIDTH, ' ') + '|'
 
@@ -251,7 +250,7 @@ def wait_until_key_pressed():
 
     oldterm = termios.tcgetattr(fd)
     newattr = termios.tcgetattr(fd)
-    newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
+    newattr[3] = newattr[3]
     termios.tcsetattr(fd, termios.TCSANOW, newattr)
 
     try:
@@ -261,7 +260,6 @@ def wait_until_key_pressed():
     finally:
         termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
 
-    os.system("clear")
     return result
 
 
@@ -271,3 +269,5 @@ def print_end_screen():
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
+
+    wait_until_key_pressed()

@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from views import view
+
 from models.assignment import Assignment
 from models.student import Student
 
@@ -16,21 +20,10 @@ def get_assignments_to_table(student):
     '''
     table = []
     for assignment in student.assignments_list:
-        table.append([assignment.name, assignment.status, assignment.submit_date, assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
+        table.append([assignment.name,     assignment.status,     assignment.submit_date,
+                      assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
 
     return table
-
-
-def load_assigments_from_file():
-    '''
-    '''
-    pass
-
-
-def save_assigments_to_file():
-    '''
-    '''
-    pass
 
 
 def create_assigment():
@@ -61,6 +54,7 @@ def add_assigment(assigment):
     '''
     for student in student_controller.get_students():
         student.assigments_list.append(assigment)
+
 
 
 def calculate_total_grade(list_of_assigments):
@@ -99,8 +93,17 @@ def change_assignment_to_done(assignment):
     Returns:
         None
     '''
-    # submit_date = datetime.today()
+    submit_date = '{}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
     if assignment.status == 'undone':
         assignment.status = 'done'
-        assignment.submit_date = '01:01:2016'  # submit_date
+        assignment.submit_date = submit_date
+
+
+def view_student_assignments(student):
+    '''
+    '''
+    labels = ['name', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
+    table = get_assignments_to_table(student)
+
+    view.print_table(table, labels)

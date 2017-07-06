@@ -2,6 +2,7 @@ import os
 
 from views import view
 
+from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
@@ -23,15 +24,16 @@ def mentor_menu(user):
     end = False
     while not end:
 
-        views.view.print_menu(title, options, exit_message)
-        option = is_option_valid(len(options))
+        os.system('clear')
+        view.print_menu(title, options, exit_message)
+        option = view.input_number()
 
         if option == 1:
             view_students()
         elif option == 2:
             add_assigment()
         elif option == 3:
-            grade_assigment()
+            grade_assignment()
         elif option == 4:
             check_attendance()
         elif option == 5:
@@ -40,8 +42,6 @@ def mentor_menu(user):
             remove_student()
         elif option == 0:
             end = True
-        else:
-            views.view.print_message('There is no such option.')
 
 def view_students():
     '''
@@ -51,37 +51,54 @@ def view_students():
         Nothing, it just prints the student list.
     '''
 
-    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    titles = ["Name", "Surname", "e-mail", "Attendance"]
     students_info = []
-
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                              student.email, student.attendance])
+                             student.email, str(student.attendance)])
 
-    views.view.print_table(students_info, titles)
+    view.print_table(students_info, titles)
+    # view.print_message("Press any key to continue.")
+    # view.wait_until_key_pressed()
 
 
-def add_assigment():
+def add_assignment():
     '''
     Creates new assignment and adds it to assignment list.
     '''
     pass
 
 
-def grade_assigment():
+def grade_assignment():
     '''
     should use controllers.assigment_controller to create
         list of assigments
 
-    should use views.view.print_assigments to print assigments
+    should use view.print_assigments to print assigments
         (along with numbers to call exact assigment)
 
-    should use views.view.input_umber() to select assigment
+    should use view.input_umber() to select assigment
 
     should use controllers.assigment_controller.change_grade() to change grade
     '''
-    pass
+    view_students()
+    student_number = None
+    while not student_number:
+        student_number = view.input_number()
+
+    if student_number <= len(Student.list_of_students):
+        student_number -= 1
+        assignment_controller.view_student_assignments(Student.list_of_students[student_number])
+
+        assignment_number = None
+        while not assignment_number:
+            assignment_number = view.input_number()
+
+        if assignment_number <= len(Student.list_of_students[student_number].assignments_list):
+            assignment_number -= 1
+            new_value = 10
+            Student.list_of_students[student_number].assignments_list[assignment_number].grade = new_value
 
 
 def check_attendance():
@@ -90,39 +107,45 @@ def check_attendance():
     Adds one day to days_passed after checking.
     """
     title = "Student attendance for today"
-    exit_message = 'Back to Main Menu'
+    exit_message = 'Back to Main Menu (NOTICE: You will have to check whole attendance again for today!)'
     options = ['Present', 'Late', 'Absent']
 
-    end = False
-    while not end:
-        view_students()
+    for student in Student.list_of_students:
+        os.system('clear')
 
-        try:
-            index = get_student_index()
-        except (ValueError, IndexError):
-            return views.view.print_message('Index does not exist!')
+        index = Student.list_of_students.index(student)
+        fullname = student.name + ' ' + student.surname
 
-        fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
-        attendance = Student.list_of_students[int(index)].attendance
-        days_passed = Student.list_of_students[int(index)].days_passed
+        view.print_message(fullname)
+        view.print_menu(title, options, exit_message)
+        option = None
 
-        views.view.print_message(fullname, "\nAttendance: ", attendance)
-        views.view.print_menu(title, options, exit_message)
-        option = is_option_valid(len(options))
-
-        if option in range(1, len(options) + 1):
-            today_attendance = options[option - 1]
-            Student.list_of_students[int(index)].attendance = update_attendance(index, days_passed, today_attendance)
-        elif option == 0:
-            end = True
-        else:
-            views.view.print_message('There is no such option. Press any key to start again.')
-            views.view.wait_until_key_pressed()
+        while option not in range(0, len(options) + 1):
+            option = view.input_number()
+            if option in range(1, len(options) + 1):
+                today_attendance = options[option - 1]
+                student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
+            elif option == 0:
+                break
+                pass # load data again
 
 
-def update_attendance(index, days_passed, today_attendance):
+def update_attendance(index, days_passed, attendance, today_attendance):
+    """
+    Updates the attendance value.
+
+    Args:
+        index (int) - index of a student
+        days_passed (int) - number of days passed in school so far
+        attendance (int) - attendance value
+        today_attendance (str) - option chosen (Present/Late/Absent)
+
+    Returns:
+        attendance (int) - updated attendance
+    """
     if today_attendance == 'Present':
-        attendance = Student.list_of_students[int(index)].attendance
+        days_of_presence = (attendance * 0.01) * days_passed
+        attendance += (days_of_presence + 1) / (days_passed + 1)
     elif today_attendance == 'Late':
         todays_value = 100 / days_passed
         attendance -= todays_value * 0.2
@@ -131,6 +154,9 @@ def update_attendance(index, days_passed, today_attendance):
         attendance -= todays_value
 
     Student.list_of_students[int(index)].days_passed += 1
+
+    if attendance > 100:
+        attendance = 100
 
     return attendance
 
@@ -143,9 +169,11 @@ def add_student():
     """
     labels = ["Name", "Surname", "Login", "Password", "e-mail"]
     title = "Provide informations about new student"
-    inputs = views.view.get_inputs(labels, title)
+    inputs = view.get_inputs(labels, title)
 
-    new_student = Student(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+    new_student = Student(100, 1, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+
+    Student.save_students()
 
 
 def remove_student():
@@ -158,9 +186,11 @@ def remove_student():
     try:
         index = get_student_index()
     except (ValueError, IndexError):
-        views.view.print_message('Index does not exist!')
+        view.print_message('Index does not exist!')
 
-    del Mentor.list_of_mentors[int(index)]
+    del Student.list_of_students[int(index)]
+
+    Student.save_students()
 
 def get_student_index():
     """
@@ -172,26 +202,14 @@ def get_student_index():
         index (int)
     """
     labels = ["Index"]
-    title = "Type index number of student to remove"
-    index = views.view.get_inputs(labels, title)[0]
+    title = "Type index number of student"
+    index = view.get_inputs(labels, title)[0]
 
     if not index.isdigit():
         raise ValueError("Please type only numbers!")
 
-    elif int(index) not in range(len(Mentor.list_of_students)):
+    elif int(index) not in range(len(Student.list_of_students)):
         raise IndexError('Mentor with given index does not exist!')
 
     else:
-        return int(index)
-
-
-def is_option_valid(options_number):
-
-    try:
-        option = input_number()
-        if option in range(options_number + 1):
-            return option
-        else:
-            return False
-    except ValueError:
-        return False
+        return int(index) - 1
