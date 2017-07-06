@@ -7,7 +7,6 @@ from models.student import Student
 # from models.assigemnt import Assigment
 
 
-
 def student_menu(user):
     '''
     Prints user specific features and asks him for operation
@@ -34,27 +33,6 @@ def student_menu(user):
             submit_assigment(user)
         if option == 0:
             end = True
-
-
-def get_user_by_login_and_password(login, password, students):
-    '''
-    Search proper Student object in list_of_students by login and password.
-    If find any match will return student obj., otherwise None.
-
-    Args:
-        login: str
-        password: str
-        students: list of Student obj.
-
-    Returns:
-        student - obj
-    '''
-
-    for student in Student.list_of_students:
-        if student.login == login and student.password == password:
-            return student
-
-    return None
 
 
 def submit_assigment(student):
