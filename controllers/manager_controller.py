@@ -17,9 +17,9 @@ def manager_menu(user):
     options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
                'Edit mentor data', 'Exit']
 
-    end = False
+    show_menu = True
 
-    while not end:
+    while show_menu:
         os.system('clear')
 
         option = views.view.get_inputs(labels, title)[0]
@@ -27,14 +27,24 @@ def manager_menu(user):
 
         if option == 1:
             view_students()
+
         if option == 2:
             view_mentors()
+
         if option == 3:
             add_mentor()
+
         if option == 4:
-            remove_mentor()
+
+            try:
+                remove_mentor()
+            except ValueError:
+                print("Please type in only numbers!")
+            except IndexError:
+                print ('Mentor with given index does not exist!')
+
         if option == 0:
-            end = True
+            show_menu = False
 
 
 def view_students():
@@ -80,7 +90,7 @@ def add_mentor():
     Return:
             None
     """
-    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
+    labels = ["Login", "Password", "Name", "Surname", "e-mail"]
     title = "Provide informations about new mentor"
     inputs = views.view.get_inputs(labels, title)
 
@@ -99,10 +109,10 @@ def remove_mentor():
     index = views.view.get_inputs(labels, title)[0]
 
     if not index.isdigit():
-        raise ValueError("Please type in only numbers!")
+        raise ValueError
 
     elif int(index) not in range(len(Mentor.list_of_students)):
-        raise IndexError('Mentor with given index does not exist!')
+        raise IndexError
 
     else:
         del Mentor.list_of_mentors[int(index)]
