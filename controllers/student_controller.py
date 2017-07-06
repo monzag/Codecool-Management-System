@@ -64,16 +64,3 @@ def view_grades(student):
     table = assignment_controller.get_assignments_to_table(student)
     tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
     view.print_table(table, tittle_list)
-
-
-def get_students():
-    '''
-    Returns list of students
-    '''
-
-    return Student.list_of_students
-
-
-
-
-
