@@ -89,8 +89,8 @@ def change_assigment_to_done(assigment):
     Returns:
         None
     '''
-    submit_date = datetime.today()
+    # submit_date = datetime.today()
 
     if assigment.status == 'undone':
         assigment.status = 'done'
-        assigment.submit_date = submit_date
+        assigment.submit_date = '01:01:2016' # submit_date
