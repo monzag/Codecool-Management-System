@@ -16,7 +16,7 @@ def get_assignments_to_table(student):
     '''
     table = []
     for assignment in student.assignments_list:
-        table.append([assignment.name, assignment.status, assignment.deadline, assignment.grade, assignment.max_grade])
+        table.append([assignment.name, assignment.status, assignment.submit_date, assignment.deadline, str(assignment.grade), str(assignment.max_grade)])
 
     return table
 
@@ -78,7 +78,7 @@ def calculate_total_grade(list_of_assigments):
     return total_grade
 
 
-def change_assigment_to_done(assigment):
+def change_assignment_to_done(assignment):
     '''
     Change undone assigment to done, and adds datetime
     obj. representing today date as it's sumbit date
@@ -91,6 +91,6 @@ def change_assigment_to_done(assigment):
     '''
     # submit_date = datetime.today()
 
-    if assigment.status == 'undone':
-        assigment.status = 'done'
-        assigment.submit_date = '01:01:2016' # submit_date
+    if assignment.status == 'undone':
+        assignment.status = 'done'
+        assignment.submit_date = '01:01:2016' # submit_date
