@@ -4,7 +4,6 @@ from views import view
 from controllers import assignment_controller
 
 from models.student import Student
-# from models.assigemnt import Assigment
 
 
 def student_menu(user):
@@ -92,16 +91,6 @@ def get_students():
 
     return Student.list_of_students
 
-
-'''
-def list_student_with_grades():
-    pass
-
-
-def list_student_with_attendance():
-    pass'''
-
-# Add id's assignment to list
 
 
 
