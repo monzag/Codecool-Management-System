@@ -23,7 +23,7 @@ def mentor_menu(user):
     end = False
     while not end:
 
-        views.view.print_menu(title, options, exit_message)
+        view.print_menu(title, options, exit_message)
         option = is_option_valid(len(options))
 
         if option == 1:
@@ -41,7 +41,7 @@ def mentor_menu(user):
         elif option == 0:
             end = True
         else:
-            views.view.print_message('There is no such option.')
+            view.print_message('There is no such option.')
 
 def view_students():
     '''
@@ -59,7 +59,7 @@ def view_students():
         students_info.append([student.name, student.surname,
                               student.email, student.attendance])
 
-    views.view.print_table(students_info, titles)
+    view.print_table(students_info, titles)
 
 
 def add_assigment():
@@ -74,10 +74,10 @@ def grade_assigment():
     should use controllers.assigment_controller to create
         list of assigments
 
-    should use views.view.print_assigments to print assigments
+    should use view.print_assigments to print assigments
         (along with numbers to call exact assigment)
 
-    should use views.view.input_umber() to select assigment
+    should use view.input_umber() to select assigment
 
     should use controllers.assigment_controller.change_grade() to change grade
     '''
@@ -100,14 +100,14 @@ def check_attendance():
         try:
             index = get_student_index()
         except (ValueError, IndexError):
-            return views.view.print_message('Index does not exist!')
+            return view.print_message('Index does not exist!')
 
         fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
         attendance = Student.list_of_students[int(index)].attendance
         days_passed = Student.list_of_students[int(index)].days_passed
 
-        views.view.print_message(fullname, "\nAttendance: ", attendance)
-        views.view.print_menu(title, options, exit_message)
+        view.print_message(fullname, "\nAttendance: ", attendance)
+        view.print_menu(title, options, exit_message)
         option = is_option_valid(len(options))
 
         if option in range(1, len(options) + 1):
@@ -116,8 +116,8 @@ def check_attendance():
         elif option == 0:
             end = True
         else:
-            views.view.print_message('There is no such option. Press any key to start again.')
-            views.view.wait_until_key_pressed()
+            view.print_message('There is no such option. Press any key to start again.')
+            view.wait_until_key_pressed()
 
 
 def update_attendance(index, days_passed, today_attendance):
@@ -143,7 +143,7 @@ def add_student():
     """
     labels = ["Name", "Surname", "Login", "Password", "e-mail"]
     title = "Provide informations about new student"
-    inputs = views.view.get_inputs(labels, title)
+    inputs = view.get_inputs(labels, title)
 
     new_student = Student(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
 
@@ -158,7 +158,7 @@ def remove_student():
     try:
         index = get_student_index()
     except (ValueError, IndexError):
-        views.view.print_message('Index does not exist!')
+        view.print_message('Index does not exist!')
 
     del Mentor.list_of_mentors[int(index)]
 
@@ -173,7 +173,7 @@ def get_student_index():
     """
     labels = ["Index"]
     title = "Type index number of student to remove"
-    index = views.view.get_inputs(labels, title)[0]
+    index = view.get_inputs(labels, title)[0]
 
     if not index.isdigit():
         raise ValueError("Please type only numbers!")
