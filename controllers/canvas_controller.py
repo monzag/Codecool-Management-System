@@ -47,15 +47,16 @@ def choose_status():
         status : str - representing privilige
     '''
     title = 'Do you want to log as'
-    otions = ['Student', 'Employee', 'Mentor', 'Manager', 'Exit']
+    exit_message = 'Exit'
+    options = ['Student', 'Employee', 'Mentor', 'Manager']
 
     status = None
-    while status:
+    while not status:
         os.system('clear')
 
-        view.print_menu(title, options)
+        view.print_menu(title, options, exit_message)
         option = view.input_number()
-        
+
         if option == 1:
             status = 'Student'
         if option == 2:
@@ -66,14 +67,14 @@ def choose_status():
             status = 'Manager'
         if option == 0:
             sys.exit()
-    
+
     return status
 
 
 def load_lists_from_file(status):
     '''
     Depending on user privilige loads certain data into a program:
-    
+
     -> for each group program will load group own users, to find one
        who is trying to access program
     -> employees and mentors have access to list of students
@@ -113,7 +114,7 @@ def log_in_as_user(status):
     '''
     attempt = 1
     is_user = None
-    while user:
+    while not user:
         os.system('clear')
 
         view.print_login_screen(status, attempt)
