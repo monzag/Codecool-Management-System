@@ -63,7 +63,7 @@ class Student(Codecooler):
                 csvfile.write(cls.data_to_save)
 
     @classmethod
-    def convert_list_of_students_to_data(cls):
+    def data_to_save(cls):
         '''
         Unpack attributes of Student object as data to student_data list and add it to list_to_save.
 
@@ -71,10 +71,9 @@ class Student(Codecooler):
             list_to_save - list of lists
         '''
 
-        list_to_save = []
+        string_to_save = []
         for student in cls.list_of_students:
-            name, surname, login, password, email, attendance, days_passed = student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_list
-            student_data = [name, surname, login, password, email, attendance, days_passed]
-            list_to_save.append(student_data)
+            row = [student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_list]
+            string_to_save.append(row)
 
-        return list_to_save
+        return '\n'.join('|'.join(row) for row in string_to_save)
