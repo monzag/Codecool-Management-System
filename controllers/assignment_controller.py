@@ -45,20 +45,6 @@ def create_assignment():
     Assignment.save_assignments_to_file()
 
 
-def add_assignment(assigment):
-    '''
-    Adds new assigemnt for every student stored in system
-
-    Parameters:
-        assigment : Assigment obj.
-
-    Returns:
-        None
-    '''
-    for student in student_controller.get_students():
-        student.assigments_list.append(assigment)
-
-
 def calculate_total_grade(list_of_assigments):
     '''
     Given list of assigments calculates total grade
