@@ -15,14 +15,15 @@ def manager_menu(user):
         None
     '''
     title = 'Hi {}! What would you like to do'.format(user.name)
+    exit_message = 'Exit'
     options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
-              'Edit mentor data', 'Exit']
+               'Edit mentor data']
 
     end = False
-    while end:
+    while not end:
         os.system('clear')
 
-        view.print_menu(title, options)
+        view.print_menu(title, options, exit_message)
         option = view.input_number()
 
         if option == 1:
