@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from views import view
+
 from models.assignment import Assignment
 from models.student import Student
 
@@ -65,3 +67,12 @@ def change_assignment_to_done(assignment):
     if assignment.status == 'undone':
         assignment.status = 'done'
         assignment.submit_date = submit_date
+
+
+def view_student_assignments(student):
+    '''
+    '''
+    labels = ['name', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
+    table = get_assignments_to_table(student)
+
+    view.print_table(table, labels)

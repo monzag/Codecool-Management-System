@@ -250,7 +250,7 @@ def wait_until_key_pressed():
 
     oldterm = termios.tcgetattr(fd)
     newattr = termios.tcgetattr(fd)
-    newattr[3] = newattr[3] & ~termios.IC print('\n+-+-+-+-+-+-+-+ANON & ~termios.ECHO
+    newattr[3] = newattr[3]
     termios.tcsetattr(fd, termios.TCSANOW, newattr)
 
     try:
