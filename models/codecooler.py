@@ -17,8 +17,8 @@ class Codecooler:
             splitted - list of lists
         '''
 
-        filename = 'students.csv'
-        if not os.path.exists(filename):
+        file_path = os.getcwd() + '/data/students.csv'
+        if not os.path.exists(file_path):
             raise FileNotFoundError("There is no such a file")
 
         else:
