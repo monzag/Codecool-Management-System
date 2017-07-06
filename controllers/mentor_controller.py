@@ -2,6 +2,7 @@ import os
 
 from views import view
 
+from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
@@ -24,7 +25,7 @@ def mentor_menu(user):
     while not end:
 
         view.print_menu(title, options, exit_message)
-        option = is_option_valid(len(options))
+        option = view.input_number()
 
         if option == 1:
             view_students()
@@ -51,13 +52,12 @@ def view_students():
         Nothing, it just prints the student list.
     '''
 
-    titles = ["Name", "Surname", "e-mail", "Attendance", "Grade"]
+    titles = ["Name", "Surname", "e-mail", "Attendance"]
     students_info = []
-
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                              student.email, student.attendance])
+                             student.email, str(student.attendance)])
 
     view.print_table(students_info, titles)
 
@@ -93,8 +93,8 @@ def check_attendance():
     exit_message = 'Back to Main Menu'
     options = ['Present', 'Late', 'Absent']
 
-    end = False
-    while not end:
+    menu = True
+    while menu:
         view_students()
 
         try:
@@ -106,23 +106,25 @@ def check_attendance():
         attendance = Student.list_of_students[int(index)].attendance
         days_passed = Student.list_of_students[int(index)].days_passed
 
-        view.print_message(fullname, "\nAttendance: ", attendance)
+        view.print_message("{}\nAttendance:  {}".format(fullname, attendance))
         view.print_menu(title, options, exit_message)
-        option = is_option_valid(len(options))
+        option = view.input_number()
 
         if option in range(1, len(options) + 1):
             today_attendance = options[option - 1]
-            Student.list_of_students[int(index)].attendance = update_attendance(index, days_passed, today_attendance)
+            Student.list_of_students[int(index)].attendance = update_attendance(index, days_passed, attendance,
+                                                                                today_attendance)
         elif option == 0:
-            end = True
+            menu = False
         else:
             view.print_message('There is no such option. Press any key to start again.')
             view.wait_until_key_pressed()
 
 
-def update_attendance(index, days_passed, today_attendance):
+def update_attendance(index, days_passed, attendance, today_attendance):
     if today_attendance == 'Present':
-        attendance = Student.list_of_students[int(index)].attendance
+        days_of_presence = (attendance * 0.01) * days_passed
+        attendance += (days_of_presence + 1) / (days_passed + 1)
     elif today_attendance == 'Late':
         todays_value = 100 / days_passed
         attendance -= todays_value * 0.2
@@ -145,7 +147,9 @@ def add_student():
     title = "Provide informations about new student"
     inputs = view.get_inputs(labels, title)
 
-    new_student = Student(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+    new_student = Student(100, 1, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+
+    Student.save_students()
 
 
 def remove_student():
@@ -160,7 +164,9 @@ def remove_student():
     except (ValueError, IndexError):
         view.print_message('Index does not exist!')
 
-    del Mentor.list_of_mentors[int(index)]
+    del Student.list_of_students[int(index)]
+
+    Student.save_students()
 
 def get_student_index():
     """
@@ -172,26 +178,14 @@ def get_student_index():
         index (int)
     """
     labels = ["Index"]
-    title = "Type index number of student to remove"
+    title = "Type index number of student"
     index = view.get_inputs(labels, title)[0]
 
     if not index.isdigit():
         raise ValueError("Please type only numbers!")
 
-    elif int(index) not in range(len(Mentor.list_of_students)):
+    elif int(index) not in range(len(Student.list_of_students)):
         raise IndexError('Mentor with given index does not exist!')
 
     else:
         return int(index)
-
-
-def is_option_valid(options_number):
-
-    try:
-        option = input_number()
-        if option in range(options_number + 1):
-            return option
-        else:
-            return False
-    except ValueError:
-        return False
