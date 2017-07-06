@@ -65,15 +65,16 @@ class Student(Codecooler):
     @classmethod
     def data_to_save(cls):
         '''
-        Unpack attributes of Student object as data to student_data list and add it to list_to_save.
+        Unpack attributes of all Students, each to row list and append it to string_to_save list'
+        Change lists to string.
 
         Returns:
-            list_to_save - list of lists
+            string
         '''
 
         string_to_save = []
         for student in cls.list_of_students:
-            row = [student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_list]
+            row = [student.name, student.surname, student.login, student.password, student.email, student.attendance, student.days_passed]
             string_to_save.append(row)
 
         return '\n'.join('|'.join(row) for row in string_to_save)
