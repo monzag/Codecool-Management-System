@@ -182,11 +182,11 @@ def hold_session():
     '''
     Holds procedural logic of program
     '''
+    Assignment.get_assignments_from_file('assignments.csv')
     Student.get_codecoolers_from_file('students.csv')
     Employee.get_codecoolers_from_file('employees.csv')
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
-    Assignment.get_assignments_from_file('assignments.csv')
 
     user = start_up()
     operate_on_user(user)

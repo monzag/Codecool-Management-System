@@ -24,7 +24,6 @@ class Student(Codecooler):
         """
 
         splitted_data_list = cls.load_data_from_file(file_name)
-        print(splitted_data_list)
 
         for element in splitted_data_list:
             name, surname, login, password, mail, attendance, days_passed = element
