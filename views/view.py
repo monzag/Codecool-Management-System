@@ -15,6 +15,7 @@ def print_menu(title, options, exit_message):
     Returns:
         Nothing, it just prints the menu in the console.
     '''
+    os.system('clear')
 
     option_number = 1
 
