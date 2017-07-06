@@ -14,7 +14,6 @@ def student_menu(user):
     Returns:
         None
     '''
-
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
     options = ['View grades', 'Submit assigment']
@@ -60,7 +59,6 @@ def view_grades(student):
     '''
     Show table with data about assignment-grades'
     '''
-
     table = assignment_controller.get_assignments_to_table(student)
     tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
     view.print_table(table, tittle_list)
