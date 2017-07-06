@@ -51,7 +51,7 @@ def submit_assigment(student):
     if number < len(student.assignments_list):
         assignment = student.assignments_list[number - 1]
         assignment_controller.change_assignment_to_done(assignment)
-        # Save
+        Student.save_students()
     else:
         view.print_message('Assignment does not exist!')
 
