@@ -13,6 +13,7 @@ def manager_menu(user):
     Returns:
         None
     '''
+
     titles = 'Hi {}! What would you like to do'.format(user.name)
     options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
                'Edit mentor data', 'Exit']
