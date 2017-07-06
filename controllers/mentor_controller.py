@@ -1,5 +1,3 @@
-import os
-
 from views import view
 
 from models.assignment import Assignment
@@ -25,7 +23,6 @@ def mentor_menu(user):
     end = False
     while not end:
 
-        os.system('clear')
         view.print_menu(title, options, exit_message)
         option = view.input_number()
 
@@ -54,12 +51,12 @@ def view_students():
         Nothing, it just prints the student list.
     '''
 
-    titles = ["Name", "Surname", "e-mail", "Attendance"]
+    titles = ["Name", "Surname", "e-mail", "Attendance", 'Total grade']
     students_info = []
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                             student.email, str(student.attendance)])
+                             student.email, str(student.attendance), str(student.total_grade)])
 
     view.print_table(students_info, titles)
 

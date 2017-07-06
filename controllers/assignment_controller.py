@@ -46,31 +46,6 @@ def create_assignment():
     Assignment.save_assignments_to_file()
 
 
-def calculate_total_grade(list_of_assigments):
-    '''
-    Given list of assigments calculates total grade
-
-    Paramters:
-        list_of_assigments : list of Assigment obj.
-
-    Returns:
-        total_grade : int representing percents
-    '''
-    total_grade = 0
-
-    if len(list_of_assigments) > 0:
-        grades = 0
-        max_grades = 0
-
-        for assigment in list_of_assigments:
-            grades += assigment.grade
-            max_grades += assigment.max_grade
-
-        total_grade = grades/max_grades * 100
-
-    return total_grade
-
-
 def change_assignment_to_done(assignment):
     '''
     Change undone assigment to done, and adds datetime
