@@ -100,4 +100,4 @@ class Student(Codecooler):
 
             total_grade = grades/max_grades * 100
 
-        return total_grade
+        return int(total_grade)
