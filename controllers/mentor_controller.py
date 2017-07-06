@@ -23,7 +23,7 @@ def mentor_menu(user):
     while not end:
         os.system('clear')
 
-        view.print_menu(title, options, exit_message)
+        views.view.print_menu(title, options, exit_message)
         option = view.input_number()
 
         if option == 1:
@@ -92,6 +92,29 @@ def check_attendance():
         index = get_student_index()
     except ValueError, IndexError:
         return views.view.print_message('Index does not exist!')
+
+    fullname = Student.list_of_students[int(index)].name + ' ' + Student.list_of_students[int(index)].surname
+    attendance = Student.list_of_students[int(index)].attendance
+    days_passed = int(Student.list_of_students[int(index)].days_passed)
+    views.view.print_message(fullname)
+    views.view.print_message("Attendance: ", attendance)
+
+    title = "Student attendance for today"
+    exit_message = 'Exit'
+    options = ['Present', 'Late', 'Absent']
+    views.view.print_menu(title, options, exit_message)
+    option = view.input_number()
+
+    if option == 1:
+        return attendance
+    if option == 2:
+        todays_value = 100 / days_passed
+        attendance -= todays_value * 0.2
+        return attendance
+    if option == 3:
+        todays_value = 100 / days_passed
+        attendance = -= todays_value
+        return attendance
 
 
 def add_student():
