@@ -1,3 +1,4 @@
-name1|test|undone|add_date|deadline|submit_date|30|60
-name2|login|status|add_date|deadline|submit_date|41|70
-name3|aaaa|status|add_date|deadline|submit_date|39|50
+hangman|anna|done|2017:06:05|2017:06:12|2017:06:10|30|60
+battleships|anna|undone|2017:07:05|2017:07:05|not submitted|0|60
+hangman|jan|done|2017:06:05|2017:06:12|2017:06:9|60|60
+battleships|jan|undone|2017:07:05|2017:07:05|not submitted|0|60
