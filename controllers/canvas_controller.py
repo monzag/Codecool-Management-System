@@ -54,15 +54,13 @@ def load_database():
     Logins.from_codecoolers(Student.list_of_students)
 
     Employee.get_codecoolers_from_file('employees.csv')
-    Logins.from_codecoolers(Student.list_of_employees)
+    Logins.from_codecoolers(Employee.list_of_employees)
 
     Mentor.get_codecoolers_from_file('mentors.csv')
-    Logins.from_codecoolers(Student.list_of_mentors)
+    Logins.from_codecoolers(Mentor.list_of_mentors)
 
     Manager.get_codecoolers_from_file('managers.csv')
-    Logins.from_codecoolers(Student.list_of_managers)
-
-    print(logins.list_of_logins)
+    Logins.from_codecoolers(Manager.list_of_managers)
 
 
 def choose_status():
