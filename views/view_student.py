@@ -1,6 +1,6 @@
 def data_to_student_menu(user):
     '''
-    Get data to print student menu in student controller.
+    Get data to print table in student menu (student controller).
 
     Args:
         user - object
@@ -17,10 +17,24 @@ def data_to_student_menu(user):
 
 
 def title_to_view_grades():
+    '''
+    Get title list to table in view_grades (student controller). 
+
+    Returns:
+        title_list - list
+    '''
+
     title_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
 
     return title_list
 
 
 def invalid_assignment_in_submit():
+    '''
+    Get text about invalid assignment to submit assignment (student controller). 
+
+    Returns:
+        string
+    '''
+
     return 'Assignment does not exist!'
