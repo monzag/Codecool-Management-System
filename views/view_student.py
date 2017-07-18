@@ -11,14 +11,14 @@ def data_to_student_menu(user):
 
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
-    options = ['View grades', 'Submit assigment']
+    options = ['View grades', 'Submit assigment', 'Show all students']
 
     return title, options, exit_message
 
 
 def title_to_view_grades():
     '''
-    Get title list to table in view_grades (student controller). 
+    Get title list to table in view_grades (student controller).
 
     Returns:
         title_list - list
