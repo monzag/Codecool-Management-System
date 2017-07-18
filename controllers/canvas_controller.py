@@ -54,6 +54,9 @@ def load_database():
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
 
+    if not (len(Mentor.list_of_mentors) > 0 and len(Employee.list_of_employees) > 0):
+        sys.exit()
+
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
 
 
