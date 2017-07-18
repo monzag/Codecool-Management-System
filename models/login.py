@@ -2,15 +2,13 @@ class Logins:
 
     list_of_logins = []
 
-    def __init__(self, new_login):
-        self.list_of_logins.append(new_login)
-
     @classmethod
     def from_codecoolers(cls, codecoolers):
         '''
+        From list of Codecooler obj. instances appends logins to class list_of_logins
         '''
         for codecooler in codecoolers:
-            cls(codecooler.login)
+            cls.list_of_logins.append(codecooler.login)
 
     def is_login_unique(self, new_login):
         return new_login in self.list_of_logins
