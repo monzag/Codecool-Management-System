@@ -26,6 +26,8 @@ def student_menu(user):
             view_grades(user)
         if option == 2:
             submit_assigment(user)
+        if option == 3:
+            display_all_students()
         if option == 0:
             end = True
 
