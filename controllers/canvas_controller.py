@@ -37,8 +37,6 @@ def start_up():
     user = None
     while not user:
         os.system('clear')
-
-        status = choose_status()
         user = log_in_as_user(status)
 
     return user
@@ -71,40 +69,6 @@ def load_database():
         sys.exit()
 
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
-
-
-def choose_status():
-    '''
-    Asks user about his privilige in accessing cerain program
-    features, and determining fallowing logging system
-
-    Returns:
-        status : str - representing privilige
-    '''
-    title = 'Do you want to log as'
-    exit_message = 'Exit program'
-    options = ['Student', 'Employee', 'Mentor', 'Manager']
-
-    status = None
-    while not status:
-        os.system('clear')
-
-        view.print_menu(title, options, exit_message)
-        option = view.input_number()
-
-        if option == 1:
-            status = 'Student'
-        if option == 2:
-            status = 'Employee'
-        if option == 3:
-            status = 'Mentor'
-        if option == 4:
-            status = 'Manager'
-        if option == 0:
-            close_program()
-            sys.exit()
-
-    return status
 
 
 def log_in_as_user(status):
