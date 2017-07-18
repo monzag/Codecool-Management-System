@@ -3,19 +3,22 @@ class Logins:
     list_of_logins = []
 
     @classmethod
-    def from_codecoolers(cls, codecoolers):
+    def from_codecoolers(cls, *args):
         '''
         From list of Codecooler obj. instances appends logins to class list_of_logins
         '''
-        for codecooler in codecoolers:
-            cls.list_of_logins.append(codecooler.login)
+        for codecoolers in args:
+            for codecooler in codecoolers:
+                cls.list_of_logins.append(codecooler.login)
 
-    def is_login_unique(self, new_login):
-        return new_login in self.list_of_logins
+    @classmethod
+    def is_login_unique(cls, new_login):
+        return not new_login in cls.list_of_logins
 
     @staticmethod
     def is_login_proper(new_login):
-        return 5 < new_login < 12 and '|' not in new_login
+        return (4 < len(new_login) < 12) and ('|' not in new_login)
 
-    def is_login_valid(self, new_login):
-        return self.is_login_proper() and self.is_login_unique()
+    @classmethod
+    def is_login_valid(cls, new_login):
+        return cls.is_login_proper(new_login) and cls.is_login_unique(new_login)
