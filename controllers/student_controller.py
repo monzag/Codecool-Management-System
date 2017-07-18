@@ -78,4 +78,4 @@ def view_all_students():
         students_info.append([student.name, student.surname, student.email])
 
     titles = view_student.data_to_view_students()
-    views.view.print_table(students_info, titles)
+    view.print_table(students_info, titles)
