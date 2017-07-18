@@ -15,7 +15,7 @@ class Logins:
 
     @staticmethod
     def is_login_proper(new_login):
-        return 5 < new_login < 12 and '|' not in new_login:
+        return 5 < new_login < 12 and '|' not in new_login
 
     def is_login_valid(self, new_login):
         return self.is_login_proper() and self.is_login_unique()
