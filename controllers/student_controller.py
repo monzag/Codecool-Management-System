@@ -27,7 +27,7 @@ def student_menu(user):
         if option == 2:
             submit_assigment(user)
         if option == 3:
-            display_all_students()
+            view_all_students()
         if option == 0:
             end = True
 
@@ -65,3 +65,17 @@ def view_grades(student):
     table = assignment_controller.get_assignments_to_table(student)
     title_list = view_student.title_to_view_grades()
     view.print_table(table, title_list)
+
+
+def view_all_students():
+    '''
+    Prints list of every student's name, surname, e-mail.
+    '''
+
+    students_info = []
+
+    for student in Student.list_of_students:
+        students_info.append([student.name, student.surname, student.email])
+
+    titles = view_student.data_to_view_students()
+    views.view.print_table(students_info, titles)
