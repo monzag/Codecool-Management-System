@@ -13,13 +13,16 @@ class Codecooler:
     @staticmethod
     def load_data_from_file(file_name):
         """
-        Loads Codecooler obj. instance information from csv file, splits them, and
-        creates a list.
+        With file name provaided creates list of Codecooler obj. instances,
+        stored in this file. It tiggers init of fallowing object, which holds
+        addition to class list.
+
+        Paramaters:
+            file_name : str
 
         Return:
-            list: list with Codecooler obj. instance data
+            constructors : list of lists representing data needed to create obj.
         """
-
         file_path = os.getcwd() + '/data/' + file_name
 
         constructors = []
@@ -34,10 +37,16 @@ class Codecooler:
     @classmethod
     def get_codecoolers_from_file(cls, file_name):
         """
-        Creates objects with data from splitted list.
+        Creates Codecooler instance objs. from data stored in csv file.
+
+        Parameters:
+            file_name : str
 
         Returns:
-                None
+            None
+
+        Initializes:
+            Codecooler obj. instances (all from file)
         """
         constructors = cls.load_data_from_file(file_name)
 
