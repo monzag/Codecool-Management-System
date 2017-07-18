@@ -10,3 +10,7 @@ def title_to_view_grades():
     title_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
 
     return title_list
+
+
+def invalid_assignment_in_submit():
+    return 'Assignment does not exist!'
