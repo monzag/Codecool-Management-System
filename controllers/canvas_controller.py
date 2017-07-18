@@ -49,18 +49,15 @@ def load_database():
     Initialize all objects stored in csv files
     '''
     Assignment.get_assignments_from_file('assignments.csv')
-
     Student.get_codecoolers_from_file('students.csv')
-    Logins.from_codecoolers(Student.list_of_students)
-
     Employee.get_codecoolers_from_file('employees.csv')
-    Logins.from_codecoolers(Employee.list_of_employees)
-
     Mentor.get_codecoolers_from_file('mentors.csv')
-    Logins.from_codecoolers(Mentor.list_of_mentors)
-
     Manager.get_codecoolers_from_file('managers.csv')
-    Logins.from_codecoolers(Manager.list_of_managers)
+
+    Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
+
+    print(Logins.is_login_valid('test'))
+    input()
 
 
 def choose_status():
