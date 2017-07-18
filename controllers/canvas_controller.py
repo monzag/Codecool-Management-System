@@ -121,17 +121,8 @@ def is_user_in_system(status, login, password):
     password = view.input_password()
         None - if password and login doesn't match
     '''
-    if status == 'Student':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Student.list_of_students)
-
-    if status == 'Employee':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Employee.list_of_employees)
-
-    if status == 'Mentor':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Mentor.list_of_mentors)
-
-    if status == 'Manager':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Manager.list_of_managers)
+    codecoolers = Student.list_of_students + Employee.list_of_employees + Mentor.list_of_mentors + Manager.list_of_managers
+    codecooler_controller.get_user_by_login_and_password(login, password, codecoolers)
 
 
 def operate_on_user(user):
