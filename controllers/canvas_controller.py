@@ -65,7 +65,7 @@ def load_database():
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
 
-    if not (len(Mentor.list_of_mentors) > 0 and len(Employee.list_of_employees) > 0):
+    if len(Manager.list_of_managers) < 1 or len(Employee.list_of_employees) < 1:
         err_msg = 'There is no database stored. Contact our support at zaganiacz.m@gmail.com'
         view.print_message(err_msg)
         sys.exit()
