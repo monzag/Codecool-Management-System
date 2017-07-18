@@ -46,13 +46,29 @@ def start_up():
 
 def load_database():
     '''
-    Initialize all objects stored in csv files
+    Initialize all objects stored in data/..
+    Close program if there is not enough database to function properly.
+
+    Parameters, Returns: None
+
+    Initialize:
+        Student objs.
+        Mentor objs.
+        Employee objs.
+        Manager objs.
+        Assigments objs.
+        Logins.list_of_logins
     '''
     Assignment.get_assignments_from_file('assignments.csv')
     Student.get_codecoolers_from_file('students.csv')
     Employee.get_codecoolers_from_file('employees.csv')
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
+
+    if not (len(Mentor.list_of_mentors) > 0 and len(Employee.list_of_employees) > 0):
+        err_msg = 'There is no database stored. Contact our support at zaganiacz.m@gmail.com'
+        view.print_message(err_msg)
+        sys.exit()
 
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
 
