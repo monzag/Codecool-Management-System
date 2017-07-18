@@ -13,7 +13,7 @@ def data_to_student_menu(user):
     exit_message = 'Exit'
     options = ['View grades', 'Submit assigment']
 
-    return title, exit_message, options
+    return title, options, exit_message
 
 
 def title_to_view_grades():
