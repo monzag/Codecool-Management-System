@@ -3,6 +3,7 @@ import sys
 
 from views import view
 
+from models.login import Logins
 from models.codecooler import Codecooler
 from models.student import Student
 from models.employee import Employee
@@ -43,6 +44,27 @@ def start_up():
     return user
 
 
+def load_database():
+    '''
+    Initialize all objects stored in csv files
+    '''
+    Assignment.get_assignments_from_file('assignments.csv')
+
+    Student.get_codecoolers_from_file('students.csv')
+    Logins.from_codecoolers(Student.list_of_students)
+
+    Employee.get_codecoolers_from_file('employees.csv')
+    Logins.from_codecoolers(Student.list_of_employees)
+
+    Mentor.get_codecoolers_from_file('mentors.csv')
+    Logins.from_codecoolers(Student.list_of_mentors)
+
+    Manager.get_codecoolers_from_file('managers.csv')
+    Logins.from_codecoolers(Student.list_of_managers)
+
+    print(logins.list_of_logins)
+
+
 def choose_status():
     '''
     Asks user about his privilige in accessing cerain program
@@ -81,8 +103,8 @@ def log_in_as_user(status):
     '''
     holds loging to system:
 
-    if user provided login and password were assosiated with existing 
-    Codecooler obj. instance, fucntion returns fallowing object 
+    if user provided login and password were assosiated with existing
+    Codecooler obj. instance, fucntion returns fallowing object
     otherwise will retry loging user to system
 
     Parameters:
@@ -142,10 +164,10 @@ def is_user_in_system(status, login, password):
 
 def operate_on_user(user):
     '''
-    Depending on type of user, opens differen priviliges menus which 
+    Depending on type of user, opens differen priviliges menus which
     are declared in different modules and hold users operation logic.
 
-    Fallowing disallows certain groups on accessing features they 
+    Fallowing disallows certain groups on accessing features they
     souldn't have access to.
 
     Parameters:
@@ -181,12 +203,7 @@ def hold_session():
     '''
     Holds procedural logic of program
     '''
-    Assignment.get_assignments_from_file('assignments.csv')
-    Student.get_codecoolers_from_file('students.csv')
-    Employee.get_codecoolers_from_file('employees.csv')
-    Mentor.get_codecoolers_from_file('mentors.csv')
-    Manager.get_codecoolers_from_file('managers.csv')
-
+    load_database()
     user = start_up()
     operate_on_user(user)
     close_program()
