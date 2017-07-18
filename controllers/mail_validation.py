@@ -7,12 +7,13 @@ def check_mail(mail):
     is in proper format.
 
     Return:
-            str: mail string if mail is valid_name
+            True: if mail is valid_name
             None: if mail is invalid
     """
 
     characters_list = list(punctuation)
     no_forbidden_characters = True
+    splitted_mail = mail.split("@")
 
     for character in characters_list:
         # Remove from characters list signs that are allowed.
@@ -24,6 +25,13 @@ def check_mail(mail):
             no_forbidden_characters = False
 
     if no_forbidden_characters:
-        # Check if '@' appears only once in mail
-        if mail.count("@") == 1:
-            return mail
+        # Check if '@' appears only once in mail and if "." is used
+        if mail.count("@") == 1 and splitted_mail[1].count(".") >= 1:
+
+            try:
+
+                if not (splitted_mail[1][0] == "." or splitted_mail[1][-1] == "."):
+                    return True
+
+            except IndexError:
+                return None
