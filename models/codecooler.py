@@ -21,13 +21,12 @@ class Codecooler:
         """
 
         file_path = os.getcwd() + '/data/' + file_name
-        if not os.path.exists(file_path):
-            raise FileNotFoundError("There is no such a file")
 
-        else:
+        if os.path.exists(file_path):
             with open(file_path, 'r') as csvfile:
                 read_data = csvfile.readlines()
-                splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
+
+            splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
 
         return splitted_data_list
 
