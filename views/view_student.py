@@ -38,3 +38,7 @@ def invalid_assignment_in_submit():
     '''
 
     return 'Assignment does not exist!'
+
+
+def data_to_view_students():
+    return ["Name", "Surname", "e-mail"]
