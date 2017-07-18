@@ -22,13 +22,14 @@ class Codecooler:
 
         file_path = os.getcwd() + '/data/' + file_name
 
+        constructors = []
         if os.path.exists(file_path):
             with open(file_path, 'r') as csvfile:
-                read_data = csvfile.readlines()
+                file_rows = csvfile.readlines()
 
-            splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
+            constructors = [line.replace('\n', '').split('|') for line in file_rows]
 
-        return splitted_data_list
+        return constructors
 
     @classmethod
     def get_codecoolers_from_file(cls, file_name):
@@ -38,7 +39,9 @@ class Codecooler:
         Returns:
                 None
         """
-        splitted_data_list = cls.load_data_from_file(file_name)
+        constructors = cls.load_data_from_file(file_name)
 
-        for element in splitted_data_list:
-            cls(element[0], element[1], element[2], element[3], element[4])
+        for constructor in constructors:
+            name, surname, login, password, email = constructor
+
+            cls(name, surname, login, password, email)
