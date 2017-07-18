@@ -38,6 +38,7 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
+
     view_grades(student)
 
     number = None
@@ -50,13 +51,15 @@ def submit_assigment(student):
         Assignment.save_assignments_to_file()
 
     else:
-        view.print_message('Assignment does not exist!')
+        text = view_student.invalid_assignment_in_submit()
+        view.print_message(text)
 
 
 def view_grades(student):
     '''
     Show table with data about assignment-grades'
     '''
+
     table = assignment_controller.get_assignments_to_table(student)
     title_list = view_student.title_to_view_grades()
     view.print_table(table, title_list)
