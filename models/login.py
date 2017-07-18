@@ -4,7 +4,14 @@ class Logins:
 
     def __init__(self, new_login):
         self.list_of_logins.append(new_login)
-    
+
+    @classmethod
+    def from_codecoolers(cls, codecoolers):
+        '''
+        '''
+        for codecooler in codecoolers:
+            cls(codecooler.login)
+
     def is_login_unique(self, new_login):
         return new_login in self.list_of_logins
 
