@@ -1,4 +1,4 @@
-class logins:
+class Logins:
 
     list_of_logins = []
 
@@ -10,8 +10,7 @@ class logins:
 
     @staticmethod
     def is_login_proper(new_login):
-        if 5 < new_login < 12:
-            if '|' not in new_login:
-                return True
+        return 5 < new_login < 12 and '|' not in new_login:
 
-        return False
+    def is_login_valid(self, new_login):
+        return self.is_login_proper() and self.is_login_unique()
