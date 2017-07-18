@@ -25,8 +25,7 @@ def start_up():
     and leading user thorugh logging into a system
 
     determines identity of user and his privilige in
-    accessing sertain functions of program
-
+    accessing certain functions of program
 
     Returns:
         user : Codecooler obj. instance
@@ -37,7 +36,7 @@ def start_up():
     user = None
     while not user:
         os.system('clear')
-        user = log_in_as_user(status)
+        user = log_in_as_user()
 
     return user
 
@@ -71,7 +70,7 @@ def load_database():
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
 
 
-def log_in_as_user(status):
+def log_in_as_user():
     '''
     holds loging to system:
 
@@ -80,14 +79,14 @@ def log_in_as_user(status):
     otherwise will retry loging user to system
 
     Parameters:
-        status : str - representing grout to serch in
+        None
 
     Returns:
         user : Codecooler obj. instance
     '''
     os.system('clear')
     login, password = get_password_and_login()
-    user = is_user_in_system(status, login, password)
+    user = is_user_in_system(login, password)
 
     return user
 
@@ -106,32 +105,30 @@ def get_password_and_login():
     return login, password
 
 
-def is_user_in_system(status, login, password):
+def is_user_in_system(login, password):
     '''
-    Determines whenever given login and password exist in certain grup
+    Determines whenever given login and password exist
 
     Parameters:
-        status: str - representing privilige group
         login: str
         password: str
 
     Returns:
-        Codecooler obj. instance
-        or    login = view.input_login()
-    password = view.input_password()
-        None - if password and login doesn't match
+        Codecooler obj. instance (or None if pass/logg does not match)
     '''
     codecoolers = Student.list_of_students + Employee.list_of_employees + Mentor.list_of_mentors + Manager.list_of_managers
-    codecooler_controller.get_user_by_login_and_password(login, password, codecoolers)
+    user = codecooler_controller.get_user_by_login_and_password(login, password, codecoolers)
+
+    return user
 
 
 def operate_on_user(user):
     '''
-    Depending on type of user, opens differen priviliges menus which
-    are declared in different modules and hold users operation logic.
+    Depending on type of user, opens different priviliges menus which
+    are declared in different modules and hold users specyfic operation logic.
 
     Fallowing disallows certain groups on accessing features they
-    souldn't have access to.
+    shouldn't have access to.
 
     Parameters:
         user : Codecooler obj. instance
