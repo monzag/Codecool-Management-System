@@ -1,4 +1,5 @@
 from views import view
+from views import view_student
 
 from controllers import assignment_controller
 
@@ -14,13 +15,10 @@ def student_menu(user):
     Returns:
         None
     '''
-    title = 'Hi {}! What would you like to do'.format(user.name)
-    exit_message = 'Exit'
-    options = ['View grades', 'Submit assigment']
 
     end = False
     while not end:
-
+        title, options, exit_message = view_student.data_to_student_menu(user)
         view.print_menu(title, options, exit_message)
         option = view.input_number()
 
@@ -40,6 +38,7 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
+
     view_grades(student)
 
     number = None
@@ -52,13 +51,15 @@ def submit_assigment(student):
         Assignment.save_assignments_to_file()
 
     else:
-        view.print_message('Assignment does not exist!')
+        text = view_student.invalid_assignment_in_submit()
+        view.print_message(text)
 
 
 def view_grades(student):
     '''
     Show table with data about assignment-grades'
     '''
+
     table = assignment_controller.get_assignments_to_table(student)
-    tittle_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
-    view.print_table(table, tittle_list)
+    title_list = view_student.title_to_view_grades()
+    view.print_table(table, title_list)
