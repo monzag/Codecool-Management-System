@@ -88,3 +88,17 @@ def index_error_message():
     message = 'Mentor with given index does not exist!'
 
     return message
+
+
+def view_mentors_titles():
+    """
+    Hold strings w column titles for printing mentors
+    list.
+
+    Return:
+            list: list of strings
+    """
+
+    titles = ["Name", "Surname", "e-mail"]
+
+    return titles
