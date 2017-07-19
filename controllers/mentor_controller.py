@@ -185,11 +185,11 @@ def get_valid_data():
     Returns:
         name, surname, login, email - string
     '''
-
-    name = check_valid(is_alpha, 'name')
-    surname = check_valid(is_alpha, 'surname')
-    login = check_valid(is_login_already_exist, 'login')
-    email = check_valid(check_mail, 'e-mail')
+    name_txt, surname_txt, login_txt, email_txt = mentor_view.get_data_to_add_student()
+    name = check_valid(is_alpha, name_txt)
+    surname = check_valid(is_alpha, surname_txt)
+    login = check_valid(is_login_already_exist, login_txt)
+    email = check_valid(check_mail, email_txt)
 
     return name, surname, login, email
 
@@ -207,24 +207,10 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        title = 'Write ' + message
+        title = 'Write the data below'
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
-    return ''.join(user_input)
-
-
-def is_not_empty(user_input):
-    '''
-    Returns True if length user_input is bigger than 0.
-
-    Args:
-        user_input - string
-
-    Returns:
-        bool
-    '''
-    if len(user_input) > 0:
-        return True
+    return user_input
 
 
 def is_login_already_exist(user_input):
