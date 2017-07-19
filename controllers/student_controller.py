@@ -2,6 +2,7 @@ from views import view
 from views import view_student
 
 from controllers import assignment_controller
+from controllers import codecooler_controller
 
 from models.student import Student
 from models.assignment import Assignment
@@ -28,6 +29,8 @@ def student_menu(user):
             submit_assigment(user)
         if option == 3:
             view_all_students()
+        if option == 4:
+            change_password()
         if option == 0:
             end = True
 
@@ -79,3 +82,7 @@ def view_all_students():
 
     titles = view_student.data_to_view_students()
     view.print_table(students_info, titles)
+
+
+def change_password():
+
