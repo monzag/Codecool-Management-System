@@ -41,3 +41,8 @@ class Attendance:
             student_login, date, attendance = element
             date = cls.create_datetime(cls, date)
             cls(student_login, date, attendance)
+    @staticmethod
+    def create_datetime(self, date):
+
+        year, month, day = date.split('-')
+        return datetime.date(int(year), int(month), int(day))
