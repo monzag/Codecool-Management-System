@@ -220,13 +220,29 @@ def print_message(message):
 
 def print_welcome_screen():
 
+    os.system('clear')
+
     file_path = os.getcwd() + "/views/start_message.txt"
     with open(file_path, "r") as startup:
         for line in startup:
             print(line, end='')
 
 
-def input_login():
+def input_login(first_attempt):
+    '''
+    Takes input from user. If user filed to login to system before, will additionaly inform,
+    about worng login-password
+
+    Parameters:
+        first_attempt : bool
+
+    Returns:
+        login : str
+    '''
+    os.system('clear')
+
+    if not first_attempt:
+        print('Invalid login or password. Try again')
 
     print('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     login = input("  LOGIN:  ")
@@ -238,6 +254,8 @@ def input_password():
 
     print('\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     password = getpass.getpass("  PASSWORD:  ")
+
+    os.system('clear')
 
     return password
 
@@ -264,6 +282,8 @@ def wait_until_key_pressed():
 
 
 def print_end_screen():
+
+    os.system('clear')
 
     file_path = os.getcwd() + "/views/quit_message.txt"
     with open(file_path, "r") as startup:
