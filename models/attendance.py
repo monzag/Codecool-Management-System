@@ -26,3 +26,18 @@ class Attendance:
                 splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
 
         return splitted_data_list
+    @classmethod
+    def get_attendance_from_file(cls, filename):
+        """
+        Creates objects with data from splitted list.
+
+        Returns:
+            None
+        """
+
+        splitted_data_list = cls.load_data_from_file(filename)
+
+        for element in splitted_data_list:
+            student_login, date, attendance = element
+            date = cls.create_datetime(cls, date)
+            cls(student_login, date, attendance)
