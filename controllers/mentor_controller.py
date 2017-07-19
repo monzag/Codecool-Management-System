@@ -171,9 +171,9 @@ def add_student():
 
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
-    print('Password: ', password)
+    mentor_view.print_new_password(password)
     total_grade = 100
-    new_student = Student(100, 1, total_grade, name, surname, login, password, email)
+    new_student = Student(total_grade, name, surname, login, password, email)
 
     Student.save_students()
 
@@ -207,24 +207,10 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        title = 'Write ' + message
+        title = "Type the data below"
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
     return ''.join(user_input)
-
-
-def is_not_empty(user_input):
-    '''
-    Returns True if length user_input is bigger than 0.
-
-    Args:
-        user_input - string
-
-    Returns:
-        bool
-    '''
-    if len(user_input) > 0:
-        return True
 
 
 def is_login_already_exist(user_input):
@@ -274,7 +260,7 @@ def remove_student():
         index = get_student_index()
         del Student.list_of_students[int(index)]
     except (ValueError, IndexError):
-        view.print_message('Index does not exist!')
+        mentor_view.index_doesnt_exist()
 
     Student.save_students()
 
@@ -288,8 +274,7 @@ def get_student_index():
     Returns:
         index (int)
     """
-    labels = ["Index"]
-    title = "Type index number of student"
+    labels, title = mentor_view.data_get_student_index()
     index = view.get_inputs(labels, title)[0]
 
     if not index.isdigit():
