@@ -226,8 +226,13 @@ def print_welcome_screen():
             print(line, end='')
 
 
-def input_login():
-
+def input_login(first_attempt):
+    '''
+    Takes input from user. If user filed to login to system before, will additionaly inform,
+    about worng login-password
+    '''
+    if not first_attempt:
+        print('Invalid login or password. Try again')
     print('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     login = input("  LOGIN:  ")
 
