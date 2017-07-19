@@ -65,9 +65,6 @@ def get_student_total_grade(student_index):
         max_grade += assignment.max_grade
         grade += assignment.solutions[student_index].grade
 
-    print(max_grade, grade)
-    input()
-
     total_grade = grade / max_grade * 100
 
     return '{:3.2f} %'.format(total_grade)
