@@ -75,3 +75,16 @@ def value_error_message():
     message = "Please type in only numbers!"
 
     return message
+
+
+def index_error_message():
+    """
+    Hold string containing index error message.
+
+    Return:
+            str: error message
+    """
+
+    message = 'Mentor with given index does not exist!'
+
+    return message
