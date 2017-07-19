@@ -100,7 +100,7 @@ class Assignment:
         return solutions_list
 
     @classmethod
-    def save_to_file(cls, file_name):
+    def save_assignments_to_file(cls, file_name):
         '''
         Save all stored Assignment objs. and it's solutions to file
 
@@ -163,6 +163,6 @@ class Assignment:
     def csv_string(self):
         return '{}|{}|{}|{}'.format(self.name, self.add_date, self.deadline, self.max_grade)
 
-    @property
-    def amount_of_assignments(self):
-        return len(self.list_of_assignments)
+    @classmethod
+    def amount_of_assignments(cls):
+        return len(cls.list_of_assignments)
