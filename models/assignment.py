@@ -16,40 +16,48 @@ class Assignment:
         Assignment.list_of_assignments.append(self)
 
     @classmethod
-    def from_folder(cls):
+    def from_file(cls, file_name):
         '''
         '''
-        file_path = os.getcwd() + '/data/assigments/'
-        for file_name in os.listdir(file_path):
-            if file_name.endswith('.csv'):
-                cls.from_file(file_path + file_name)
-
-    def from_file(cls, file_path):
-        '''
-        '''
-        if os.path.exists(file_path):
-
+        file_path = os.getcwd() + '/data/' + file_name
+        if os.path.exist(file_path):
             with open(file_path, 'r') as data:
-                file_rows = data.read.split('$')
+                assigments_data = data.split('|assignment|')
 
-            name, add_date, deadline, max_grade = file_rows[0].replace('\n', '').split('|')
-            solutions = cls.assign_solutions(file_rows)
+                cls.for_assignment_in_file(assignements_data)
+
+    @staticmethod
+    def split_assignment_and_solutions(file_rows):
+        '''
+        '''
+        assignment, solutions = file_rows.split('|solutions|')
+
+        assignment = assignment.replace('\n', '').split('|')
+
+        solutions = solutions.split('\n')
+        solutions = [solution.split('|') for solution in solutions]
+
+        return assignment, solutions
+
+    @classmethod
+    def for_assignment_in_file(cls, assignments_list):
+        '''
+        '''
+        for assignment_data in assignments_lists:
+            assignment, solutions = cls.split_assignment_and_solutions(assignment_data)
+
+            name, add_date, deadline, max_grade = assignment
+            solutions = cls.assign_solutions(solutions)
 
             cls(name, add_date, deadline, max_grade, solutions)
 
-    @classmethod
-    def assign_solutions(cls, file_rows):
+    @staticmethod
+    def assign_solutions(solutions):
         '''
         '''
-        solutions = []
-
-        for row in file_rows[1:]:
-            row = row.replace('\n', '').split('|')
-            solution = Solutions.from_list(row)
-            solutions.append(solution)
+        solutions_list = []
+        for solution in solutions:
+            solution = Solution.from_list(solution)
+            solutions_list.append(solution)
 
         return solutions
-
-    @classmethod
-    def save_assignments():
-        pass
