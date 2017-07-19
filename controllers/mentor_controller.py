@@ -5,6 +5,7 @@ from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
+from controllers import mail_validation
 
 
 def mentor_menu(user):
@@ -181,11 +182,10 @@ def add_student():
     """
     labels = ["Name", "Surname", "Login", "e-mail"]
     title = "Provide informations about new student"
-    invalid = True
-    while invalid:
-        inputs = view.get_inputs(labels, title)
-        name, surname, login, email = inputs[0], inputs[1], inputs[2], inputs[3]
-        invalid = is_invalid(name, surname, login, email)
+    '''valid = False
+    while not valid:'''
+    # name, surname, login, email = inputs[0], inputs[1], inputs[2], inputs[3]
+    name, surname, login, email = get_valid_data()
     password = get_random_password()
     new_student = Student(100, 1, name, surname, login, password, email)
 
@@ -199,13 +199,14 @@ def get_random_password():
 def check_valid(function, message):
     is_valid = None
     while not is_valid:
-        user_input = input(text)
-        is_valid = function(user_input)
+        user_input = view.get_inputs([message], ' ')
+        is_valid = function(user_input[0])
     return user_input
 
 
 def is_not_empty(user_input):
-    pass
+    if len(user_input) > 0:
+        return True
 
 
 def is_alpha(user_input):
@@ -213,10 +214,18 @@ def is_alpha(user_input):
         return True
 
 
-def is_invalid(name, surname, login, email):
-    check_valid_name = check_valid(is_alpha, 'Name: ')
-    check_valid_surname = check_valid(is_alpha, 'Surname: ')
-    check_valid_login = 
+def get_valid_data():
+    name = check_valid(is_alpha, 'Name: ')
+    surname = check_valid(is_alpha, 'Surname: ')
+    # login = mail_validation.check_mail()
+    email = check_email()
+    email = mail_validation.check_mail(email)
+
+    return name, surname, login, email
+
+
+def check_email():
+    pass
 
 
 def remove_student():
