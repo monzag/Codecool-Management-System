@@ -34,7 +34,7 @@ def input_number():
     if number.isdigit():
         return int(number)
 
-    return number
+    return None
 
 
 def print_table(table, title_list):
@@ -306,6 +306,3 @@ def print_end_screen():
             print(line, end='')
 
     wait_until_key_pressed()
-
-
-
