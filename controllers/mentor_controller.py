@@ -210,6 +210,15 @@ def is_not_empty(user_input):
 
 
 def is_alpha(user_input):
+    '''
+    Returns True if user_input is alpha.
+
+    Args:
+        user_input - string
+
+    Returns:
+        bool
+    '''
     if user_input.isalpha():
         return True
 
@@ -217,15 +226,11 @@ def is_alpha(user_input):
 def get_valid_data():
     name = check_valid(is_alpha, 'Name: ')
     surname = check_valid(is_alpha, 'Surname: ')
-    # login = mail_validation.check_mail()
-    email = check_email()
-    email = mail_validation.check_mail(email)
+    login = check_valid(is_not_empty, 'Login: ')
+    is_email = mail_validation.check_mail()
+    email = check_email(is_email, 'E-mail: ')
 
     return name, surname, login, email
-
-
-def check_email():
-    pass
 
 
 def remove_student():
