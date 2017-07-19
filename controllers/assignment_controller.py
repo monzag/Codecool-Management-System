@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from models.assignment import Assignment
@@ -31,7 +32,7 @@ def submit_solution_to_assignment(assignment, student_index):
     if solution.submit_date == '0':
 
         solution.submit_date = get_submit_date()
-        solution.file_name = solution.get_file_name(student_index, assignment.name)
+        solution.file_name = assignment.name + '_' + str(student_index) + 'txt'
         save_solution_to_file(solution.file_name)
 
     else:
@@ -49,5 +50,6 @@ def save_solution_to_file(file_name):
     '''
     text = assignment_view.get_submision_text()
 
-    with open(file_name, 'w+') as solution_file:
+    file_path = os.getcwd() + '/data/solutions/' + file_name
+    with open(file_path, 'w+') as solution_file:
         solution_file.write(text)
