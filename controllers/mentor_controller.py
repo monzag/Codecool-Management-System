@@ -169,19 +169,13 @@ def add_student():
             Nothing, it just adds the student to the list.
     """
 
-    labels = ["Name", "Surname", "Login", "e-mail"]
-    title = "Provide informations about new student"
-
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
+    print('Password: ', password)
     total_grade = 100
     new_student = Student(100, 1, total_grade, name, surname, login, password, email)
 
     Student.save_students()
-
-
-def get_random_password():
-    return 'test'
 
 
 def get_valid_data():
@@ -192,10 +186,10 @@ def get_valid_data():
         name, surname, login, email - string
     '''
 
-    name = check_valid(is_alpha, 'Name: ')
-    surname = check_valid(is_alpha, 'Surname: ')
-    login = check_valid(is_not_empty, 'Login: ')
-    email = check_valid(check_mail, 'E-mail: ')
+    name = check_valid(is_alpha, 'name')
+    surname = check_valid(is_alpha, 'surname')
+    login = check_valid(is_login_already_exist, 'login')
+    email = check_valid(check_mail, 'e-mail')
 
     return name, surname, login, email
 
@@ -213,8 +207,9 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        user_input = view.get_inputs([message], ' ')
-        is_valid = function(user_input[0])
+        title = 'Write ' + message
+        user_input = view.get_inputs([message], title)[0]
+        is_valid = function(user_input)
     return ''.join(user_input)
 
 
@@ -229,6 +224,26 @@ def is_not_empty(user_input):
         bool
     '''
     if len(user_input) > 0:
+        return True
+
+
+def is_login_already_exist(user_input):
+    '''
+    Check that user_input is not empty string.
+    If not, check that login isn't occupied by another students.
+    Returns True if not.
+
+    Args:
+        user_input - string
+
+    Returns:
+        bool
+    '''
+    if len(user_input) > 0:
+        for student in Student.list_of_students:
+            if student.login == user_input:
+                return None
+
         return True
 
 
