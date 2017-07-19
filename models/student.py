@@ -11,7 +11,6 @@ class Student(Codecooler):
     def __init__(self, total_grade, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
-        self.total_grade = self.calculate_total_grade()
 
     @classmethod
     def get_codecoolers_from_file(cls, file_name):
@@ -70,27 +69,3 @@ class Student(Codecooler):
             string_to_save.append(row)
 
         return '\n'.join('|'.join(row) for row in string_to_save)
-
-    def calculate_total_grade(self):
-        '''
-        Given list of assigments calculates total grade
-
-        Paramters:
-            list_of_assigments : list of Assigment obj.
-
-        Returns:
-            total_grade : int representing percents
-        '''
-        total_grade = 0
-
-        if len(self.assignments_list) > 0:
-            grades = 0
-            max_grades = 0
-
-            for assignment in self.assignments_list:
-                grades += assignment.grade
-                max_grades += assignment.max_grade
-
-            total_grade = grades/max_grades * 100
-
-        return int(total_grade)
