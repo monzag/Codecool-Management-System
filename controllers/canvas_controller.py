@@ -59,9 +59,6 @@ def load_database():
 
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
 
-    print(Logins.is_login_valid('test'))
-    input()
-
 
 def choose_status():
     '''
