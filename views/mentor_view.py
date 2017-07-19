@@ -30,3 +30,22 @@ def get_data_to_add_student():
         name, surname, login, email - string
     '''
     return 'Name', 'Surname', 'Login', 'E-mail'
+
+
+def print_new_password(password):
+
+    print('Password: ', password)
+
+
+def data_get_student_index():
+
+    labels = ["Index"]
+    title = "Type index number of student"
+
+    return labels, title
+
+
+def index_doesnt_exist():
+
+    print("Index does not exist!")
+
