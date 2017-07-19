@@ -45,3 +45,17 @@ class Solution:
     @property
     def csv_string(self):
         return '{}|{}|{}'.format(self.grade, self.submit_date, self.file_name)
+
+    @property
+    def formated_grade(self):
+        if grade > 0:
+            return str(grade)
+        else:
+            return 'not graded yet'
+
+    @property
+    def formated_submit_date(self):
+        if submit_date != '0':
+            return submit_date
+        else:
+            return 'not submited yet'
