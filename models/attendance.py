@@ -46,3 +46,15 @@ class Attendance:
 
         year, month, day = date.split('-')
         return datetime.date(int(year), int(month), int(day))
+
+    def save_attendance_to_file(self, filename):
+
+        file_path = os.getcwd() + '/data/' + filename
+
+        if os.path.exists(os.getcwd() + '/data/' + filename):
+            with open(file_path, 'a') as csvfile:
+                csvfile.append(self.data_to_save())
+
+        else:
+            with open(file_path, 'w') as csvfile:
+                csvfile.write(self.data_to_save())
