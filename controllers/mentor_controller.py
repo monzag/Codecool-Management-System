@@ -197,6 +197,16 @@ def get_random_password():
 
 
 def check_valid(function, message):
+    '''
+    Get input from user and check valid by proper function.
+
+    Args:
+        function
+        message - str
+
+    Returns:
+        user_input - string
+    '''
     is_valid = None
     while not is_valid:
         user_input = view.get_inputs([message], ' ')
