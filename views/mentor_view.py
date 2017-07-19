@@ -11,7 +11,7 @@ def menu_labels(user):
 def data_to_check_attendance():
 
     title = "Student attendance for today"
-    exit_message = 'Back to Main Menu (NOTICE: You will have to check whole attendance again for today!)'
+    exit_message = 'Back to Main Menu'
     options = ['Present', 'Late', 'Absent']
 
     return title, exit_message, options
