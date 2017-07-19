@@ -20,3 +20,25 @@ def data_to_check_attendance():
 def attendance_checked():
 
     print("\nAll attendance for today is checked.\n")
+
+
+def data_to_add_student():
+
+    return ['Name', 'Surname', 'Login', 'E-mail']
+
+
+def print_new_password(password):
+
+    print('Password: ', password)
+
+
+def data_get_student_index():
+
+    labels = ["Index"]
+    title = "Type index number of student"
+
+    return labels, title
+
+def index_doesnt_exist():
+
+    print("Index does not exist!")
