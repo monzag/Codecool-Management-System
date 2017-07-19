@@ -40,6 +40,8 @@ class Student(Codecooler):
             if att.student_login == self.login:
                 total_attendance += att.today_value
                 days_count += 1
+        if days_count == 0:
+            return 100
 
         return total_attendance // days_count
 
