@@ -24,7 +24,7 @@ def title_to_view_grades():
         title_list - list
     '''
 
-    title_list = ['assignment', 'add date', 'deadline', 'max grade', 'grade', 'submit date']
+    title_list = ['assignment', 'add date', 'deadline', 'submit date', 'grade', 'max grade']
 
     return title_list
 

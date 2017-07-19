@@ -64,8 +64,9 @@ def view_grades(student):
     '''
     Show table with data about assignment-grades'
     '''
+    student_index = Student.list_of_students.index(student)
 
-    table = assignment_controller.get_assignments_to_table(student)
+    table = assignment_controller.get_assignments_to_table(student_index)
     title_list = view_student.title_to_view_grades()
     view.print_table(table, title_list)
 
@@ -94,4 +95,3 @@ def change_password(student):
 
     codecooler_controller.change_password(student)
     Student.save_students()
-
