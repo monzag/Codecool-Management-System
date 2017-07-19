@@ -1,5 +1,6 @@
 import string
 from random import choice
+from views import view
 
 
 def get_user_by_login_and_password(login, password, codecoolers):
@@ -56,3 +57,7 @@ def get_random_password():
         password += choice(digits)
 
     return password
+
+
+def change_password(user):
+    view.
