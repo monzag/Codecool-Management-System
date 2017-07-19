@@ -191,10 +191,6 @@ def add_student():
     Student.save_students()
 
 
-def get_random_password():
-    return 'test'
-
-
 def get_valid_data():
     '''
     Get valid data and return it.
