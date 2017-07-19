@@ -35,10 +35,7 @@ def start_up():
 
     user = log_in_as_user(True)
     while not user:
-        os.system('clear')
         user = log_in_as_user(False)
-
-    os.system('clear')
 
     return user
 

@@ -230,9 +230,18 @@ def input_login(first_attempt):
     '''
     Takes input from user. If user filed to login to system before, will additionaly inform,
     about worng login-password
+
+    Parameters:
+        first_attempt : bool
+
+    Returns:
+        login : str
     '''
+    os.system('clear')
+
     if not first_attempt:
         print('Invalid login or password. Try again')
+
     print('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     login = input("  LOGIN:  ")
 
@@ -243,6 +252,8 @@ def input_password():
 
     print('\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
     password = getpass.getpass("  PASSWORD:  ")
+
+    os.system('clear')
 
     return password
 
