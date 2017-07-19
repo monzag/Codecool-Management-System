@@ -1,3 +1,7 @@
+import string
+from random import choice
+
+
 def get_user_by_login_and_password(login, password, codecoolers):
     '''
     Searches given list of Codecooler obj. and compares passwords and logins
@@ -35,3 +39,20 @@ def get_codecoolers_with_mails(codecoolers):
         table.append([codecooler.name, codecooler.surname, codecooler.email, '{}%'.format(codecooler.attendance)])
 
     return table
+
+
+def get_random_password():
+    '''
+    Get random digit and letter to create password (6 signs).
+
+    Returns:
+        password - string
+    '''
+
+    digits = string.hexdigits
+    password = ''
+    length_password = 6
+    while len(password) < length_password:
+        password += choice(digits)
+
+    return password

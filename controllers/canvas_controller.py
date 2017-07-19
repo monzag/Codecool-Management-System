@@ -26,8 +26,7 @@ def start_up():
     and leading user thorugh logging into a system
 
     determines identity of user and his privilige in
-    accessing sertain functions of program
-
+    accessing certain functions of program
 
     Returns:
         user : Codecooler obj. instance
@@ -35,19 +34,27 @@ def start_up():
     view.print_welcome_screen()
     view.wait_until_key_pressed()
 
-    user = None
+    user = log_in_as_user(True)
     while not user:
-        os.system('clear')
-
-        status = choose_status()
-        user = log_in_as_user(status)
+        user = log_in_as_user(False)
 
     return user
 
 
 def load_database():
     '''
-    Initialize all objects stored in csv files
+    Initialize all objects stored in data/..
+    Close program if there is not enough database to function properly.
+
+    Parameters, Returns: None
+
+    Initialize:
+        Student objs.
+        Mentor objs.
+        Employee objs.
+        Manager objs.
+        Assigments objs.
+        Logins.list_of_logins
     '''
     Assignment.get_assignments_from_file('assignments.csv')
     Attendance.get_attendance_from_file('attendance.csv')
@@ -56,45 +63,15 @@ def load_database():
     Mentor.get_codecoolers_from_file('mentors.csv')
     Manager.get_codecoolers_from_file('managers.csv')
 
+    if len(Manager.list_of_managers) < 1 or len(Employee.list_of_employees) < 1:
+        err_msg = 'There is no database stored. Contact our support at zaganiacz.m@gmail.com'
+        view.print_message(err_msg)
+        sys.exit()
 
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
 
 
-def choose_status():
-    '''
-    Asks user about his privilige in accessing cerain program
-    features, and determining fallowing logging system
-
-    Returns:
-        status : str - representing privilige
-    '''
-    title = 'Do you want to log as'
-    exit_message = 'Exit program'
-    options = ['Student', 'Employee', 'Mentor', 'Manager']
-
-    status = None
-    while not status:
-        os.system('clear')
-
-        view.print_menu(title, options, exit_message)
-        option = view.input_number()
-
-        if option == 1:
-            status = 'Student'
-        if option == 2:
-            status = 'Employee'
-        if option == 3:
-            status = 'Mentor'
-        if option == 4:
-            status = 'Manager'
-        if option == 0:
-            close_program()
-            sys.exit()
-
-    return status
-
-
-def log_in_as_user(status):
+def log_in_as_user(first_attempt):
     '''
     holds loging to system:
 
@@ -103,67 +80,58 @@ def log_in_as_user(status):
     otherwise will retry loging user to system
 
     Parameters:
-        status : str - representing grout to serch in
+        first_attempt : bool
 
     Returns:
         user : Codecooler obj. instance
     '''
-    os.system('clear')
-    login, password = get_password_and_login()
-    user = is_user_in_system(status, login, password)
+    login, password = get_password_and_login(first_attempt)
+    user = is_user_in_system(login, password)
 
     return user
 
 
-def get_password_and_login():
+def get_password_and_login(first_attempt):
     '''
     Takes loggin information from user
+
+    Parameters:
+        first_attempt : bool
 
     Returns:
         login: str
         pasword: str
     '''
-    login = view.input_login()
+    login = view.input_login(first_attempt)
     password = view.input_password()
 
     return login, password
 
 
-def is_user_in_system(status, login, password):
+def is_user_in_system(login, password):
     '''
-    Determines whenever given login and password exist in certain grup
+    Determines whenever given login and password exist
 
     Parameters:
-        status: str - representing privilige group
         login: str
         password: str
 
     Returns:
-        Codecooler obj. instance
-        or    login = view.input_login()
-    password = view.input_password()
-        None - if password and login doesn't match
+        Codecooler obj. instance (or None if pass/logg does not match)
     '''
-    if status == 'Student':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Student.list_of_students)
+    codecoolers = Student.list_of_students + Employee.list_of_employees + Mentor.list_of_mentors + Manager.list_of_managers
+    user = codecooler_controller.get_user_by_login_and_password(login, password, codecoolers)
 
-    if status == 'Employee':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Employee.list_of_employees)
-
-    if status == 'Mentor':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Mentor.list_of_mentors)
-
-    if status == 'Manager':
-        return codecooler_controller.get_user_by_login_and_password(login, password, Manager.list_of_managers)
+    return user
 
 
 def operate_on_user(user):
     '''
-    Depending on type of user, opens differen priviliges menus which
-    are declared in different modules and hold users operation logic.
+    Depending on type of user, opens different priviliges menus which
+    are declared in different modules and hold users specyfic operation logic.
 
     Fallowing disallows certain groups on accessing features they
-    souldn't have access to.
+    shouldn't have access to.
 
     Parameters:
         user : Codecooler obj. instance
@@ -190,7 +158,6 @@ def close_program():
     '''
     Prints end screen
     '''
-    os.system('clear')
     view.print_end_screen()
 
 

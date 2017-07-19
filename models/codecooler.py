@@ -13,33 +13,44 @@ class Codecooler:
     @staticmethod
     def load_data_from_file(file_name):
         """
-        Loads Codecooler obj. instance information from csv file, splits them, and
-        creates a list.
+        With file name provaided creates list of Codecooler obj. instances,
+        stored in this file. It tiggers init of fallowing object, which holds
+        addition to class list.
+
+        Paramaters:
+            file_name : str
 
         Return:
-            list: list with Codecooler obj. instance data
+            constructors : list of lists representing data needed to create obj.
         """
-
         file_path = os.getcwd() + '/data/' + file_name
-        if not os.path.exists(file_path):
-            raise FileNotFoundError("There is no such a file")
 
-        else:
+        constructors = []
+        if os.path.exists(file_path):
             with open(file_path, 'r') as csvfile:
-                read_data = csvfile.readlines()
-                splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
+                file_rows = csvfile.readlines()
 
-        return splitted_data_list
+            constructors = [line.replace('\n', '').split('|') for line in file_rows]
+
+        return constructors
 
     @classmethod
     def get_codecoolers_from_file(cls, file_name):
         """
-        Creates objects with data from splitted list.
+        Creates Codecooler instance objs. from data stored in csv file.
+
+        Parameters:
+            file_name : str
 
         Returns:
-                None
-        """
-        splitted_data_list = cls.load_data_from_file(file_name)
+            None
 
-        for element in splitted_data_list:
-            cls(element[0], element[1], element[2], element[3], element[4])
+        Initializes:
+            Codecooler obj. instances (all from file)
+        """
+        constructors = cls.load_data_from_file(file_name)
+
+        for constructor in constructors:
+            name, surname, login, password, email = constructor
+
+            cls(name, surname, login, password, email)
