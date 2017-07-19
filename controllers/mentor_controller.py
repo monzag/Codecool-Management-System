@@ -220,8 +220,9 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        user_input = view.get_inputs([message], ' ')
-        is_valid = function(user_input[0])
+        title = 'Write ' + message
+        user_input = view.get_inputs([message], title)[0]
+        is_valid = function(user_input)
     return ''.join(user_input)
 
 
