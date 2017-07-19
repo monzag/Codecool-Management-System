@@ -70,9 +70,10 @@ def change_password(user):
     Returns:
         None
     '''
-    old_password = view.get_inputs(['Write old password: '], ' ')
+
+    old_password = view.get_inputs(['Old password'], 'Type your old password')[0]
     if old_password == user.password:
-        new_password = view.get_inputs(['Write new password: '], ' ')
+        new_password = view.get_inputs(['New password'], 'Type your new password')[0]
         user.password = new_password
     else:
         view.print_message('Bad old password')
