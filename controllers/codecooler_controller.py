@@ -60,4 +60,20 @@ def get_random_password():
 
 
 def change_password(user):
-    view.
+    '''
+    Get old password from user and if is correct, change password for new.
+    If is incorrect, print error message.
+
+    Args:
+        user - object
+
+    Returns:
+        None
+    '''
+    old_password = view.get_inputs(['Write old password: '], ' ')
+    if old_password == user.password:
+        new_password = view.get_inputs(['Write new password: '], ' ')
+        user.password = new_password
+    else:
+        view.print_message('Bad old password')
+
