@@ -25,7 +25,7 @@ class Solution:
         return cls(int(grade), submit_date, file_name)
 
     @classmethod
-    def get_file_name(cls, assignment_name, student_name):
+    def get_file_name(cls, student_index, assignment_name):
         '''
         Creates unique name for file storing solution added to data.
 
@@ -37,7 +37,7 @@ class Solution:
             file_path : str
 
         '''
-        file_name = assignment_name + '_' + student_name + '.txt'
+        file_name = str(student_index) + '_' + assignment_name + '.txt'
         file_path = os.getcwd() + '/data/solutions/' + file_name
 
         return file_path
