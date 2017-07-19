@@ -11,7 +11,6 @@ class Student(Codecooler):
     def __init__(self, total_grade, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
-        self.assignments_list = self.get_assignment_list()
         self.total_grade = self.calculate_total_grade()
 
     @classmethod
