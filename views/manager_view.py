@@ -48,3 +48,17 @@ def manager_menu_titles(user):
     exit_message = "Exit"
 
     return title, options, exit_message
+
+
+def view_students_titles():
+    """
+    Hold strings w column titles for printing students
+    list.
+
+    Return:
+            list: list of strings
+    """
+
+    titles = ["Name", "Surname", "e-mail", "Attendance"]
+
+    return titles
