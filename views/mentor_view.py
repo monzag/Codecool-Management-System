@@ -4,6 +4,8 @@ def menu_labels(user):
     exit_message = 'Exit'
     options = ['View students', 'Add assignment', 'Grade assignment',
                'Check attendance', 'Add student', 'Remove student']
+
+
 def data_to_check_attendance():
 
     title = "Student attendance for today"
@@ -11,3 +13,8 @@ def data_to_check_attendance():
     options = ['Present', 'Late', 'Absent']
 
     return title, exit_message, options
+
+
+def attendance_checked():
+
+    print("\nAll attendance for today is checked.\n")
