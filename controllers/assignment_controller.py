@@ -11,8 +11,8 @@ def get_assignments_to_table(student_index):
         solution.append(assignment.add_date)
         solution.append(assignment.deadline)
         solution.append(assignment.max_grade)
-        solution.append(assignment.solutions[student_index].formated_submit_date)
         solution.append(assignment.solutions[student_index].formated_grade)
+        solution.append(assignment.solutions[student_index].formated_submit_date)
 
         table.append(solution)
 
