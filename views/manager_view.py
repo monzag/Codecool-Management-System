@@ -62,3 +62,16 @@ def view_students_titles():
     titles = ["Name", "Surname", "e-mail", "Attendance"]
 
     return titles
+
+
+def value_error_message():
+    """
+    Hold string containing value error message.
+
+    Return:
+            str: error message
+    """
+
+    message = "Please type in only numbers!"
+
+    return message
