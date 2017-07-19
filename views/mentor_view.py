@@ -20,3 +20,13 @@ def data_to_check_attendance():
 def attendance_checked():
 
     print("\nAll attendance for today is checked.\n")
+
+
+def get_data_to_add_student():
+    '''
+    Get proper label when student is added by mentor. 
+
+    Returns:
+        name, surname, login, email - string
+    '''
+    return 'Name', 'Surname', 'Login', 'E-mail'
