@@ -57,8 +57,16 @@ def view_students():
     students_info = []
 
     for student in Student.list_of_students:
-        students_info.append([student.name, student.surname,
-                             student.email, str(student.get_attendance()), str(student.total_grade)])
+        student_index = Student.list_of_students.index(student)
+
+        table_row = []
+        table_row.append(student.name)
+        table_row.append(student.surname)
+        table_row.append(student.email)
+        table_row.append(str(student.get_attendance()))
+        table_row.append(assignment_controller.get_student_total_grade(student_index))
+
+        students_info.append(table_row)
 
     view.print_table(students_info, titles)
 

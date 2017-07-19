@@ -53,3 +53,21 @@ def save_solution_to_file(file_name):
     file_path = os.getcwd() + '/data/solutions/' + file_name
     with open(file_path, 'w+') as solution_file:
         solution_file.write(text)
+
+
+def get_student_total_grade(student_index):
+    '''
+    '''
+    grade = 0
+    max_grade = 0
+
+    for assignment in Assignment.list_of_assignments:
+        max_grade += assignment.max_grade
+        grade += assignment.solutions[student_index].grade
+
+    print(max_grade, grade)
+    input()
+
+    total_grade = grade / max_grade * 100
+
+    return '{:3.2f} %'.format(total_grade)
