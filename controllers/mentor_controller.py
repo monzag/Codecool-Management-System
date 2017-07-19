@@ -180,8 +180,6 @@ def add_student():
     Returns:
             Nothing, it just adds the student to the list.
     """
-    labels = ["Name", "Surname", "Login", "e-mail"]
-    title = "Provide informations about new student"
 
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
