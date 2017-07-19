@@ -179,13 +179,44 @@ def add_student():
     Returns:
             Nothing, it just adds the student to the list.
     """
-    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
+    labels = ["Name", "Surname", "Login", "e-mail"]
     title = "Provide informations about new student"
-    inputs = view.get_inputs(labels, title)
-
-    new_student = Student(100, 1, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+    invalid = True
+    while invalid:
+        inputs = view.get_inputs(labels, title)
+        name, surname, login, email = inputs[0], inputs[1], inputs[2], inputs[3]
+        invalid = is_invalid(name, surname, login, email)
+    password = get_random_password()
+    new_student = Student(100, 1, name, surname, login, password, email)
 
     Student.save_students()
+
+
+def get_random_password():
+    return 'test'
+
+
+def check_valid(function, message):
+    is_valid = None
+    while not is_valid:
+        user_input = input(text)
+        is_valid = function(user_input)
+    return user_input
+
+
+def is_not_empty(user_input):
+    pass
+
+
+def is_alpha(user_input):
+    if user_input.isalpha():
+        return True
+
+
+def is_invalid(name, surname, login, email):
+    check_valid_name = check_valid(is_alpha, 'Name: ')
+    check_valid_surname = check_valid(is_alpha, 'Surname: ')
+    check_valid_login = 
 
 
 def remove_student():
