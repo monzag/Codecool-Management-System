@@ -5,7 +5,7 @@ from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
-from controllers import mail_validation
+from controllers.mail_validation import *
 
 
 def mentor_menu(user):
@@ -185,7 +185,9 @@ def add_student():
 
     name, surname, login, email = get_valid_data()
     password = get_random_password()
-    new_student = Student(100, 1, name, surname, login, password, email)
+    print(name, surname, login, password, email)
+    total_grade = 100
+    new_student = Student(100, 1, total_grade, name, surname, login, password, email)
 
     Student.save_students()
 
@@ -205,8 +207,7 @@ def get_valid_data():
     name = check_valid(is_alpha, 'Name: ')
     surname = check_valid(is_alpha, 'Surname: ')
     login = check_valid(is_not_empty, 'Login: ')
-    is_email = mail_validation.check_mail()
-    email = check_email(is_email, 'E-mail: ')
+    email = check_valid(check_mail, 'E-mail: ')
 
     return name, surname, login, email
 
@@ -226,12 +227,12 @@ def check_valid(function, message):
     while not is_valid:
         user_input = view.get_inputs([message], ' ')
         is_valid = function(user_input[0])
-    return user_input
+    return ''.join(user_input)
 
 
 def is_not_empty(user_input):
     '''
-    Returns True if length user_input is bigger than 0. 
+    Returns True if length user_input is bigger than 0.
 
     Args:
         user_input - string
