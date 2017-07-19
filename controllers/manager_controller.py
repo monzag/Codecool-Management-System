@@ -16,15 +16,9 @@ def manager_menu(user):
         None
     '''
 
-    titles = 'Hi {}! What would you like to do'.format(user.name)
-    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor',
-               'Exit']
-
     show_menu = True
 
-    title = "Manager menu"
-    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor']
-    exit_message = "Exit"
+    title, options, exit_message = manager_menu_titles(user)
 
     end = False
 
@@ -48,12 +42,17 @@ def manager_menu(user):
             Mentor.save_data_to_file()
 
         if option == 4:
+
             try:
                 remove_mentor()
+
             except ValueError:
-                print("Please type in only numbers!")
+                message = value_error_message()
+                views.view.print_message(message)
+
             except IndexError:
-                print('Mentor with given index does not exist!')
+                message = index_error_message()
+                views.view.print_message(message)
 
         if option == 0:
             end = True
@@ -67,7 +66,7 @@ def view_students():
             None
     '''
 
-    titles = ["Name", "Surname", "e-mail", "Attendance"]
+    titles = view_students_titles()
     students_info = []
 
     for student in Student.list_of_students:
@@ -85,7 +84,7 @@ def view_mentors():
             None
     '''
 
-    titles = ["Name", "Surname", "e-mail"]
+    titles = view_mentors_titles()
     mentors_info = []
 
     for mentor in Mentor.list_of_mentors:
@@ -101,12 +100,13 @@ def add_mentor():
     Return:
             None
     """
+    titles = input_titles_for_mentor_add()
 
-    login = get_single_input("Type login: ")
-    password = get_single_input("Type password: ")
-    name = get_valid_input(check_name, "Type name: ")
-    surname = get_valid_input(check_name, "Type surname: ")
-    mail = get_valid_input(check_mail, "Type mail: ")
+    login = get_single_input(titles[0])
+    password = get_single_input(titles[1])
+    name = get_valid_input(check_name, titles[2])
+    surname = get_valid_input(check_name, titles[3])
+    mail = get_valid_input(check_mail, titles[4])
 
     new_mentor = Mentor(name, surname, login, password, mail)
 
@@ -120,9 +120,8 @@ def remove_mentor():
     '''
     view_mentors()
 
-    labels = ["Index"]
-    title = "Type index number of mentor to remove"
-    user_input = views.view.get_inputs(labels, title)[0]
+    title, label = input_titles_for_mentor_remove()
+    user_input = views.view.get_inputs(label, title)[0]
 
     if not user_input.isdigit():
         raise ValueError
