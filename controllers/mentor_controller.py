@@ -185,7 +185,6 @@ def add_student():
 
     name, surname, login, email = get_valid_data()
     password = get_random_password()
-    print(name, surname, login, password, email)
     total_grade = 100
     new_student = Student(100, 1, total_grade, name, surname, login, password, email)
 
