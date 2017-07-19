@@ -18,3 +18,10 @@ def data_to_check_attendance():
 def attendance_checked():
 
     print("\nAll attendance for today is checked.\n")
+
+
+def data_to_add_student():
+
+    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
+    title = "Provide informations about new student"
+    
