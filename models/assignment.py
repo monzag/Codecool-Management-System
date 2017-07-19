@@ -162,3 +162,7 @@ class Assignment:
     @property
     def csv_string(self):
         return '{}|{}|{}|{}'.format(self.name, self.add_date, self.deadline, self.max_grade)
+
+    @property
+    def amount_of_assignments(self):
+        return len(self.list_of_assignments)
