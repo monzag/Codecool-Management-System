@@ -49,3 +49,7 @@ class Assignment:
             solutions.append(solution)
 
         return solutions
+
+    @classmethod
+    def save_assignments():
+        pass
