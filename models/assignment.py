@@ -90,7 +90,6 @@ class Assignment:
         Parameters:
             solutions : list of lists of str
 
-        Returns:
             solutions_list : list of Solution objs.
         '''
         solutions_list = []
@@ -99,3 +98,39 @@ class Assignment:
             solutions_list.append(new_solution)
 
         return solutions_list
+
+    @classmethod
+    def save_to_file(cls, file_name):
+        '''
+        '''
+        file_path = os.getcwd() + '/data/' + file_name
+        with open(file_path, 'w') as data:
+            data.write(cls.get_file_string())
+
+    @classmethod
+    def get_file_string(cls):
+        '''
+        '''
+        return '\n|assignment|\n'.join([cls.join_assignment_with_solutions(assignment) for assignment in Assignment.list_of_assignments])
+
+    @staticmethod
+    def join_solutions(solutions):
+        '''
+        '''
+        string = '|solutions|\n'
+        string += '\n'.join(map(lambda solution: solution.csv_string, solutions))
+
+        return string
+
+    @classmethod
+    def join_assignment_with_solutions(cls, assignment):
+        '''
+        '''
+        joined_string = assignment.csv_string + '\n'
+        joined_string += cls.join_solutions(assignment.solutions)
+
+        return joined_string
+
+    @property
+    def csv_string(self):
+        return '{}|{}|{}|{}'.format(self.name, self.add_date, self.deadline, self.max_grade)
