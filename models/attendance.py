@@ -12,7 +12,7 @@ class Attendance:
         self.date = date
         self.today_value = int(today_value)
         Attendance.list_of_attendance.append(self)
-        
+
     @staticmethod
     def load_data_from_file(filename):
 
@@ -56,14 +56,14 @@ class Attendance:
 
         if os.path.exists(os.getcwd() + '/data/' + filename):
             with open(file_path, 'a') as csvfile:
-                csvfile.append(self.data_to_save())
+                csvfile.write(self.data_to_save() + '\n')
 
         else:
             with open(file_path, 'w') as csvfile:
-                csvfile.write(self.data_to_save())
+                csvfile.write(self.data_to_save() + '\n')
 
     def data_to_save(self):
 
-        row = [self.student_login, self.date, self.attendance]
+        row = [self.student_login, str(self.date), str(self.today_value)]
 
         return '|'.join(row)
