@@ -117,3 +117,17 @@ def input_titles_for_mentor_add():
               "Type surname: ", "Type mail: "]
 
     return titles
+
+
+def input_titles_for_mentor_remove():
+    """
+    Hold list of strings which are titles for every
+    input when creating mentor object.
+
+    Return:
+            list: list of strings
+    """
+    label = ["Index"]
+    title = "Type index number of mentor to remove"
+
+    return title, label
