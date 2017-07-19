@@ -1,17 +1,17 @@
 import os
 from models.codecooler import Codecooler
 from models.assignment import Assignment
+from models.attendance import Attendance
 
 
 class Student(Codecooler):
 
     list_of_students = []
 
-    def __init__(self, attendance, days_passed, total_grade, *args):
+    def __init__(self, total_grade, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
-        self.attendance = attendance
-        self.days_passed = days_passed
+        self.attendance = self.get_total_attendance()
         self.assignments_list = self.get_assignment_list()
         self.total_grade = self.calculate_total_grade()
 
@@ -27,11 +27,22 @@ class Student(Codecooler):
         splitted_data_list = cls.load_data_from_file(file_name)
 
         for element in splitted_data_list:
-            name, surname, login, password, mail, attendance, days_passed, total_grade = element
-            attendance = int(attendance)
-            days_passed = int(days_passed)
+            name, surname, login, password, mail, total_grade = element
             total_grade = int(total_grade)
-            cls(attendance, days_passed, total_grade, name, surname, login, password, mail)
+            cls(total_grade, name, surname, login, password, mail)
+
+    def get_total_attendance(self):
+
+        attendances = Attendance.list_of_attendance
+        total_attendance = 0
+        days_count = 0
+
+        for att in attendances:
+            if att.student_login == self.login:
+                total_attendance += att.today_value
+                days_count += 1
+
+        return total_attendance // days_count
 
     def get_assignment_list(self):
         '''
@@ -72,7 +83,7 @@ class Student(Codecooler):
 
         string_to_save = []
         for student in cls.list_of_students:
-            row = [student.name, student.surname, student.login, student.password, student.email, str(student.attendance), str(student.days_passed), str(student.total_grade)]
+            row = [student.name, student.surname, student.login, student.password, student.email, str(student.total_grade)]
             string_to_save.append(row)
 
         return '\n'.join('|'.join(row) for row in string_to_save)
