@@ -3,6 +3,8 @@ import os
 import views.view
 from models.student import Student
 from models.mentor import Mentor
+from controllers.mail_validation import *
+from views.manager_view import *
 
 
 def manager_menu(user):
@@ -99,11 +101,14 @@ def add_mentor():
     Return:
             None
     """
-    labels = ["Login", "Password", "Name", "Surname", "e-mail"]
-    title = "Provide informations about new mentor"
-    inputs = views.view.get_inputs(labels, title)
 
-    new_mentor = Mentor(inputs[2], inputs[3], inputs[0], inputs[1], inputs[4])
+    login = get_single_input("Type login: ")
+    password = get_single_input("Type password: ")
+    name = get_valid_input(check_name, "Type name: ")
+    surname = get_valid_input(check_name, "Type surname: ")
+    mail = get_valid_input(check_mail, "Type mail: ")
+
+    new_mentor = Mentor(name, surname, login, password, mail)
 
 
 def remove_mentor():
@@ -129,3 +134,9 @@ def remove_mentor():
         index = int(user_input) - 1
         del Mentor.list_of_mentors[index]
         Mentor.save_data_to_file()
+
+
+def check_name(name):
+
+    if name.isalpha():
+        return True
