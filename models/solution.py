@@ -22,7 +22,7 @@ class Solution:
         '''
         grade, submit_date, file_name = list_of_attributes_values
 
-        return cls(grade, submit_date, file_name)
+        return cls(int(grade), submit_date, file_name)
 
     @classmethod
     def get_file_name(cls, assignment_name, student_name):
@@ -41,3 +41,7 @@ class Solution:
         file_path = os.getcwd() + '/data/solutions/' + file_name
 
         return file_path
+
+    @property
+    def csv_string(self):
+        return '{}|{}|{}'.format(self.grade, self.submit_date, self.file_name)

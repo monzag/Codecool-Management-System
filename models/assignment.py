@@ -45,6 +45,10 @@ class Assignment:
 
         Parameters:
             file_rows : string
+
+        Returns:
+            assignment : list of strs
+            solutions : list of lists of strs
         '''
         assignment, solutions = file_rows.split('|solutions|')
 
@@ -76,7 +80,7 @@ class Assignment:
             name, add_date, deadline, max_grade = assignment
             solutions = cls.assign_solutions(solutions)
 
-            cls(name, add_date, deadline, max_grade, solutions)
+            cls(name, add_date, deadline, int(max_grade), solutions)
 
     @staticmethod
     def assign_solutions(solutions):
