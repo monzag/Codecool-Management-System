@@ -196,6 +196,23 @@ def get_random_password():
     return 'test'
 
 
+def get_valid_data():
+    '''
+    Get valid data and return it.
+
+    Returns:
+        name, surname, login, email - string
+    '''
+
+    name = check_valid(is_alpha, 'Name: ')
+    surname = check_valid(is_alpha, 'Surname: ')
+    login = check_valid(is_not_empty, 'Login: ')
+    is_email = mail_validation.check_mail()
+    email = check_email(is_email, 'E-mail: ')
+
+    return name, surname, login, email
+
+
 def check_valid(function, message):
     '''
     Get input from user and check valid by proper function.
@@ -240,16 +257,6 @@ def is_alpha(user_input):
     '''
     if user_input.isalpha():
         return True
-
-
-def get_valid_data():
-    name = check_valid(is_alpha, 'Name: ')
-    surname = check_valid(is_alpha, 'Surname: ')
-    login = check_valid(is_not_empty, 'Login: ')
-    is_email = mail_validation.check_mail()
-    email = check_email(is_email, 'E-mail: ')
-
-    return name, surname, login, email
 
 
 def remove_student():
