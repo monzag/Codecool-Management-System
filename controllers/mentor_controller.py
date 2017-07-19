@@ -205,6 +205,15 @@ def check_valid(function, message):
 
 
 def is_not_empty(user_input):
+    '''
+    Returns True if length user_input is bigger than 0. 
+
+    Args:
+        user_input - string
+
+    Returns:
+        bool
+    '''
     if len(user_input) > 0:
         return True
 
