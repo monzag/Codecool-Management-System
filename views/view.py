@@ -212,6 +212,21 @@ def get_inputs(labels, title):
     return inputs
 
 
+def get_input(label):
+    '''
+    Get one input from user.
+
+    Args:
+        text - string
+
+    Returns:
+        user_input - string
+    '''
+    user_input = input('{}:  '.format(label))
+
+    return user_input
+
+
 def print_message(message):
 
     print(message)
@@ -291,3 +306,6 @@ def print_end_screen():
             print(line, end='')
 
     wait_until_key_pressed()
+
+
+

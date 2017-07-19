@@ -11,7 +11,7 @@ def data_to_student_menu(user):
 
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
-    options = ['View grades', 'Submit assigment', 'Show all students']
+    options = ['View grades', 'Submit assigment', 'Show all students', 'Change password']
 
     return title, options, exit_message
 

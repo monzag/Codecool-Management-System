@@ -1,5 +1,6 @@
 import string
 from random import choice
+from views import view
 
 
 def get_user_by_login_and_password(login, password, codecoolers):
@@ -56,3 +57,24 @@ def get_random_password():
         password += choice(digits)
 
     return password
+
+
+def change_password(user):
+    '''
+    Get old password from user and if is correct, change password for new.
+    If is incorrect, print error message.
+
+    Args:
+        user - object
+
+    Returns:
+        None
+    '''
+
+    old_password = view.get_inputs(['Old password'], 'Type your old password')[0]
+    if old_password == user.password:
+        new_password = view.get_inputs(['New password'], 'Type your new password')[0]
+        user.password = new_password
+    else:
+        view.print_message('Bad old password')
+
