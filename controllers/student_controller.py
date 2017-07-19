@@ -30,7 +30,7 @@ def student_menu(user):
         if option == 3:
             view_all_students()
         if option == 4:
-            change_password()
+            change_password(user)
         if option == 0:
             end = True
 
@@ -84,5 +84,14 @@ def view_all_students():
     view.print_table(students_info, titles)
 
 
-def change_password():
+def change_password(student):
+    '''
+    Change old password to new.
+
+    Args:
+        student - object
+    '''
+
+    codecooler_controller.change_password(student)
+    Student.save_students()
 
