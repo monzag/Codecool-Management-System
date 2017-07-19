@@ -17,7 +17,7 @@ class Assignment:
         Assignment.list_of_assignments.append(self)
 
     @classmethod
-    def from_file(cls, file_name):
+    def get_assignments_from_file(cls, file_name):
         '''
         Given file name creates all Assignment objs stored in data.
 
