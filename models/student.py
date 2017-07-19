@@ -31,7 +31,7 @@ class Student(Codecooler):
             total_grade = int(total_grade)
             cls(total_grade, name, surname, login, password, mail)
 
-    def get_total_attendance(self):
+    def get_attendance(self):
 
         attendances = Attendance.list_of_attendance
         total_attendance = 0
