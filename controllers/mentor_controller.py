@@ -184,8 +184,7 @@ def add_student():
     title = "Provide informations about new student"
 
     name, surname, login, email = get_valid_data()
-    password = get_random_password()
-    print(name, surname, login, password, email)
+    password = codecooler_controller.get_random_password()
     total_grade = 100
     new_student = Student(100, 1, total_grade, name, surname, login, password, email)
 
