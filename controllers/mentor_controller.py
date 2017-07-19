@@ -1,24 +1,25 @@
 from views import view
 import os
+from models.attendance import Attendance
 from models.assignment import Assignment
 from models.student import Student
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
+from controllers.mail_validation import *
+from views import mentor_view
+import datetime
 
 
 def mentor_menu(user):
     '''
     Prints user specific features and asks him for operation
-    to perform. Resolve all interacions, util user diecides to exit.
+    to perform. Resolve all interactions, util user diecides to exit.
 
     Returns:
         None
     '''
-    title = 'Hi {}! What would you like to do'.format(user.name)
-    exit_message = 'Exit'
-    options = ['View students', 'Add assignment', 'Grade assignment',
-               'Check attendance', 'Add student', 'Remove student']
+    title, exit_message, options = mentor_view.menu_labels(user)
 
     end = False
     while not end:
@@ -57,7 +58,7 @@ def view_students():
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                             student.email, str(student.attendance), str(student.total_grade)])
+                             student.email, str(student.get_attendance()), str(student.total_grade)])
 
     view.print_table(students_info, titles)
 
@@ -112,64 +113,52 @@ def get_new_grade(max_grade):
 
 def check_attendance():
     """
-    Chooses student by login and grades its attendance for today.
-    Adds one day to days_passed after checking.
+    Prints the name of the student if he didn't have been checked today.
+    Adds its attendance for today based on input.
+    Saves to file.
     """
-    title = "Student attendance for today"
-    exit_message = 'Back to Main Menu (NOTICE: You will have to check whole attendance again for today!)'
-    options = ['Present', 'Late', 'Absent']
 
-    for student in Student.list_of_students:
-        os.system('clear')
+    title, exit_message, options = mentor_view.data_to_check_attendance()
+    students = Student.list_of_students
+    attendances = Attendance.list_of_attendance
 
-        index = Student.list_of_students.index(student)
-        fullname = student.name + ' ' + student.surname
+    for student in students:
+        if datetime.date.today() not in [att.date for att in attendances if att.student_login == student.login]:
+            os.system('clear')
 
-        view.print_message(fullname)
-        view.print_menu(title, options, exit_message)
-        option = None
+            fullname = student.name + ' ' + student.surname
+            view.print_message(fullname)
+            view.print_menu(title, options, exit_message)
 
-        while option not in range(0, len(options) + 1):
-            option = view.input_number()
-            if option in range(1, len(options) + 1):
-                today_attendance = options[option - 1]
-                student.attendance = update_attendance(index, student.days_passed, student.attendance, today_attendance)
-            elif option == 0:
-                Student.get_codecoolers_from_file('students.csv')
+            option = get_option(options)
+            if option == 0:
                 break
+            today_attendance = get_today_attendance(option)
+            attendance = Attendance(student.login, datetime.date.today(), today_attendance)
+            attendances.append(attendance)
+            attendance.save_attendance_to_file('attendance.csv')
 
-    Student.save_students()
+    mentor_view.attendance_checked()
 
 
-def update_attendance(index, days_passed, attendance, today_attendance):
-    """
-    Updates the attendance value.
+def get_option(options):
 
-    Args:
-        index (int) - index of a student
-        days_passed (int) - number of days passed in school so far
-        attendance (int) - attendance value
-        today_attendance (str) - option chosen (Present/Late/Absent)
+    option = None
 
-    Returns:
-        attendance (int) - updated attendance
-    """
-    if today_attendance == 'Present':
-        days_of_presence = (attendance * 0.01) * days_passed
-        attendance += (days_of_presence + 1) / (days_passed + 1)
-    elif today_attendance == 'Late':
-        todays_value = 100 / days_passed
-        attendance -= todays_value * 0.2
-    elif today_attendance == 'Absent':
-        todays_value = 100 / days_passed
-        attendance -= todays_value
+    while option not in range(0, len(options) + 1):
+        option = view.input_number()
 
-    Student.list_of_students[int(index)].days_passed += 1
+    return option
 
-    if attendance > 100:
-        attendance = 100
 
-    return int(attendance)
+def get_today_attendance(option):
+
+    if option == 1:
+        return '100'
+    elif option == 2:
+        return '80'
+    elif option == 3:
+        return '0'
 
 
 def add_student():
@@ -179,13 +168,97 @@ def add_student():
     Returns:
             Nothing, it just adds the student to the list.
     """
-    labels = ["Name", "Surname", "Login", "Password", "e-mail"]
-    title = "Provide informations about new student"
-    inputs = view.get_inputs(labels, title)
 
-    new_student = Student(100, 1, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
+    name, surname, login, email = get_valid_data()
+    password = codecooler_controller.get_random_password()
+    print('Password: ', password)
+    total_grade = 100
+    new_student = Student(100, 1, total_grade, name, surname, login, password, email)
 
     Student.save_students()
+
+
+def get_valid_data():
+    '''
+    Get valid data and return it.
+
+    Returns:
+        name, surname, login, email - string
+    '''
+
+    name = check_valid(is_alpha, 'name')
+    surname = check_valid(is_alpha, 'surname')
+    login = check_valid(is_login_already_exist, 'login')
+    email = check_valid(check_mail, 'e-mail')
+
+    return name, surname, login, email
+
+
+def check_valid(function, message):
+    '''
+    Get input from user and check valid by proper function.
+
+    Args:
+        function
+        message - str
+
+    Returns:
+        user_input - string
+    '''
+    is_valid = None
+    while not is_valid:
+        title = 'Write ' + message
+        user_input = view.get_inputs([message], title)[0]
+        is_valid = function(user_input)
+    return ''.join(user_input)
+
+
+def is_not_empty(user_input):
+    '''
+    Returns True if length user_input is bigger than 0.
+
+    Args:
+        user_input - string
+
+    Returns:
+        bool
+    '''
+    if len(user_input) > 0:
+        return True
+
+
+def is_login_already_exist(user_input):
+    '''
+    Check that user_input is not empty string.
+    If not, check that login isn't occupied by another students.
+    Returns True if not.
+
+    Args:
+        user_input - string
+
+    Returns:
+        bool
+    '''
+    if len(user_input) > 0:
+        for student in Student.list_of_students:
+            if student.login == user_input:
+                return None
+
+        return True
+
+
+def is_alpha(user_input):
+    '''
+    Returns True if user_input is alpha.
+
+    Args:
+        user_input - string
+
+    Returns:
+        bool
+    '''
+    if user_input.isalpha():
+        return True
 
 
 def remove_student():
