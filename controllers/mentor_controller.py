@@ -182,9 +182,7 @@ def add_student():
     """
     labels = ["Name", "Surname", "Login", "e-mail"]
     title = "Provide informations about new student"
-    '''valid = False
-    while not valid:'''
-    # name, surname, login, email = inputs[0], inputs[1], inputs[2], inputs[3]
+
     name, surname, login, email = get_valid_data()
     password = get_random_password()
     new_student = Student(100, 1, name, surname, login, password, email)
