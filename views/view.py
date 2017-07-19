@@ -220,6 +220,8 @@ def print_message(message):
 
 def print_welcome_screen():
 
+    os.system('clear')
+
     file_path = os.getcwd() + "/views/start_message.txt"
     with open(file_path, "r") as startup:
         for line in startup:
@@ -280,6 +282,8 @@ def wait_until_key_pressed():
 
 
 def print_end_screen():
+
+    os.system('clear')
 
     file_path = os.getcwd() + "/views/quit_message.txt"
     with open(file_path, "r") as startup:

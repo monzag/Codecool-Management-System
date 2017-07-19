@@ -83,7 +83,6 @@ def log_in_as_user(first_attempt):
     Returns:
         user : Codecooler obj. instance
     '''
-    os.system('clear')
     login, password = get_password_and_login(first_attempt)
     user = is_user_in_system(login, password)
 
@@ -157,7 +156,6 @@ def close_program():
     '''
     Prints end screen
     '''
-    os.system('clear')
     view.print_end_screen()
 
 
