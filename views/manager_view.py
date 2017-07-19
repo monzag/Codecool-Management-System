@@ -102,3 +102,18 @@ def view_mentors_titles():
     titles = ["Name", "Surname", "e-mail"]
 
     return titles
+
+
+def input_titles_for_mentor_add():
+    """
+    Hold list of strings which are titles for every
+    input when creating mentor object.
+
+    Return:
+            list: list of strings
+    """
+
+    titles = ["Type login: ", "Type password: ", "Type name: ",
+              "Type surname: ", "Type mail: "]
+
+    return titles
