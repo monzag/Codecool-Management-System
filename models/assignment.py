@@ -102,6 +102,13 @@ class Assignment:
     @classmethod
     def save_to_file(cls, file_name):
         '''
+        Save all stored Assignment objs. and it's solutions to file
+
+        Parameters:
+            file_name : str
+
+        Returns:
+            None
         '''
         file_path = os.getcwd() + '/data/' + file_name
         with open(file_path, 'w') as data:
@@ -110,12 +117,26 @@ class Assignment:
     @classmethod
     def get_file_string(cls):
         '''
+        Creates string saved to file representing all stored Assignemt objs. and its Solution objs.
+
+        Parameters:
+            None
+
+        Returns:
+            str
         '''
         return '\n|assignment|\n'.join([cls.join_assignment_with_solutions(assignment) for assignment in Assignment.list_of_assignments])
 
     @staticmethod
     def join_solutions(solutions):
         '''
+        Creates string of Solution objs. passed.
+
+        Parameters:
+            solutions : list of Solution objs.
+
+        Returns:
+            string : str
         '''
         string = '|solutions|\n'
         string += '\n'.join(map(lambda solution: solution.csv_string, solutions))
@@ -125,6 +146,13 @@ class Assignment:
     @classmethod
     def join_assignment_with_solutions(cls, assignment):
         '''
+        Create csv file string of single Assignment obj. and it's Solutions objs.
+
+        Parameters:
+            assignment : Assignemt obj.
+
+        Returns:
+            joined_string : str
         '''
         joined_string = assignment.csv_string + '\n'
         joined_string += cls.join_solutions(assignment.solutions)
