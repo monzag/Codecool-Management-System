@@ -10,6 +10,7 @@ from models.employee import Employee
 from models.mentor import Mentor
 from models.manager import Manager
 from models.assignment import Assignment
+from models.attendance import Attendance
 
 from controllers import codecooler_controller
 from controllers import student_controller
@@ -56,6 +57,7 @@ def load_database():
         Logins.list_of_logins
     '''
     Assignment.get_assignments_from_file('assignments.csv')
+    Attendance.get_attendance_from_file('attendance.csv')
     Student.get_codecoolers_from_file('students.csv')
     Employee.get_codecoolers_from_file('employees.csv')
     Mentor.get_codecoolers_from_file('mentors.csv')
