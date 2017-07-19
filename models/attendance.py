@@ -12,6 +12,7 @@ class Attendance:
         self.date = date
         self.today_value = int(today_value)
         Attendance.list_of_attendance.append(self)
+        
     @staticmethod
     def load_data_from_file(filename):
 
@@ -26,6 +27,7 @@ class Attendance:
                 splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
 
         return splitted_data_list
+
     @classmethod
     def get_attendance_from_file(cls, filename):
         """
@@ -41,6 +43,7 @@ class Attendance:
             student_login, date, attendance = element
             date = cls.create_datetime(cls, date)
             cls(student_login, date, attendance)
+
     @staticmethod
     def create_datetime(self, date):
 
@@ -58,3 +61,9 @@ class Attendance:
         else:
             with open(file_path, 'w') as csvfile:
                 csvfile.write(self.data_to_save())
+
+    def data_to_save(self):
+
+        row = [self.student_login, self.date, self.attendance]
+
+        return '|'.join(row)
