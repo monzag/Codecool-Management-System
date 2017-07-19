@@ -24,24 +24,6 @@ class Solution:
 
         return cls(int(grade), submit_date, file_name)
 
-    @classmethod
-    def get_file_name(cls, student_index, assignment_name):
-        '''
-        Creates unique name for file storing solution added to data.
-
-        Parameters:
-            assignment_name : str
-            student_name : str
-
-        Returns:
-            file_path : str
-
-        '''
-        file_name = str(student_index) + '_' + assignment_name + '.txt'
-        file_path = os.getcwd() + '/data/solutions/' + file_name
-
-        return file_path
-
     @property
     def csv_string(self):
         return '{}|{}|{}'.format(self.grade, self.submit_date, self.file_name)
