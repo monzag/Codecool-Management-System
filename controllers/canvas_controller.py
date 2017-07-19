@@ -33,10 +33,12 @@ def start_up():
     view.print_welcome_screen()
     view.wait_until_key_pressed()
 
-    user = None
+    user = log_in_as_user(True)
     while not user:
         os.system('clear')
-        user = log_in_as_user()
+        user = log_in_as_user(False)
+
+    os.system('clear')
 
     return user
 
@@ -70,7 +72,7 @@ def load_database():
     Logins.from_codecoolers(Student.list_of_students, Employee.list_of_employees, Manager.list_of_managers, Mentor.list_of_mentors)
 
 
-def log_in_as_user():
+def log_in_as_user(first_attempt):
     '''
     holds loging to system:
 
@@ -79,27 +81,30 @@ def log_in_as_user():
     otherwise will retry loging user to system
 
     Parameters:
-        None
+        first_attempt : bool
 
     Returns:
         user : Codecooler obj. instance
     '''
     os.system('clear')
-    login, password = get_password_and_login()
+    login, password = get_password_and_login(first_attempt)
     user = is_user_in_system(login, password)
 
     return user
 
 
-def get_password_and_login():
+def get_password_and_login(first_attempt):
     '''
     Takes loggin information from user
+
+    Parameters:
+        first_attempt : bool
 
     Returns:
         login: str
         pasword: str
     '''
-    login = view.input_login()
+    login = view.input_login(first_attempt)
     password = view.input_password()
 
     return login, password
