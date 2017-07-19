@@ -19,7 +19,7 @@ class Student(Codecooler):
         Creates objects with data from splitted list.
 
         Returns:
-                None
+            None
         """
 
         splitted_data_list = cls.load_data_from_file(file_name)
@@ -41,21 +41,6 @@ class Student(Codecooler):
                 days_count += 1
 
         return total_attendance // days_count
-
-    def get_assignment_list(self):
-        '''
-        Add Assignment objects to list if assignment's owner equal to Student login.
-
-        Returns:
-            assignment_list - list with Assignment obj.
-        '''
-
-        assignment_list = []
-        for assignment in Assignment.list_of_assignments:
-            if assignment.owner == self.login:
-                assignment_list.append(assignment)
-
-        return assignment_list
 
     @classmethod
     def save_students(cls):
