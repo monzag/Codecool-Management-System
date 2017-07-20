@@ -31,6 +31,8 @@ def student_menu(user):
             view_all_students()
         if option == 4:
             change_password(user)
+        if option == 5:
+            show_general_grade()
         if option == 0:
             end = True
 
@@ -83,6 +85,13 @@ def view_all_students():
 
     titles = view_student.data_to_view_students()
     view.print_table(students_info, titles)
+
+
+def show_general_grade():
+    '''
+    '''
+    data_to_table = assignment_controller.get_solutions_data()
+    print(data_to_table)
 
 
 def change_password(student):
