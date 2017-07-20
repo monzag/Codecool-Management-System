@@ -116,6 +116,7 @@ def add_mentor():
     mail = get_valid_input(check_mail, titles[4])
 
     new_mentor = Mentor(name, surname, login, password, mail)
+    Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
 
 def remove_mentor():
