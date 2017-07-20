@@ -122,6 +122,8 @@ def add_mentor():
     msg = 'Login: {}, Password: {}'.format(login, password)
     send_email(msg, mail)
 
+    views.view.print_send_password_msg()
+
 
 def remove_mentor():
     '''
