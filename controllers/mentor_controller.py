@@ -202,7 +202,7 @@ def add_student():
         view.print_send_password_msg()
 
     except smtplib.SMTPRecipientsRefused:
-        view.recipent_error()
+        mentor_view.recipent_error()
 
 
 
