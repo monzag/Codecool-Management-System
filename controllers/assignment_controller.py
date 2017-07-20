@@ -73,7 +73,7 @@ def get_student_total_grade(student_index):
 def remove_student_solutions(student_index):
     '''
     '''
-    for assignment in Assignemnt.list_of_assignments:
+    for assignment in Assignment.list_of_assignments:
         del assignment.solutions[student_index]
 
-    Assignemnt.save_assignments_to_file('assignements.csv')
+    Assignment.save_assignments_to_file('assignements.csv')
