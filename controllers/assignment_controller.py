@@ -5,6 +5,7 @@ from models.assignment import Assignment
 from models.solution import Solution
 
 from views import assignment_view
+from views import view
 
 
 def get_assignments_to_table(student_index):
@@ -92,7 +93,7 @@ def assign_assignments_to_new_student():
 def print_student_assignments(student_index):
     '''
     '''
-    title = ['name', 'add date', 'deadline', 'submit_date', 'grade', 'max_grade']
+    titles = ['name', 'add date', 'deadline', 'submit_date', 'grade', 'max_grade']
 
     table = []
     for assignment in Assignment.list_of_assignments:
@@ -106,3 +107,5 @@ def print_student_assignments(student_index):
         row.append(str(assignment.max_grade))
 
         table.append(row)
+
+    view.print_table(table, titles)
