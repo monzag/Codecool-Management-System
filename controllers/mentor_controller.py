@@ -82,7 +82,20 @@ def grade_assignment():
     if student_index != None:
 
         assignment_controller.print_student_assignments(student_index)
+        assignemnt = assignment_controller.get_assignment_form_user_input()
 
+        if assignemnt:
+            solution = assignemnt.solutions[student_index]
+
+            if solution.can_be_graded:
+
+                view.print_message(solution.get_content())
+
+            else:
+                view.print_message('Assignment was already graded, or was not submited yet!')
+
+        else:
+            view.print_message('There is no such assignment!')
 
     else:
         view.print_message('There is no such student!')
