@@ -41,14 +41,16 @@ def mentor_menu(user):
         elif option == 2:
             assignment_controller.create_assignment()
         elif option == 3:
-            grade_assignment()
+            assignment_controller.edit_assignment()
         elif option == 4:
-            check_attendance()
+            grade_assignment()
         elif option == 5:
-            add_student()
+            check_attendance()
         elif option == 6:
-            remove_student()
+            add_student()
         elif option == 7:
+            remove_student()
+        elif option == 8:
             change_password(user)
         elif option == 0:
             end = True

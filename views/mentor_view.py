@@ -2,7 +2,7 @@ def menu_labels(user):
 
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
-    options = ['View students', 'Add assignment', 'Grade assignment',
+    options = ['View students', 'Add assignment', 'Edit assignment', 'Grade assignment',
                'Check attendance', 'Add student', 'Remove student', 'Change password']
 
     return title, exit_message, options
@@ -49,6 +49,8 @@ def index_doesnt_exist():
 
     print("Index does not exist!")
 
+
 def recipent_error():
 
     print("\nE-mail can not be delivered!\n")
+
