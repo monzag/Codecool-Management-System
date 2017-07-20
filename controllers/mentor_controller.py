@@ -1,5 +1,6 @@
 from views import view
 import os
+from models.login import Logins
 from models.attendance import Attendance
 from models.assignment import Assignment
 from models.student import Student
@@ -180,7 +181,9 @@ def add_student():
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
     print('Password: ', password)
-    new_student = Student(100, 1, name, surname, login, password, email)
+    new_student = Student(name, surname, login, password, email)
+    assignment_controller.assign_assignments_to_new_student()
+    # TODO create new attendance obj. instance sthing
 
     Student.save_students()
 
@@ -195,7 +198,7 @@ def get_valid_data():
 
     name = check_valid(is_alpha, 'name')
     surname = check_valid(is_alpha, 'surname')
-    login = check_valid(Login.is_login_valid, 'login')
+    login = check_valid(Logins.is_login_valid, 'login')
     email = check_valid(check_mail, 'e-mail')
 
     return name, surname, login, email
@@ -262,6 +265,7 @@ def remove_student():
         index = get_student_index()
         del Student.list_of_students[int(index)]
         assignment_controller.remove_student_solutions(index)
+        # TODO remove attendance obj. instance sthing
     except (ValueError, IndexError):
         view.print_message('Index does not exist!')
 
