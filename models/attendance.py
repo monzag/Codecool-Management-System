@@ -76,6 +76,7 @@ class Attendance:
 
         with open(filepath, 'w') as csvfile:
             csvfile.write(cls.data_to_overwrite())
+
     @classmethod
     def data_to_overwrite(cls):
 
@@ -87,3 +88,6 @@ class Attendance:
         string_to_save = '\n'.join('|'.join(row) for row in string_to_save)
 
         return string_to_save
+
+    def __eq__(self, other):
+        return self.student_login == other.student_login and self.date == other.date
