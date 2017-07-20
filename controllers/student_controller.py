@@ -19,7 +19,7 @@ def student_menu(user):
 
     end = False
     while not end:
-        title, options, exit_message = view_student.data_to_student_menu(user)
+        title, options, exit_message = view_student.get_data_to_student_menu(user)
         view.print_menu(title, options, exit_message)
         option = view.input_number()
 
@@ -58,7 +58,7 @@ def submit_assigment(student):
         Assignment.save_assignments_to_file('assignments.csv')
 
     else:
-        text = view_student.invalid_assignment_in_submit()
+        text = view_student.get_invalid_assignment_in_submit()
         view.print_message(text)
 
 
@@ -69,7 +69,7 @@ def view_grades(student):
     student_index = Student.list_of_students.index(student)
 
     table = assignment_controller.get_assignments_to_table(student_index)
-    title_list = view_student.title_to_view_grades()
+    title_list = view_student.get_title_to_view_grades()
     view.print_table(table, title_list)
 
 
@@ -83,16 +83,16 @@ def view_all_students():
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname, student.email])
 
-    titles = view_student.data_to_view_students()
+    titles = view_student.get_data_to_view_students()
     view.print_table(students_info, titles)
 
 
 def show_general_grade():
     '''
-    Get data about general grade of assignments and display it in table. 
+    Get data about general grade of assignments and display it in table.
     '''
     grades_info = assignment_controller.get_solutions_data()
-    titles = view_student.titles_to_general_grade()
+    titles = view_student.get_titles_to_general_grade()
     view.print_table(grades_info, titles)
 
 
