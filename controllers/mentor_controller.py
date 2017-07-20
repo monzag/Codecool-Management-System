@@ -189,7 +189,6 @@ def add_student():
 
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
-    mentor_view.print_new_password(password)
     new_student = Student(name, surname, login, password, email)
     assignment_controller.assign_assignments_to_new_student()
 
@@ -197,6 +196,7 @@ def add_student():
 
     msg = 'Login: {}, Password: {}'.format(login, password)
     send_email(msg, email)
+    view.print_send_password_msg()
 
 
 def get_valid_data():
