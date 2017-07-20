@@ -135,4 +135,4 @@ def input_titles_for_mentor_remove():
 
 def recipent_error():
 
-    print("E-mail can not be delivered!")
+    print("\nE-mail can not be delivered!\n")
