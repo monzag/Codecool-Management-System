@@ -1,9 +1,13 @@
 import os
 
-import views.view
 from models.student import Student
 from models.mentor import Mentor
+from models.manager import Manager
+
 from controllers.mail_validation import *
+from controllers import codecooler_controller
+
+from views import view
 from views.manager_view import *
 
 
@@ -39,7 +43,7 @@ def manager_menu(user):
 
         if option == 3:
             add_mentor()
-            Mentor.save_data_to_file()
+            Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
         if option == 4:
 
@@ -135,7 +139,7 @@ def remove_mentor():
     else:
         index = int(user_input) - 1
         del Mentor.list_of_mentors[index]
-        Mentor.save_data_to_file()
+        Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
 
 def check_name(name):
@@ -153,5 +157,6 @@ def change_password(user):
     '''
 
     codecooler_controller.change_password(user)
-    # Manager.save_data_to_file()
+    Manager.save_codecoolers_to_file('managers.csv', Manager.list_of_managers)
+
 
