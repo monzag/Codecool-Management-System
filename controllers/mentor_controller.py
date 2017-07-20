@@ -281,6 +281,7 @@ def remove_student():
     try:
         index = get_student_index()
         del Student.list_of_students[int(index)]
+        assignment_controller.remove_student_solutions(index)
     except (ValueError, IndexError):
         view.print_message('Index does not exist!')
 

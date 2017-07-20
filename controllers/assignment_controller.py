@@ -68,3 +68,12 @@ def get_student_total_grade(student_index):
     total_grade = grade / max_grade * 100
 
     return '{:3.2f} %'.format(total_grade)
+
+
+def remove_student_solutions(student_index):
+    '''
+    '''
+    for assignment in Assignemnt.list_of_assignments:
+        del assignment.solutions[student_index]
+
+    Assignemnt.save_assignments_to_file('assignements.csv')
