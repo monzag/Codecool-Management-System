@@ -12,6 +12,13 @@ from views import view
 
 def get_assignments_to_table(student_index):
     '''
+    For a single Student obj. creates data necessery to print in view table
+
+    Paramaters:
+        student_index : int
+
+    Returns:
+        table : list of lists of strs
     '''
     table = []
     for assignment in Assignment.list_of_assignments:
@@ -30,6 +37,20 @@ def get_assignments_to_table(student_index):
 
 def submit_solution_to_assignment(assignment, student_index):
     '''
+    For a specified studnet and assignement creates submision and saves it to file
+
+    Paramaters:
+        assignement : Assignement obj.
+        student_index : int
+
+    Returns:
+        None
+
+    Creates:
+        file with solution
+
+    Updates:
+        Solution obj.
     '''
     solution = assignment.solutions[student_index]
 
@@ -44,8 +65,6 @@ def submit_solution_to_assignment(assignment, student_index):
 
 
 def get_today_date():
-    '''
-    '''
     return '{:0>2}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
 def save_solution_to_file(file_name):
@@ -60,6 +79,13 @@ def save_solution_to_file(file_name):
 
 def get_student_total_grade(student_index):
     '''
+    Calculates total grade of all uploaded submisions of a student
+
+    Paramaters:
+        student_index : int
+
+    Returns:
+        total_grade : str
     '''
     grade = 0
     max_grade = 0
@@ -82,6 +108,16 @@ def get_student_total_grade(student_index):
 
 def remove_student_solutions(student_index):
     '''
+    Fallows remowing student. Removes all his solutions stored in database
+
+    Parameters:
+        student_index : int
+
+    Returns:
+        None
+
+    Updated:
+        Assignemnt, Solution classes data
     '''
     for assignment in Assignment.list_of_assignments:
         del assignment.solutions[student_index]
@@ -91,6 +127,16 @@ def remove_student_solutions(student_index):
 
 def assign_assignments_to_new_student():
     '''
+    Fallows adding student. Creates Solution objs. for all assignemts stored in system
+
+    Paramaters:
+        None
+
+    Returns:
+        None
+
+    Updates:
+        Solution, Assignment class data
     '''
     for assignment in Assignment.list_of_assignments:
         assignment.solutions.append(Solution(0, '0', '0'))
@@ -100,6 +146,13 @@ def assign_assignments_to_new_student():
 
 def print_student_assignments(student_index):
     '''
+    Prints table representing students assignments.
+
+    Paramaters:
+        student_index : int
+
+    Returns:
+        None (void-print)
     '''
     titles = ['name', 'add date', 'deadline', 'submit_date', 'grade', 'max_grade']
 
@@ -121,6 +174,15 @@ def print_student_assignments(student_index):
 
 def get_assignment_form_user_input():
     '''
+    Asks user for input and tries to find Assignment under input index.
+    Returns this assignement or None
+
+    Paramaters:
+        None
+
+    Returns:
+        assignment : Assignment obj.
+        or None
     '''
     labels = ['Index']
     title = 'Type index number of assignment'
@@ -138,6 +200,7 @@ def get_assignment_form_user_input():
 
 def create_assignment():
     '''
+    Creates new Assignemnt obj. and updated Solutions of all Students objs. in data
     '''
     name, add_date, deadline, max_grade, solutions = get_assignment_data()
 
@@ -148,6 +211,17 @@ def create_assignment():
 
 def get_assignment_data():
     '''
+    Gets valid data for all data necessery to create new Assignment obj.
+
+    Parameters:
+        None
+
+    Returns:
+        name      : str
+        add_date  : str
+        deadline  : str
+        max_grade : int
+        solutions : str
     '''
     add_date = get_today_date()
     name, deadline, max_grade = get_valid_inputs()
@@ -162,6 +236,15 @@ def get_assignment_data():
 
 def get_valid_inputs():
     '''
+    Gets valid data form inputs necessery to create new Assignment obj.
+
+    Parameters:
+        None
+
+    Returns:
+        name      : str
+        deadline  : str
+        max_grade : int
     '''
     name = check_valid(is_name, 'name')
     deadline = check_valid(is_date, 'deadline(yyyy:mm:dd)')
@@ -172,10 +255,18 @@ def get_valid_inputs():
 
 def check_valid(function, message):
     '''
+    Repeat asking for input until function passed returns True
+
+    Paramaters:
+        function() : bool
+        message    : str
+
+    Returns:
+        user_input : str
     '''
     is_valid = None
     while not is_valid:
-        user_input = view.get_inputs([message], 'type stuff')[0]
+        user_input = view.get_inputs([message], '')[0]
         is_valid = function(user_input)
 
     return ''.join(user_input)
@@ -183,6 +274,13 @@ def check_valid(function, message):
 
 def is_name(user_input):
     '''
+    Checks if assignment name is valid and does not exist already
+
+    Parameters:
+        user_input : str
+
+    Returns:
+        bool
     '''
     assignment_names = [assignment.name for assignment in Assignment.list_of_assignments]
     if len(user_input) > 5 and user_input not in assignment_names:
@@ -193,6 +291,13 @@ def is_name(user_input):
 
 def is_grade(user_input):
     '''
+    Checks if given *user_input* is valid
+
+    Paramaters:
+        user_input : str
+
+    Returns:
+        bool
     '''
     if user_input.isdigit():
         if 0 < int(user_input) < 101:
@@ -203,6 +308,13 @@ def is_grade(user_input):
 
 def is_date(user_input):
     '''
+    Using regex checks if user_input fitts expected date pattern
+
+    Paramaters:
+        user_input : str
+
+    Returns:
+        bool
     '''
     date_pattern = r'(201[7-9]).(1[0-2]|(0)?[1-9]).([0,1]|[1,2]\d|(0)?[1-9])$'
 
@@ -215,6 +327,13 @@ def is_date(user_input):
 
 def format_date(user_input):
     '''
+    Given valid date as string adds '0' if day or month is one char
+
+    Parameters:
+        user_input : str
+
+    Returns:
+        date : str
     '''
     date_pattern = r'(?P<year>201[7-9]).(?P<month>1[0-2]|(0)?[1-9]).(?P<day>3[0,1]|[1,2]\d|(0)?[1-9])$'
 
@@ -229,6 +348,15 @@ def format_date(user_input):
 
 def get_solutions_data():
     '''
+    Findes maximum, minimum and average from every Assignemnt obj. stored
+    and returns them as list of list where each next list represents
+    different Assignemnt obj.
+
+    Paramaters:
+        None
+
+    Returns:
+        table : list of lists of str
     '''
     table = []
     for assignment in Assignment.list_of_assignments:
@@ -252,6 +380,13 @@ def get_solutions_data():
 
 def print_assignments():
     '''
+    Prints list representing every Assignemnt obj. stored in data.
+
+    Paramaters:
+        None
+
+    Returns:
+        None (void-print)
     '''
     titles = ['name', 'add date', 'deadline', 'max_grade']
 
@@ -271,6 +406,16 @@ def print_assignments():
 
 def edit_assignment():
     '''
+    Lets user choose Assignemnt obj. and change it's attribiutes values
+
+    Paramaters:
+        None
+
+    Returns:
+        None
+
+    Updates:
+        Assignemnt obj.
     '''
     print_assignments()
     assignment = get_assignment_form_user_input()
