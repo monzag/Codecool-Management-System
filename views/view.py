@@ -306,3 +306,12 @@ def print_end_screen():
             print(line, end='')
 
     wait_until_key_pressed()
+
+def print_send_password_msg():
+    """
+    Prints information about sent password.
+
+    Return:
+            None
+    """
+    print("\nYour password has been sent to Your e-mail.\n")
