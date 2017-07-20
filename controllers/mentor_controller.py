@@ -91,6 +91,7 @@ def grade_assignment():
 
                 view.print_message(solution.get_content())
                 solution.grade = get_new_grade(assignment.max_grade)
+                Assignment.save_assignments_to_file('assignments.csv')
 
             else:
                 view.print_message('Assignment was already graded, or was not submited yet!')
