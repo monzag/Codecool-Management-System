@@ -87,3 +87,22 @@ def assign_assignments_to_new_student():
         assignment.solutions.append(Solution(0, '0', '0'))
 
     Assignment.save_assignments_to_file('assignments.csv')
+
+
+def print_student_assignments(student_index):
+    '''
+    '''
+    title = ['name', 'add date', 'deadline', 'submit_date', 'grade', 'max_grade']
+
+    table = []
+    for assignment in Assignment.list_of_assignments:
+        row = []
+
+        row.append(assignment.name)
+        row.append(assignment.add_date)
+        row.append(assignment.deadline)
+        row.append(assignment.solutions[student_index].formated_submit_date)
+        row.append(assignment.solutions[student_index].formated_grade)
+        row.append(str(assignment.max_grade))
+
+        table.append(row)
