@@ -314,4 +314,4 @@ def print_send_password_msg():
     Return:
             None
     """
-    print("\nYour password has been sent to Your e-mail.\n")
+    print("\nPassword has been sent to Your e-mail.\n")
