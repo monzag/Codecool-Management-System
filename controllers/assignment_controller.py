@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from models.assignment import Assignment
+from models.solution import Solution
 
 from views import assignment_view
 
