@@ -24,7 +24,7 @@ def attendance_checked():
 
 def get_data_to_add_student():
     '''
-    Get proper label when student is added by mentor. 
+    Get proper label when student is added by mentor.
 
     Returns:
         name, surname, login, email - string
@@ -49,3 +49,6 @@ def index_doesnt_exist():
 
     print("Index does not exist!")
 
+def recipent_error():
+
+    print("\nE-mail can not be delivered!\n")

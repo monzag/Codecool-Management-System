@@ -59,7 +59,7 @@ def view_students_titles():
             list: list of strings
     """
 
-    titles = ["Name", "Surname", "e-mail", "Attendance"]
+    titles = ["Name", "Surname", "e-mail"]
 
     return titles
 
@@ -131,3 +131,8 @@ def input_titles_for_mentor_remove():
     title = "Type index number of mentor to remove"
 
     return title, label
+
+
+def recipent_error():
+
+    print("\nE-mail can not be delivered!\n")
