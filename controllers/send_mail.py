@@ -5,6 +5,13 @@ def send_email(msg, to_addr_list,
                login='manager.stachu',
                password='ccms_manager',
                smtpserver='smtp.gmail.com:587'):
+    """
+    Get user login and generated password
+    and send it to the user's e-mail.
+
+    Return:
+            None
+    """        
 
     header = 'From: ', from_addr
     header += 'To:', to_addr_list
