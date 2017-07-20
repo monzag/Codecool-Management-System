@@ -158,7 +158,7 @@ def check_attendance():
 
             update_attendance(option, student, attendances)
 
-    mentor_view.attendance_checked()
+    show_attendance_status(students, attendances)
 
 
 def update_attendance(option, student, attendance_list):
@@ -174,6 +174,24 @@ def update_attendance(option, student, attendance_list):
     attendance = Attendance(student.login, datetime.date.today(), today_attendance)
     attendance_list.append(attendance)
     attendance.save_attendance_to_file('attendance.csv')
+
+
+def show_attendance_status(students, attendances):
+
+    if attendances == []:
+        return mentor_view.print_empty_database_msg()
+
+    unchecked_students = 0
+
+    for student in students:
+        if datetime.date.today() not in [att.date for att in attendances if att.student_login == student.login]:
+            unchecked_students += 1
+
+    if unchecked_students == 0:
+        return mentor_view.print_all_checked()
+
+    elif unchecked_students > 0:
+        return mentor_view.print_how_many_unchecked(unchecked_students)
 
 
 def get_option(options):
