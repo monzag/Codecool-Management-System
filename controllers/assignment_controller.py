@@ -76,4 +76,13 @@ def remove_student_solutions(student_index):
     for assignment in Assignment.list_of_assignments:
         del assignment.solutions[student_index]
 
-    Assignment.save_assignments_to_file('assignements.csv')
+    Assignment.save_assignments_to_file('assignments.csv')
+
+
+def assign_assignments_to_new_student():
+    '''
+    '''
+    for assignment in Assignment.list_of_assignments:
+        assignment.solutions.append(Solution(0, '0', '0'))
+
+    Assignment.save_assignments_to_file('assignments.csv')
