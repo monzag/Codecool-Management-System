@@ -43,17 +43,17 @@ def submit_assigment(student):
     Args:
         student - obj
     '''
-
+    student_index = Student.list_of_students.index(student)
     view_grades(student)
 
     number = None
     while not number:
         number = view.input_number()
 
-    if number <= len(student.assignments_list):
-        assignment = student.assignments_list[number - 1]
-        assignment_controller.change_assignment_to_done(assignment)
-        Assignment.save_assignments_to_file()
+    if number <= Assignment.amount_of_assignments():
+        assignment = Assignment.list_of_assignments[number - 1]
+        assignment_controller.submit_solution_to_assignment(assignment, student_index)
+        Assignment.save_assignments_to_file('assignments.csv')
 
     else:
         text = view_student.invalid_assignment_in_submit()
@@ -64,8 +64,9 @@ def view_grades(student):
     '''
     Show table with data about assignment-grades'
     '''
+    student_index = Student.list_of_students.index(student)
 
-    table = assignment_controller.get_assignments_to_table(student)
+    table = assignment_controller.get_assignments_to_table(student_index)
     title_list = view_student.title_to_view_grades()
     view.print_table(table, title_list)
 
@@ -94,4 +95,3 @@ def change_password(student):
 
     codecooler_controller.change_password(student)
     Student.save_students()
-

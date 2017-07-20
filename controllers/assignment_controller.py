@@ -1,116 +1,128 @@
-from datetime import date
-
-from views import view
-
-from controllers import student_controller
+import os
+from datetime import datetime
 
 from models.assignment import Assignment
-from models.student import Student
+from models.solution import Solution
+
+from views import assignment_view
+from views import view
 
 
-def get_assignments_to_table(student):
+def get_assignments_to_table(student_index):
     '''
-    Given Student obj. creates table for view.print_table
-
-    Parameters:
-        student: Student obj.
-
-    Returns:
-        table: 2d list of table prints
     '''
     table = []
-    for assignment in student.assignments_list:
-        row = [assignment.name,     assignment.status,     assignment.submit_date,
-               assignment.deadline, str(assignment.grade), str(assignment.max_grade)]
+    for assignment in Assignment.list_of_assignments:
+        solution = []
+        solution.append(assignment.name)
+        solution.append(assignment.add_date)
+        solution.append(assignment.deadline)
+        solution.append(assignment.solutions[student_index].formated_submit_date)
+        solution.append(assignment.solutions[student_index].formated_grade)
+        solution.append(str(assignment.max_grade))
 
-        table.append(row)
+        table.append(solution)
 
     return table
 
 
-def create_assignment():
+def submit_solution_to_assignment(assignment, student_index):
     '''
-    Creates new assignment from data provided by mentor.
-
-    Returns:
-        None
     '''
-    deadline = get_deadline()
-    max_grade = get_max_grade()
-    add_date = get_add_date()
+    solution = assignment.solutions[student_index]
 
-    for student in Student.list_of_students:
-        student.assignments_list.append(Assignment(student.login, student.name,
-                                        add_date, deadline, max_grade))
+    if solution.submit_date == '0':
 
-    Assignment.save_assignments_to_file()
+        solution.submit_date = get_submit_date()
+        solution.file_name = assignment.name + '_' + str(student_index) + 'txt'
+        save_solution_to_file(solution.file_name)
+
+    else:
+        assignment_view.print_fail_message()
 
 
-def change_assignment_to_done(assignment):
+def get_submit_date():
     '''
-    Change undone assigment to done, and adds datetime
-    obj. representing today date as it's sumbit date
-
-    Paramateres:
-        assigment: Assigment obj.
-
-    Returns:
-        None
     '''
-    submit_date = '{}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
-
-    if assignment.status == 'undone':
-        assignment.status = 'done'
-        assignment.submit_date = submit_date
-
-
-def view_student_assignments(student):
-    '''
-    Prints Student obj. own assigments
-
-    Parametrs:
-        student: Student obj.
-
-    Return:
-        None
-    '''
-    labels = ['name', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
-    table = get_assignments_to_table(student)
-
-    view.print_table(table, labels)
-
-
-def get_add_date():
     return '{}:{}:{}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
-def get_deadline():
 
-    deadline = None
+def save_solution_to_file(file_name):
+    '''
+    '''
+    text = assignment_view.get_submision_text()
 
-    while deadline == None:
+    file_path = os.getcwd() + '/data/solutions/' + file_name
+    with open(file_path, 'w+') as solution_file:
+        solution_file.write(text)
 
-        deadline_labels = ["Day", "Month", "Year"]
-        deadline_title = "Type deadline"
-        deadline_input = view.get_inputs(deadline_labels, deadline_title)
 
-        if all([item.isdigit() for item in deadline_input]):
-            deadline = deadline_input[0] + "-" + deadline_input[1] + "-" + deadline_input[2]
-            return deadline
-        else:
-            deadline = None
+def get_student_total_grade(student_index):
+    '''
+    '''
+    grade = 0
+    max_grade = 0
 
-def get_max_grade():
+    for assignment in Assignment.list_of_assignments:
+        max_grade += assignment.max_grade
+        grade += assignment.solutions[student_index].grade
 
-    max_grade = None
+    total_grade = grade / max_grade * 100
 
-    while max_grade == None:
+    return '{:3.2f} %'.format(total_grade)
 
-        labels = [ "Max grade"]
-        title = "Type maximal grade"
-        inputs = view.get_inputs(labels, title)
 
-        if inputs[0].isdigit():
-            max_grade = int(inputs[0])
-            return max_grade
-        else:
-            max_grade = None
+def remove_student_solutions(student_index):
+    '''
+    '''
+    for assignment in Assignment.list_of_assignments:
+        del assignment.solutions[student_index]
+
+    Assignment.save_assignments_to_file('assignments.csv')
+
+
+def assign_assignments_to_new_student():
+    '''
+    '''
+    for assignment in Assignment.list_of_assignments:
+        assignment.solutions.append(Solution(0, '0', '0'))
+
+    Assignment.save_assignments_to_file('assignments.csv')
+
+
+def print_student_assignments(student_index):
+    '''
+    '''
+    titles = ['name', 'add date', 'deadline', 'submit_date', 'grade', 'max_grade']
+
+    table = []
+    for assignment in Assignment.list_of_assignments:
+        row = []
+
+        row.append(assignment.name)
+        row.append(assignment.add_date)
+        row.append(assignment.deadline)
+        row.append(assignment.solutions[student_index].formated_submit_date)
+        row.append(assignment.solutions[student_index].formated_grade)
+        row.append(str(assignment.max_grade))
+
+        table.append(row)
+
+    view.print_table(table, titles)
+
+
+def get_assignment_form_user_input():
+    '''
+    '''
+    labels = ['Index']
+    title = 'Type index number of assignment'
+    user_input = view.get_inputs(labels, title)[0]
+
+    assignment_indexes = [str(assignment_index + 1) for assignment_index in range(len(Assignment.list_of_assignments))]
+
+    if user_input in assignment_indexes:
+        assignment = Assignment.list_of_assignments[int(user_input) - 1]
+
+        return assignment
+
+    return None

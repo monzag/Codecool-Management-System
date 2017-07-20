@@ -1,74 +1,168 @@
 import os
 
+from models.solution import Solution
+
 
 class Assignment:
 
-    # all ssigments ever created and match with student
     list_of_assignments = []
 
-    def __init__(self, login, name, add_date, deadline, max_grade, grade=0, status='undone', submit_date='not submitted'):
+    def __init__(self, name, add_date, deadline, max_grade, solutions):
         self.name = name
-        self.owner = login
-        self.status = status
         self.add_date = add_date
         self.deadline = deadline
-        self.submit_date = submit_date
-        self.grade = grade
         self.max_grade = max_grade
+        self.solutions = solutions
 
         Assignment.list_of_assignments.append(self)
 
-    @staticmethod
-    def load_data_from_file(file_name):
-        """
-        Loads Codecooler obj. instance information from csv file, splits them, and
-        creates a list.
-
-        Return:
-            list: list with Codecooler obj. instance data
-        """
-
-        file_path = os.getcwd() + '/data/' + file_name
-        if not os.path.exists(file_path):
-            raise FileNotFoundError("There is no such file")
-        else:
-            with open(file_path, 'r') as csvfile:
-                read_data = csvfile.readlines()
-                splitted_data_list = [line.replace('\n', '').split('|') for line in read_data]
-
-        return splitted_data_list
-
     @classmethod
     def get_assignments_from_file(cls, file_name):
-        """
-        Creates objects with data from splitted list.
+        '''
+        Given file name creates all Assignment objs stored in data.
+
+        Parameters:
+            file_name : str
 
         Returns:
             None
-        """
-        splitted_data_list = cls.load_data_from_file(file_name)
 
-        for element in splitted_data_list:
-            name, owner, status, add_date, deadline, submit_date, grade, max_grade = element
-            grade = int(grade)
-            max_grade = int(max_grade)
-            cls(owner, name, add_date, deadline, max_grade, grade, status, submit_date)
+        Initializes:
+            Assignment objs. (stored in classlist)
+        '''
+        file_path = os.getcwd() + '/data/' + file_name
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as data:
+                assignments_data = data.read().split('|assignment|')
+
+            cls.from_assignments_in_file(assignments_data)
+
+    @staticmethod
+    def split_assignment_and_solutions(file_rows):
+        '''
+        Changes list of plain text representing one assignment in csv file into
+        lists of attribiutes values needed to create Assignemnt and Solutions objs.
+
+        Parameters:
+            file_rows : string
+
+        Returns:
+            assignment : list of strs
+            solutions : list of lists of strs
+        '''
+        assignment, solutions = file_rows.split('|solutions|')
+
+        assignment = assignment.replace('\n', '').split('|')
+
+        solutions = solutions.split('\n')
+        solutions = [solution.split('|') for solution in solutions if solution != '']
+
+        return assignment, solutions
 
     @classmethod
-    def save_assignments_to_file(cls):
+    def from_assignments_in_file(cls, assignments_list):
         '''
+        For one assignements stored in data change it's csv form into a lists of
+        attribiutes values and create Assignemt obj.
+
+        Parameters:
+            assignments_list : list of strs
+
+        Returns:
+            None
+
+        Initializes:
+            Assignemnt objs. (stored in classlist)
         '''
-        file_path = os.getcwd() + '/data/assignments.csv'
+        for assignment_data in assignments_list:
+            assignment, solutions = cls.split_assignment_and_solutions(assignment_data)
+
+            name, add_date, deadline, max_grade = assignment
+            solutions = cls.assign_solutions(solutions)
+
+            cls(name, add_date, deadline, int(max_grade), solutions)
+
+    @staticmethod
+    def assign_solutions(solutions):
+        '''
+        Create list of Solution objs.
+
+        Parameters:
+            solutions : list of lists of str
+
+            solutions_list : list of Solution objs.
+        '''
+        solutions_list = []
+        for solution in solutions:
+            new_solution = Solution.from_list(solution)
+            solutions_list.append(new_solution)
+
+        return solutions_list
+
+    @classmethod
+    def save_assignments_to_file(cls, file_name):
+        '''
+        Save all stored Assignment objs. and it's solutions to file
+
+        Parameters:
+            file_name : str
+
+        Returns:
+            None
+        '''
+        file_path = os.getcwd() + '/data/' + file_name
         with open(file_path, 'w') as data:
-            data.write(cls.csv_string())
+            data.write(cls.get_file_string())
 
     @classmethod
-    def csv_string(cls):
-        csv_string = []
-        for assignment in cls.list_of_assignments:
-            row = [assignment.name, assignment.owner, assignment.status, assignment.add_date, 
-                   assignment.deadline, assignment.submit_date, str(assignment.grade), str(assignment.max_grade)]
+    def get_file_string(cls):
+        '''
+        Creates string saved to file representing all stored Assignemt objs. and its Solution objs.
 
-            csv_string.append(row)
+        Parameters:
+            None
 
-        return '\n'.join('|'.join(row) for row in csv_string)
+        Returns:
+            str
+        '''
+        return '\n|assignment|\n'.join([cls.join_assignment_with_solutions(assignment) for assignment in Assignment.list_of_assignments])
+
+    @staticmethod
+    def join_solutions(solutions):
+        '''
+        Creates string of Solution objs. passed.
+
+        Parameters:
+            solutions : list of Solution objs.
+
+        Returns:
+            string : str
+        '''
+        string = '|solutions|\n'
+        string += '\n'.join(map(lambda solution: solution.csv_string, solutions))
+
+        return string
+
+    @classmethod
+    def join_assignment_with_solutions(cls, assignment):
+        '''
+        Create csv file string of single Assignment obj. and it's Solutions objs.
+
+        Parameters:
+            assignment : Assignemt obj.
+
+        Returns:
+            joined_string : str
+        '''
+        joined_string = assignment.csv_string + '\n'
+        joined_string += cls.join_solutions(assignment.solutions)
+
+        return joined_string
+
+    @property
+    def csv_string(self):
+        return '{}|{}|{}|{}'.format(self.name, self.add_date, self.deadline, self.max_grade)
+
+    @classmethod
+    def amount_of_assignments(cls):
+        return len(cls.list_of_assignments)
