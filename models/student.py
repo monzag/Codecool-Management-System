@@ -8,7 +8,7 @@ class Student(Codecooler):
 
     list_of_students = []
 
-    def __init__(self, total_grade, *args):
+    def __init__(self, *args):
         super().__init__(*args)
         Student.list_of_students.append(self)
 
