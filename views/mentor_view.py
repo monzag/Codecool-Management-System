@@ -17,9 +17,19 @@ def data_to_check_attendance():
     return title, exit_message, options
 
 
-def attendance_checked():
+def print_all_checked():
 
-    print("\nAll attendance for today is checked or no students in database.\n")
+    print("\nAll students are checked for today.\n")
+
+
+def print_empty_database_msg():
+
+    print('\nNo students in database.\n')
+
+
+def print_how_many_unchecked(unchecked_students_num):
+
+    print("\nStudents left to be checked: {}\n".format(unchecked_students_num))
 
 
 def get_data_to_add_student():
