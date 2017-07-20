@@ -135,7 +135,7 @@ def check_attendance():
     """
     Prints the name of the student if he hasn't been checked today.
     Adds his attendance for today based on input.
-    Saves to file.
+    Updates attendance list and saves to file.
     """
 
     title, exit_message, options = mentor_view.data_to_check_attendance()
