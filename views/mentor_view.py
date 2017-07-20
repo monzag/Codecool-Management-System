@@ -49,7 +49,11 @@ def index_doesnt_exist():
 
     print("Index does not exist!")
 
-    
+
 def recipent_error():
 
     print("\nE-mail can not be delivered!\n")
+
+def title_check_valid():
+
+    return 'Type the data below'
