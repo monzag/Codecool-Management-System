@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 
 from models.assignment import Assignment
@@ -148,11 +149,11 @@ def create_assignment():
 def get_valid_inputs():
     '''
     '''
-    name = check_valid(is_alpha, 'name')
-    deadline = check_valid(is_date, 'deadline')
-    email = check_valid(isdigit, email_txt)
+    name = check_valid(is_name, 'name').caplitalize()
+    deadline = check_valid(is_date, 'deadline(yyyy:mm:dd)')
+    max_grade = int(check_valid(is_grade, 'max grade'))
 
-    return name, surname, login, email
+    return name, deadline, max_grade
 
 
 def check_valid(function, message):
@@ -160,8 +161,38 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        title = 'Type the data below'
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
 
     return ''.join(user_input)
+
+
+def is_name(user_input):
+    '''
+    '''
+    if len(user_input) > 5:
+        return True
+
+    return False
+
+
+def is_grade(user_input):
+    '''
+    '''
+    if user_input.isdigit():
+        if 0 < int(user_input) < 101:
+            return True
+
+    return False
+
+
+def is_deadline(user_input):
+    '''
+    '''
+    date_pattern = r'(?P<year>201[7-9]).(?P<month>1[0-2]|(0)?[1-9]).(?P<day>3[0,1]|[1,2]\d|(0)?[1-9])$'
+
+    match = re.match(date_pattern, user_input)
+    if match:
+        return True
+
+    return False
