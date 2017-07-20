@@ -131,3 +131,8 @@ def input_titles_for_mentor_remove():
     title = "Type index number of mentor to remove"
 
     return title, label
+
+
+def recipent_error():
+
+    print("E-mail can not be delivered!")
