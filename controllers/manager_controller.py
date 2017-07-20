@@ -120,7 +120,7 @@ def add_mentor():
     new_mentor = Mentor(name, surname, login, password, mail)
     Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
-    msg = 'Login: {}, Password: {}'.format(login, password)
+    msg = 'Password: {}'.format(password)
 
     try:
         send_email(msg, mail)

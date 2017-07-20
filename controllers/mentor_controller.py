@@ -204,7 +204,7 @@ def add_student():
 
     Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
 
-    msg = 'Login: {}, Password: {}'.format(login, password)
+    msg = 'Password: {}'.format(password)
 
     try:
         send_email(msg, email)
