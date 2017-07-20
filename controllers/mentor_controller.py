@@ -1,16 +1,19 @@
-from views import view
 import os
+import datetime
+
 from models.login import Logins
 from models.attendance import Attendance
 from models.assignment import Assignment
 from models.student import Student
 from models.mentor import Mentor
+
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
 from controllers.mail_validation import *
+
+from views import view
 from views import mentor_view
-import datetime
 
 
 def mentor_menu(user):
@@ -188,7 +191,7 @@ def add_student():
     new_student = Student(name, surname, login, password, email)
     assignment_controller.assign_assignments_to_new_student()
 
-    Student.save_students()
+    Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
 
 
 def get_valid_data():
@@ -255,7 +258,7 @@ def remove_student():
 
         del Student.list_of_students[int(student_index)]
         assignment_controller.remove_student_solutions(student_index)
-        Student.save_students()
+        Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
 
     else:
         view.print_message('Index does not exist!')
@@ -290,4 +293,4 @@ def change_password(user):
     '''
 
     codecooler_controller.change_password(user)
-    Mentor.save_data_to_file()
+    Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
