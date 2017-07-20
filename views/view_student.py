@@ -11,7 +11,7 @@ def data_to_student_menu(user):
 
     title = 'Hi {}! What would you like to do'.format(user.name)
     exit_message = 'Exit'
-    options = ['View grades', 'Submit assigment', 'Show all students', 'Change password']
+    options = ['View grades', 'Submit assigment', 'Show all students', 'Change password', 'Show general grade']
 
     return title, options, exit_message
 
@@ -48,5 +48,12 @@ def data_to_view_students():
         list of strings
     '''
     return ["Name", "Surname", "e-mail"]
+
+
+def title_to_general_grade():
+    '''
+
+    '''
+    ['Total grade', 'min', 'max', 'average']
 
 
