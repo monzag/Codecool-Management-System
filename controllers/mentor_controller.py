@@ -57,8 +57,7 @@ def view_students():
     titles = ["Name", "Surname", "e-mail", "Attendance", 'Total grade']
     students_info = []
 
-    for student in Student.list_of_students:
-        student_index = Student.list_of_students.index(student)
+    for student_index, student in enumerate(Student.list_of_students):
 
         table_row = []
         table_row.append(student.name)
