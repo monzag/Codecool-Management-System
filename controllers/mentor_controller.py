@@ -42,6 +42,8 @@ def mentor_menu(user):
             add_student()
         elif option == 6:
             remove_student()
+        elif option == 7:
+            change_password(user)
         elif option == 0:
             end = True
 
@@ -276,3 +278,15 @@ def get_student_index():
         return int(user_input) - 1
 
     return None
+
+
+def change_password(user):
+    '''
+    Change old password to new. Save changes.
+
+    Args:
+        user - object
+    '''
+
+    codecooler_controller.change_password(user)
+    Mentor.save_data_to_file()
