@@ -78,26 +78,14 @@ def grade_assignment():
     Then asks the user for the choice and changing the grade.
     '''
     view_students()
-    student_id = None
-    while not student_id:
-        student_id = view.input_number()
+    student_index = get_student_index()
+    if student_index != None:
 
-    for student in Student.list_of_students:
-        if Student.list_of_students.index(student) == student_id - 1:
-            assignment_controller.view_student_assignments(student)
+        assignment_controller.print_student_assignments(student_index)
 
-            assignment_id = None
-            while not assignment_id:
-                assignment_id = view.input_number()
 
-                for assignment in student.assignments_list:
-                    if student.assignments_list.index(assignment) == assignment_id - 1:
-                        new_grade = get_new_grade(assignment.max_grade)
-                        student.assignments_list[assignment_id - 1].grade = new_grade
-
-                        student.total_grade = student.calculate_total_grade()
-                        Student.save_students()
-                        Assignment.save_assignments_to_file()
+    else:
+        view.print_message('There is no such student!')
 
 
 def get_new_grade(max_grade):
