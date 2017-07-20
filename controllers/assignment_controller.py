@@ -4,6 +4,7 @@ from datetime import datetime
 
 from models.assignment import Assignment
 from models.solution import Solution
+from models.student import Student
 
 from views import assignment_view
 from views import view
@@ -140,7 +141,9 @@ def create_assignment():
     '''
     add_date = get_today_date()
     name, deadline, max_grade = get_valid_inputs()
+    deadline = format_date(deadline)
 
+    solutions = []
     for index in range(len(Student.list_of_students)):
         solutions.append(Solution(0, '0', '0'))
 
@@ -152,7 +155,7 @@ def create_assignment():
 def get_valid_inputs():
     '''
     '''
-    name = check_valid(is_name, 'name').caplitalize()
+    name = check_valid(is_name, 'name')
     deadline = check_valid(is_date, 'deadline(yyyy:mm:dd)')
     max_grade = int(check_valid(is_grade, 'max grade'))
 
@@ -164,7 +167,7 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        user_input = view.get_inputs([message], title)[0]
+        user_input = view.get_inputs([message], 'type stuff')[0]
         is_valid = function(user_input)
 
     return ''.join(user_input)
@@ -173,7 +176,8 @@ def check_valid(function, message):
 def is_name(user_input):
     '''
     '''
-    if len(user_input) > 5:
+    assignment_names = [assignment.name for assignment in Assignment.list_of_assignments]
+    if len(user_input) > 5 and user_input not in assignment_names:
         return True
 
     return False
@@ -189,13 +193,27 @@ def is_grade(user_input):
     return False
 
 
-def is_deadline(user_input):
+def is_date(user_input):
     '''
     '''
-    date_pattern = r'(?P<year>201[7-9]).(?P<month>1[0-2]|(0)?[1-9]).(?P<day>3[0,1]|[1,2]\d|(0)?[1-9])$'
+    date_pattern = r'(201[7-9]).(1[0-2]|(0)?[1-9]).([0,1]|[1,2]\d|(0)?[1-9])$'
 
     match = re.match(date_pattern, user_input)
     if match:
         return True
 
     return False
+
+
+def format_date(user_input):
+    '''
+    '''
+    date_pattern = r'(?P<year>201[7-9]).(?P<month>1[0-2]|(0)?[1-9]).(?P<day>3[0,1]|[1,2]\d|(0)?[1-9])$'
+
+    match = re.match(date_pattern, user_input)
+
+    year = match.group('year')
+    month = '{:0>2}'.format(match.group('month'))
+    day = '{:0>2}'.format(match.group('day'))
+
+    return '{}:{}:{}'.format(year, month, day)
