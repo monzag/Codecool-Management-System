@@ -76,3 +76,14 @@ class Attendance:
 
         with open(filepath, 'w') as csvfile:
             csvfile.write(cls.data_to_overwrite())
+    @classmethod
+    def data_to_overwrite(cls):
+
+        string_to_save = []
+        for attendance in cls.list_of_attendance:
+            row = [attendance.student_login, str(attendance.date), str(attendance.today_value)]
+            string_to_save.append(row)
+
+        string_to_save = '\n'.join('|'.join(row) for row in string_to_save)
+
+        return string_to_save
