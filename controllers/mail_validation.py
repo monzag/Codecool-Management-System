@@ -30,7 +30,7 @@ def check_mail(mail):
 
             try:
 
-                if not (splitted_mail[1][0] == "." or splitted_mail[1][-1] == "."):
+                if not (splitted_mail[1][0] == "." or splitted_mail[1][-1] == "." or splitted_mail[1][0] == " "):
                     return True
 
             except IndexError:

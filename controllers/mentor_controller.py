@@ -181,10 +181,9 @@ def add_student():
 
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
-    print('Password: ', password)
+    mentor_view.print_new_password(password)
     new_student = Student(name, surname, login, password, email)
     assignment_controller.assign_assignments_to_new_student()
-    # TODO create new attendance obj. instance sthing
 
     Student.save_students()
 
@@ -196,11 +195,11 @@ def get_valid_data():
     Returns:
         name, surname, login, email - string
     '''
-
-    name = check_valid(is_alpha, 'name')
-    surname = check_valid(is_alpha, 'surname')
-    login = check_valid(Logins.is_login_valid, 'login')
-    email = check_valid(check_mail, 'e-mail')
+    name_txt, surname_txt, login_txt, email_txt = mentor_view.get_data_to_add_student()
+    name = check_valid(is_alpha, name_txt)
+    surname = check_valid(is_alpha, surname_txt)
+    login = check_valid(Logins.is_login_valid, login_txt)
+    email = check_valid(check_mail, email_txt)
 
     return name, surname, login, email
 
@@ -218,25 +217,11 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        title = 'Write ' + message
+        title = 'Type the data below'
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
 
     return ''.join(user_input)
-
-
-def is_not_empty(user_input):
-    '''
-    Returns True if length user_input is bigger than 0.
-
-    Args:
-        user_input - string
-
-    Returns:
-        bool
-    '''
-    if len(user_input) > 0:
-        return True
 
 
 def is_alpha(user_input):
@@ -267,7 +252,6 @@ def remove_student():
 
         del Student.list_of_students[int(student_index)]
         assignment_controller.remove_student_solutions(student_index)
-        # TODO remove attendance obj. instance sthing
         Student.save_students()
 
     else:
@@ -283,8 +267,7 @@ def get_student_index():
     Returns:
         index (int)
     """
-    labels = ["Index"]
-    title = "Type index number of student"
+    labels, title = mentor_view.data_get_student_index()
     user_input = view.get_inputs(labels, title)[0]
 
     student_indexes = [str(student_index + 1) for student_index in range(len(Student.list_of_students))]
