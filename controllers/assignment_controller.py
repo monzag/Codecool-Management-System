@@ -139,6 +139,16 @@ def get_assignment_form_user_input():
 def create_assignment():
     '''
     '''
+    name, add_date, deadline, max_grade, solutions = get_assignment_data()
+
+    Assignment(name, add_date, deadline, max_grade, solutions)
+
+    Assignment.save_assignments_to_file('assignments.csv')
+
+
+def get_assignment_data():
+    '''
+    '''
     add_date = get_today_date()
     name, deadline, max_grade = get_valid_inputs()
     deadline = format_date(deadline)
@@ -147,9 +157,7 @@ def create_assignment():
     for index in range(len(Student.list_of_students)):
         solutions.append(Solution(0, '0', '0'))
 
-    Assignment(name, add_date, deadline, max_grade, solutions)
-
-    Assignment.save_assignments_to_file('assignments.csv')
+    return name, add_date, deadline, max_grade, solutions
 
 
 def get_valid_inputs():
@@ -240,3 +248,38 @@ def get_solutions_data():
         table.append(row)
 
     return table
+
+
+def print_assignments():
+    '''
+    '''
+    titles = ['name', 'add date', 'deadline', 'max_grade']
+
+    table = []
+    for assignment in Assignment.list_of_assignments:
+        row = []
+
+        row.append(assignment.name)
+        row.append(assignment.add_date)
+        row.append(assignment.deadline)
+        row.append(str(assignment.max_grade))
+
+        table.append(row)
+
+    view.print_table(table, titles)
+
+
+def edit_assignment():
+    '''
+    '''
+    print_assignments()
+    assignment = get_assignment_form_user_input()
+    if assignment:
+        assignment_index = Assignment.list_of_assignments.index(assignment)
+
+        assignment_data = get_assignment_data()
+        del Assignment.list_of_assignments[assignment_index]
+
+
+    else:
+        view.print_message('There is no such assignment')
