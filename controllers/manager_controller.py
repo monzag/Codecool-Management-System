@@ -1,9 +1,13 @@
 import os
 
-import views.view
 from models.student import Student
 from models.mentor import Mentor
+from models.manager import Manager
+
 from controllers.mail_validation import *
+from controllers import codecooler_controller
+
+from views import view
 from views.manager_view import *
 
 
@@ -39,7 +43,7 @@ def manager_menu(user):
 
         if option == 3:
             add_mentor()
-            Mentor.save_data_to_file()
+            Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
         if option == 4:
 
@@ -53,6 +57,9 @@ def manager_menu(user):
             except IndexError:
                 message = index_error_message()
                 views.view.print_message(message)
+
+        if option == 5:
+            change_password(user)
 
         if option == 0:
             end = True
@@ -109,6 +116,7 @@ def add_mentor():
     mail = get_valid_input(check_mail, titles[4])
 
     new_mentor = Mentor(name, surname, login, password, mail)
+    Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
 
 def remove_mentor():
@@ -132,10 +140,24 @@ def remove_mentor():
     else:
         index = int(user_input) - 1
         del Mentor.list_of_mentors[index]
-        Mentor.save_data_to_file()
+        Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
 
 def check_name(name):
 
     if name.isalpha():
         return True
+
+
+def change_password(user):
+    '''
+    Change old password to new. Save changes.
+
+    Args:
+        user - object
+    '''
+
+    codecooler_controller.change_password(user)
+    Manager.save_codecoolers_to_file('managers.csv', Manager.list_of_managers)
+
+

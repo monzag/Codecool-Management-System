@@ -94,4 +94,4 @@ def change_password(student):
     '''
 
     codecooler_controller.change_password(student)
-    Student.save_students()
+    Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
