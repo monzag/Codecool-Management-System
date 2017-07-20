@@ -113,8 +113,8 @@ def get_new_grade(max_grade):
 
 def check_attendance():
     """
-    Prints the name of the student if he didn't have been checked today.
-    Adds its attendance for today based on input.
+    Prints the name of the student if he hasn't been checked today.
+    Adds his attendance for today based on input.
     Saves to file.
     """
 
@@ -131,14 +131,22 @@ def check_attendance():
             view.print_menu(title, options, exit_message)
 
             option = get_option(options)
-            if option == 0:
+            if option == 4:
+                continue
+            elif option == 0:
                 break
-            today_attendance = get_today_attendance(option)
-            attendance = Attendance(student.login, datetime.date.today(), today_attendance)
-            attendances.append(attendance)
-            attendance.save_attendance_to_file('attendance.csv')
+
+            update_attendance(option, student, attendances)
 
     mentor_view.attendance_checked()
+
+
+def update_attendance(option, student, attendance_list):
+
+    today_attendance = get_today_attendance(option)
+    attendance = Attendance(student.login, datetime.date.today(), today_attendance)
+    attendances.append(attendance)
+    attendance.save_attendance_to_file('attendance.csv')
 
 
 def get_option(options):
