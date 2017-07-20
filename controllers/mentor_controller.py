@@ -1,5 +1,6 @@
 from views import view
 import os
+from models.login import Logins
 from models.attendance import Attendance
 from models.assignment import Assignment
 from models.student import Student
@@ -56,9 +57,16 @@ def view_students():
     titles = ["Name", "Surname", "e-mail", "Attendance", 'Total grade']
     students_info = []
 
-    for student in Student.list_of_students:
-        students_info.append([student.name, student.surname,
-                             student.email, str(student.get_attendance()), str(student.total_grade)])
+    for student_index, student in enumerate(Student.list_of_students):
+
+        table_row = []
+        table_row.append(student.name)
+        table_row.append(student.surname)
+        table_row.append(student.email)
+        table_row.append(str(student.get_attendance()))
+        table_row.append(assignment_controller.get_student_total_grade(student_index))
+
+        students_info.append(table_row)
 
     view.print_table(students_info, titles)
 
@@ -70,26 +78,28 @@ def grade_assignment():
     Then asks the user for the choice and changing the grade.
     '''
     view_students()
-    student_id = None
-    while not student_id:
-        student_id = view.input_number()
+    student_index = get_student_index()
+    if student_index != None:
 
-    for student in Student.list_of_students:
-        if Student.list_of_students.index(student) == student_id - 1:
-            assignment_controller.view_student_assignments(student)
+        assignment_controller.print_student_assignments(student_index)
+        assignment = assignment_controller.get_assignment_form_user_input()
 
-            assignment_id = None
-            while not assignment_id:
-                assignment_id = view.input_number()
+        if assignment:
+            solution = assignment.solutions[student_index]
 
-                for assignment in student.assignments_list:
-                    if student.assignments_list.index(assignment) == assignment_id - 1:
-                        new_grade = get_new_grade(assignment.max_grade)
-                        student.assignments_list[assignment_id - 1].grade = new_grade
+            if solution.can_be_graded:
 
-                        student.total_grade = student.calculate_total_grade()
-                        Student.save_students()
-                        Assignment.save_assignments_to_file()
+                view.print_message(solution.get_content())
+                solution.grade = get_new_grade(assignment.max_grade)
+
+            else:
+                view.print_message('Assignment was already graded, or was not submited yet!')
+
+        else:
+            view.print_message('There is no such assignment!')
+
+    else:
+        view.print_message('There is no such student!')
 
 
 def get_new_grade(max_grade):
@@ -172,8 +182,8 @@ def add_student():
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
     mentor_view.print_new_password(password)
-    total_grade = 100
-    new_student = Student(total_grade, name, surname, login, password, email)
+    new_student = Student(name, surname, login, password, email)
+    assignment_controller.assign_assignments_to_new_student()
 
     Student.save_students()
 
@@ -188,7 +198,7 @@ def get_valid_data():
     name_txt, surname_txt, login_txt, email_txt = mentor_view.get_data_to_add_student()
     name = check_valid(is_alpha, name_txt)
     surname = check_valid(is_alpha, surname_txt)
-    login = check_valid(is_login_already_exist, login_txt)
+    login = check_valid(Logins.is_login_valid, login_txt)
     email = check_valid(check_mail, email_txt)
 
     return name, surname, login, email
@@ -210,27 +220,8 @@ def check_valid(function, message):
         title = 'Type the data below'
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
-    return user_input
 
-
-def is_login_already_exist(user_input):
-    '''
-    Check that user_input is not empty string.
-    If not, check that login isn't occupied by another students.
-    Returns True if not.
-
-    Args:
-        user_input - string
-
-    Returns:
-        bool
-    '''
-    if len(user_input) > 0:
-        for student in Student.list_of_students:
-            if student.login == user_input:
-                return None
-
-        return True
+    return ''.join(user_input)
 
 
 def is_alpha(user_input):
@@ -256,13 +247,15 @@ def remove_student():
     """
     view_students()
 
-    try:
-        index = get_student_index()
-        del Student.list_of_students[int(index)]
-    except (ValueError, IndexError):
-        mentor_view.index_doesnt_exist()
+    student_index = get_student_index()
+    if student_index != None:
 
-    Student.save_students()
+        del Student.list_of_students[int(student_index)]
+        assignment_controller.remove_student_solutions(student_index)
+        Student.save_students()
+
+    else:
+        view.print_message('Index does not exist!')
 
 
 def get_student_index():
@@ -275,13 +268,11 @@ def get_student_index():
         index (int)
     """
     labels, title = mentor_view.data_get_student_index()
-    index = view.get_inputs(labels, title)[0]
+    user_input = view.get_inputs(labels, title)[0]
 
-    if not index.isdigit():
-        raise ValueError("Please type only numbers!")
+    student_indexes = [str(student_index + 1) for student_index in range(len(Student.list_of_students))]
 
-    elif int(index) - 1 not in range(len(Student.list_of_students)):
-        raise IndexError('Mentor with given index does not exist!')
+    if user_input in student_indexes:
+        return int(user_input) - 1
 
-    else:
-        return int(index) - 1
+    return None

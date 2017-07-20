@@ -24,14 +24,14 @@ def title_to_view_grades():
         title_list - list
     '''
 
-    title_list = ['Assignment', 'status', 'submit_date', 'deadline', 'grade', 'max_grade']
+    title_list = ['assignment', 'add date', 'deadline', 'submit date', 'grade', 'max grade']
 
     return title_list
 
 
 def invalid_assignment_in_submit():
     '''
-    Get text about invalid assignment to submit assignment (student controller). 
+    Get text about invalid assignment to submit assignment (student controller).
 
     Returns:
         string
