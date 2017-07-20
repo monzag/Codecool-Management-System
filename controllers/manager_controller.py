@@ -6,8 +6,9 @@ from models.manager import Manager
 
 from controllers.mail_validation import *
 from controllers import codecooler_controller
+from controllers.send_mail import *
 
-from views import view
+import views.view
 from views.manager_view import *
 
 
@@ -110,13 +111,16 @@ def add_mentor():
     titles = input_titles_for_mentor_add()
 
     login = get_single_input(titles[0])
-    password = get_single_input(titles[1])
+    password = codecooler_controller.get_random_password()
     name = get_valid_input(check_name, titles[2])
     surname = get_valid_input(check_name, titles[3])
     mail = get_valid_input(check_mail, titles[4])
 
     new_mentor = Mentor(name, surname, login, password, mail)
     Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
+
+    msg = 'Login: {}, Password: {}'.format(login, password)
+    send_email(msg, mail)
 
 
 def remove_mentor():
@@ -159,5 +163,3 @@ def change_password(user):
 
     codecooler_controller.change_password(user)
     Manager.save_codecoolers_to_file('managers.csv', Manager.list_of_managers)
-
-
