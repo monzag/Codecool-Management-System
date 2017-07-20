@@ -1,5 +1,6 @@
 import os
 import datetime
+import smtplib
 
 from models.login import Logins
 from models.attendance import Attendance
@@ -197,8 +198,14 @@ def add_student():
     Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
 
     msg = 'Login: {}, Password: {}'.format(login, password)
-    send_email(msg, email)
-    view.print_send_password_msg()
+
+    try:
+        send_email(msg, email)
+        view.print_send_password_msg()
+
+    except smtplib.SMTPRecipientsRefused:
+        mentor_view.recipent_error()
+
 
 
 def get_valid_data():

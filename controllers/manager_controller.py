@@ -1,4 +1,5 @@
 import os
+import smtplib
 
 from models.student import Student
 from models.mentor import Mentor
@@ -79,7 +80,7 @@ def view_students():
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                             student.email, str(student.attendance)])
+                             student.email])
 
     views.view.print_table(students_info, titles)
 
@@ -120,10 +121,13 @@ def add_mentor():
     Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
     msg = 'Login: {}, Password: {}'.format(login, password)
-    send_email(msg, mail)
 
-    views.view.print_send_password_msg()
+    try:
+        send_email(msg, mail)
+        views.view.print_send_password_msg()
 
+    except smtplib.SMTPRecipientsRefused:
+        recipent_error()
 
 def remove_mentor():
     '''
