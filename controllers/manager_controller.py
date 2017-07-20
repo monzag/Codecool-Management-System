@@ -4,7 +4,6 @@ import views.view
 from models.student import Student
 from models.mentor import Mentor
 from controllers.mail_validation import *
-from controllers import codecooler_controller
 from views.manager_view import *
 
 
@@ -55,6 +54,9 @@ def manager_menu(user):
                 message = index_error_message()
                 views.view.print_message(message)
 
+        if option == 5:
+            change_password(user)
+
         if option == 0:
             end = True
 
@@ -104,8 +106,7 @@ def add_mentor():
     titles = input_titles_for_mentor_add()
 
     login = get_single_input(titles[0])
-    password = codecooler_controller.get_random_password()
-    # show password or send e-mail -> Gracek
+    password = get_single_input(titles[1])
     name = get_valid_input(check_name, titles[2])
     surname = get_valid_input(check_name, titles[3])
     mail = get_valid_input(check_mail, titles[4])
@@ -141,3 +142,16 @@ def check_name(name):
 
     if name.isalpha():
         return True
+
+
+def change_password(user):
+    '''
+    Change old password to new. Save changes.
+
+    Args:
+        user - object
+    '''
+
+    codecooler_controller.change_password(user)
+    # Manager.save_data_to_file()
+
