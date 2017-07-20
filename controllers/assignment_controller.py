@@ -141,6 +141,9 @@ def create_assignment():
     add_date = get_today_date()
     name, deadline, max_grade = get_valid_inputs()
 
+    for index in range(len(Student.list_of_students)):
+        solutions.append(Solution(0, '0', '0'))
+
     Assignment(name, add_date, deadline, max_grade, solutions)
 
     Assignment.save_assignments_to_file('assignments.csv')
