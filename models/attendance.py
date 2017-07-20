@@ -2,6 +2,7 @@ import os
 import csv
 import datetime
 
+
 class Attendance:
 
     list_of_attendance = []
@@ -52,14 +53,14 @@ class Attendance:
 
     def save_attendance_to_file(self, filename):
 
-        file_path = os.getcwd() + '/data/' + filename
+        filepath = os.getcwd() + '/data/' + filename
 
         if os.path.exists(os.getcwd() + '/data/' + filename):
-            with open(file_path, 'a') as csvfile:
+            with open(filepath, 'a') as csvfile:
                 csvfile.write(self.data_to_save() + '\n')
 
         else:
-            with open(file_path, 'w') as csvfile:
+            with open(filepath, 'w') as csvfile:
                 csvfile.write(self.data_to_save() + '\n')
 
     def data_to_save(self):
@@ -67,3 +68,26 @@ class Attendance:
         row = [self.student_login, str(self.date), str(self.today_value)]
 
         return '|'.join(row)
+
+    @classmethod
+    def overwrite_file(cls, filename):
+
+        filepath = os.getcwd() + '/data/' + filename
+
+        with open(filepath, 'w') as csvfile:
+            csvfile.write(cls.data_to_overwrite())
+
+    @classmethod
+    def data_to_overwrite(cls):
+
+        string_to_save = []
+        for attendance in cls.list_of_attendance:
+            row = [attendance.student_login, str(attendance.date), str(attendance.today_value)]
+            string_to_save.append(row)
+
+        string_to_save = '\n'.join('|'.join(row) for row in string_to_save)
+
+        return string_to_save
+
+    def __eq__(self, other):
+        return self.student_login == other.student_login and self.date == other.date

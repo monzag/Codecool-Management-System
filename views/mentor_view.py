@@ -12,14 +12,14 @@ def data_to_check_attendance():
 
     title = "Student attendance for today"
     exit_message = 'Back to Main Menu'
-    options = ['Present', 'Late', 'Absent']
+    options = ['Present', 'Late', 'Absent', 'Skip student']
 
     return title, exit_message, options
 
 
 def attendance_checked():
 
-    print("\nAll attendance for today is checked.\n")
+    print("\nAll attendance for today is checked or no students in database.\n")
 
 
 def get_data_to_add_student():
@@ -49,8 +49,7 @@ def index_doesnt_exist():
 
     print("Index does not exist!")
 
-
+    
 def recipent_error():
 
     print("\nE-mail can not be delivered!\n")
-

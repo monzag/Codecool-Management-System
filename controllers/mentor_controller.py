@@ -17,7 +17,6 @@ from controllers.send_mail import *
 from views import view
 from views import mentor_view
 
-
 def mentor_menu(user):
     '''
     Prints user specific features and asks him for operation
@@ -134,8 +133,8 @@ def get_new_grade(max_grade):
 
 def check_attendance():
     """
-    Prints the name of the student if he didn't have been checked today.
-    Adds its attendance for today based on input.
+    Prints the name of the student if he hasn't been checked today.
+    Adds his attendance for today based on input.
     Saves to file.
     """
 
@@ -152,14 +151,22 @@ def check_attendance():
             view.print_menu(title, options, exit_message)
 
             option = get_option(options)
-            if option == 0:
+            if option == 4:
+                continue
+            elif option == 0:
                 break
-            today_attendance = get_today_attendance(option)
-            attendance = Attendance(student.login, datetime.date.today(), today_attendance)
-            attendances.append(attendance)
-            attendance.save_attendance_to_file('attendance.csv')
+
+            update_attendance(option, student, attendances)
 
     mentor_view.attendance_checked()
+
+
+def update_attendance(option, student, attendance_list):
+
+    today_attendance = get_today_attendance(option)
+    attendance = Attendance(student.login, datetime.date.today(), today_attendance)
+    attendance_list.append(attendance)
+    attendance.save_attendance_to_file('attendance.csv')
 
 
 def get_option(options):
@@ -266,16 +273,43 @@ def remove_student():
         Nothing, it just removes the student.
     """
     view_students()
-
     student_index = get_student_index()
-    if student_index != None:
+    students = Student.list_of_students
 
-        del Student.list_of_students[int(student_index)]
+    if student_index is not None:
+        students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)
-        Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
+
+        Student.save_students()
+        clean_attendance_data()
 
     else:
         view.print_message('Index does not exist!')
+
+
+def clean_attendance_data():
+
+    attendances = Attendance.list_of_attendance
+    atts_to_remove = []
+
+    for attendance in attendances:
+        if attendance.student_login not in [student.login for student in Student.list_of_students]:
+            atts_to_remove.append(attendance)
+
+    for att in atts_to_remove:
+        attendances.remove(att)
+
+    remove_duplicates(attendances)
+
+    Attendance.overwrite_file('attendance.csv')
+
+
+def remove_duplicates(attendances):
+
+    for att in attendances:
+        for att2 in Attendance.list_of_attendance:
+            if att.__eq__(att2):
+                attendances.remove(att2)
 
 
 def get_student_index():
