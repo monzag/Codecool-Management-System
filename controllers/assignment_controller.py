@@ -275,11 +275,12 @@ def edit_assignment():
     print_assignments()
     assignment = get_assignment_form_user_input()
     if assignment:
-        assignment_index = Assignment.list_of_assignments.index(assignment)
+        name, deadline, max_grade = get_valid_inputs()
+        assignment.name = name
+        assignment.deadline = deadline
+        assignment.max_grade = max_grade
 
-        assignment_data = get_assignment_data()
-        del Assignment.list_of_assignments[assignment_index]
-
+        Assignemt.save_assignments_to_file('assignments.csv')
 
     else:
         view.print_message('There is no such assignment')
