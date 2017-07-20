@@ -59,7 +59,7 @@ def view_students_titles():
             list: list of strings
     """
 
-    titles = ["Name", "Surname", "e-mail", "Attendance"]
+    titles = ["Name", "Surname", "e-mail"]
 
     return titles
 
