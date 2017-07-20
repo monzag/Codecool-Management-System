@@ -137,5 +137,31 @@ def get_assignment_form_user_input():
 def create_assignment():
     '''
     '''
-    add_date = get_today_date
-    name, add_date, deadline, max_grade, solutions
+    add_date = get_today_date()
+    name, deadline, max_grade = get_valid_inputs()
+
+    Assignment(name, add_date, deadline, max_grade, solutions)
+
+    Assignment.save_assignments_to_file('assignments.csv')
+
+
+def get_valid_inputs():
+    '''
+    '''
+    name = check_valid(is_alpha, 'name')
+    deadline = check_valid(is_date, 'deadline')
+    email = check_valid(isdigit, email_txt)
+
+    return name, surname, login, email
+
+
+def check_valid(function, message):
+    '''
+    '''
+    is_valid = None
+    while not is_valid:
+        title = 'Type the data below'
+        user_input = view.get_inputs([message], title)[0]
+        is_valid = function(user_input)
+
+    return ''.join(user_input)
