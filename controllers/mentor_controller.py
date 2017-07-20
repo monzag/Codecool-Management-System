@@ -4,6 +4,7 @@ from models.login import Logins
 from models.attendance import Attendance
 from models.assignment import Assignment
 from models.student import Student
+from models.mentor import Mentor
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
