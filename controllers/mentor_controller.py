@@ -259,7 +259,7 @@ def check_valid(function, message):
     '''
     is_valid = None
     while not is_valid:
-        title = 'Type the data below'
+        title = mentor_view.title_check_valid()
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
 
