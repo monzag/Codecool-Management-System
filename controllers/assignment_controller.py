@@ -44,8 +44,7 @@ def submit_solution_to_assignment(assignment, student_index):
 def get_submit_date():
     '''
     '''
-    return '{}:{}:{}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
-
+    return '{:0>2}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
 def save_solution_to_file(file_name):
     '''
@@ -62,12 +61,19 @@ def get_student_total_grade(student_index):
     '''
     grade = 0
     max_grade = 0
+    today = get_submit_date()
 
     for assignment in Assignment.list_of_assignments:
-        max_grade += assignment.max_grade
-        grade += assignment.solutions[student_index].grade
+        solution = assignment.solutions[student_index]
 
-    total_grade = grade / max_grade * 100
+        if today > assignment.deadline or solution.grade > 0:
+            max_grade += assignment.max_grade
+            grade += solution.grade
+
+    if max_grade > 0:
+        total_grade = grade / max_grade * 100
+    else:
+        total_grade = 100
 
     return '{:3.2f} %'.format(total_grade)
 
