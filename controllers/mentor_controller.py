@@ -280,7 +280,7 @@ def remove_student():
         students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)
 
-        Student.save_students()
+        Student.save_codecoolers_to_file('students.csv', students)
         clean_attendance_data()
 
     else:
