@@ -44,7 +44,7 @@ def manager_menu_titles(user):
     """
 
     title = "Manager menu"
-    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor']
+    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor', 'Change password']
     exit_message = "Exit"
 
     return title, options, exit_message
@@ -59,7 +59,7 @@ def view_students_titles():
             list: list of strings
     """
 
-    titles = ["Name", "Surname", "e-mail", "Attendance"]
+    titles = ["Name", "Surname", "e-mail"]
 
     return titles
 
@@ -131,3 +131,8 @@ def input_titles_for_mentor_remove():
     title = "Type index number of mentor to remove"
 
     return title, label
+
+
+def recipent_error():
+
+    print("\nE-mail can not be delivered!\n")

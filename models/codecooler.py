@@ -54,3 +54,31 @@ class Codecooler:
             name, surname, login, password, email = constructor
 
             cls(name, surname, login, password, email)
+
+    @classmethod
+    def save_codecoolers_to_file(cls, filename, list_of_codecoolers):
+        '''
+        Save codecoolers data to csv file. If file not exist, create file.
+        '''
+
+        file_path = os.getcwd() + '/data/' + filename
+
+        with open(file_path, 'w') as csvfile:
+            csvfile.write(cls.data_to_save(list_of_codecoolers))
+
+    @classmethod
+    def data_to_save(cls, list_of_codecoolers):
+        '''
+        Unpack attributes of all codecoolers, each to row list and append it to string_to_save list'
+        Change lists to string.
+
+        Returns:
+            string
+        '''
+
+        string_to_save = []
+        for codecooler in list_of_codecoolers:
+            row = [codecooler.name, codecooler.surname, codecooler.login, codecooler.password, codecooler.email]
+            string_to_save.append(row)
+
+        return '\n'.join('|'.join(row) for row in string_to_save)

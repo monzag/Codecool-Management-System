@@ -1,15 +1,21 @@
-from views import view
 import os
+import datetime
+import smtplib
+
 from models.login import Logins
 from models.attendance import Attendance
 from models.assignment import Assignment
 from models.student import Student
+from models.mentor import Mentor
+
 from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
 from controllers.mail_validation import *
+from controllers.send_mail import *
+
+from views import view
 from views import mentor_view
-import datetime
 
 def mentor_menu(user):
     '''
@@ -34,13 +40,17 @@ def mentor_menu(user):
         elif option == 2:
             assignment_controller.create_assignment()
         elif option == 3:
-            grade_assignment()
+            assignment_controller.edit_assignment()
         elif option == 4:
-            check_attendance()
+            grade_assignment()
         elif option == 5:
-            add_student()
+            check_attendance()
         elif option == 6:
+            add_student()
+        elif option == 7:
             remove_student()
+        elif option == 8:
+            change_password(user)
         elif option == 0:
             end = True
 
@@ -90,6 +100,7 @@ def grade_assignment():
 
                 view.print_message(solution.get_content())
                 solution.grade = get_new_grade(assignment.max_grade)
+                Assignment.save_assignments_to_file('assignments.csv')
 
             else:
                 view.print_message('Assignment was already graded, or was not submited yet!')
@@ -188,11 +199,20 @@ def add_student():
 
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
-    mentor_view.print_new_password(password)
     new_student = Student(name, surname, login, password, email)
     assignment_controller.assign_assignments_to_new_student()
 
-    Student.save_students()
+    Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
+
+    msg = 'Login: {}, Password: {}'.format(login, password)
+
+    try:
+        send_email(msg, email)
+        view.print_send_password_msg()
+
+    except smtplib.SMTPRecipientsRefused:
+        mentor_view.recipent_error()
+
 
 
 def get_valid_data():
@@ -259,6 +279,7 @@ def remove_student():
     if student_index is not None:
         students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)
+
         Student.save_students()
         clean_attendance_data()
 
@@ -309,3 +330,15 @@ def get_student_index():
         return int(user_input) - 1
 
     return None
+
+
+def change_password(user):
+    '''
+    Change old password to new. Save changes.
+
+    Args:
+        user - object
+    '''
+
+    codecooler_controller.change_password(user)
+    Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)

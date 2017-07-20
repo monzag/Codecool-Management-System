@@ -1,9 +1,15 @@
 import os
+import smtplib
 
-import views.view
 from models.student import Student
 from models.mentor import Mentor
+from models.manager import Manager
+
 from controllers.mail_validation import *
+from controllers import codecooler_controller
+from controllers.send_mail import *
+
+import views.view
 from views.manager_view import *
 
 
@@ -39,7 +45,7 @@ def manager_menu(user):
 
         if option == 3:
             add_mentor()
-            Mentor.save_data_to_file()
+            Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
         if option == 4:
 
@@ -53,6 +59,9 @@ def manager_menu(user):
             except IndexError:
                 message = index_error_message()
                 views.view.print_message(message)
+
+        if option == 5:
+            change_password(user)
 
         if option == 0:
             end = True
@@ -71,7 +80,7 @@ def view_students():
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                             student.email, str(student.attendance)])
+                             student.email])
 
     views.view.print_table(students_info, titles)
 
@@ -103,13 +112,22 @@ def add_mentor():
     titles = input_titles_for_mentor_add()
 
     login = get_single_input(titles[0])
-    password = get_single_input(titles[1])
+    password = codecooler_controller.get_random_password()
     name = get_valid_input(check_name, titles[2])
     surname = get_valid_input(check_name, titles[3])
     mail = get_valid_input(check_mail, titles[4])
 
     new_mentor = Mentor(name, surname, login, password, mail)
+    Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
+    msg = 'Login: {}, Password: {}'.format(login, password)
+
+    try:
+        send_email(msg, mail)
+        views.view.print_send_password_msg()
+
+    except smtplib.SMTPRecipientsRefused:
+        recipent_error()
 
 def remove_mentor():
     '''
@@ -132,10 +150,22 @@ def remove_mentor():
     else:
         index = int(user_input) - 1
         del Mentor.list_of_mentors[index]
-        Mentor.save_data_to_file()
+        Mentor.save_codecoolers_to_file('mentors.csv', Mentor.list_of_mentors)
 
 
 def check_name(name):
 
     if name.isalpha():
         return True
+
+
+def change_password(user):
+    '''
+    Change old password to new. Save changes.
+
+    Args:
+        user - object
+    '''
+
+    codecooler_controller.change_password(user)
+    Manager.save_codecoolers_to_file('managers.csv', Manager.list_of_managers)
