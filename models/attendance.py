@@ -71,7 +71,10 @@ class Attendance:
 
     def save_attendance_to_file(self, filename):
         '''
-        
+        Appends a new attendance element to the CSV file.
+
+        Args:
+            filename (str)
         '''
         filepath = os.getcwd() + '/data/' + filename
 
@@ -84,14 +87,21 @@ class Attendance:
                 csvfile.write(self.data_to_save() + '\n')
 
     def data_to_save(self):
-
+        '''
+        Returns a row from object attributes that is ready to be saved.
+        '''
         row = [self.student_login, str(self.date), str(self.today_value)]
 
         return '|'.join(row)
 
     @classmethod
     def overwrite_file(cls, filename):
+        '''
+        Overwrites the CSV file with updated data.
 
+        Args:
+            filename (str)
+        '''
         filepath = os.getcwd() + '/data/' + filename
 
         with open(filepath, 'w') as csvfile:
@@ -99,7 +109,14 @@ class Attendance:
 
     @classmethod
     def data_to_overwrite(cls):
+        '''
+        Unpacks attributes of all attendances,
+        adds each of them to row in list and append it to string_to_save list
+        Change list to string.
 
+        Returns:
+            string_to_save (str)
+        '''
         string_to_save = []
         for attendance in cls.list_of_attendance:
             row = [attendance.student_login, str(attendance.date), str(attendance.today_value)]
@@ -113,4 +130,5 @@ class Attendance:
         return string_to_save
 
     def __eq__(self, other):
+        
         return self.student_login == other.student_login and self.date == other.date
