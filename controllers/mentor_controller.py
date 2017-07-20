@@ -196,7 +196,7 @@ def get_valid_data():
 
     name = check_valid(is_alpha, 'name')
     surname = check_valid(is_alpha, 'surname')
-    login = check_valid(is_login_already_exist, 'login')
+    login = check_valid(Login.is_login_valid, 'login')
     email = check_valid(check_mail, 'e-mail')
 
     return name, surname, login, email
@@ -232,26 +232,6 @@ def is_not_empty(user_input):
         bool
     '''
     if len(user_input) > 0:
-        return True
-
-
-def is_login_already_exist(user_input):
-    '''
-    Check that user_input is not empty string.
-    If not, check that login isn't occupied by another students.
-    Returns True if not.
-
-    Args:
-        user_input - string
-
-    Returns:
-        bool
-    '''
-    if len(user_input) > 0:
-        for student in Student.list_of_students:
-            if student.login == user_input:
-                return None
-
         return True
 
 
