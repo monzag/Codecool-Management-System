@@ -44,7 +44,7 @@ def manager_menu_titles(user):
     """
 
     title = "Manager menu"
-    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor']
+    options = ['View students', 'View mentors', 'Add mentor', 'Remove mentor', 'Change password']
     exit_message = "Exit"
 
     return title, options, exit_message
