@@ -196,7 +196,7 @@ def add_student():
     Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
 
     msg = 'Login: {}, Password: {}'.format(login, password)
-    send_email(msg, mail)
+    send_email(msg, email)
 
 
 def get_valid_data():
