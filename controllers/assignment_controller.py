@@ -226,16 +226,16 @@ def get_solutions_data():
     for assignment in Assignment.list_of_assignments:
         row = []
 
-        mininum = min(assignment.solutions, key=lambda solution: solution.grade)
+        minimum = min(assignment.solutions, key=lambda solution: solution.grade)
         maximum = max(assignment.solutions, key=lambda solution: solution.grade)
         avarage = sum(map(lambda solution: solution.grade, assignment.solutions))
-        avarage /= assignment.max_grade * len(assignment.solutions)
+        avarage /= assignment.max_grade * len(assignment.solutions) * 100
 
         row.append(assignment.name)
-        row.append('{:2.2f}'.format(avarage))
+        row.append('{:2.2f}%'.format(avarage))
         row.append(str(minimum.grade))
         row.append(str(maximum.grade))
-        row.append(assignment.max_grade)
+        row.append(str(assignment.max_grade))
 
         table.append(row)
 
