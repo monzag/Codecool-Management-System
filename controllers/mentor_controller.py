@@ -266,6 +266,24 @@ def remove_student():
         view.print_message('Index does not exist!')
 
 
+def clean_attendance_data():
+
+    attendances = Attendance.list_of_attendance
+    atts_to_remove = []
+
+    for attendance in attendances:
+        if attendance.student_login not in [student.login for student in Student.list_of_students]:
+            atts_to_remove.append(attendance)
+
+    for att in atts_to_remove:
+        attendances.remove(att)
+
+    remove_duplicates(attendances)
+
+    Attendance.overwrite_file('attendance.csv')
+
+
+
 
 def get_student_index():
     """
