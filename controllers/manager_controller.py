@@ -79,7 +79,7 @@ def view_students():
 
     for student in Student.list_of_students:
         students_info.append([student.name, student.surname,
-                             student.email, str(student.attendance)])
+                             student.email)])
 
     views.view.print_table(students_info, titles)
 
