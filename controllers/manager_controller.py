@@ -105,6 +105,7 @@ def add_mentor():
 
     login = get_single_input(titles[0])
     password = codecooler_controller.get_random_password()
+    # show password or send e-mail -> Gracek
     name = get_valid_input(check_name, titles[2])
     surname = get_valid_input(check_name, titles[3])
     mail = get_valid_input(check_mail, titles[4])
