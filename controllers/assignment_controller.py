@@ -280,7 +280,7 @@ def edit_assignment():
         assignment.deadline = deadline
         assignment.max_grade = max_grade
 
-        Assignemt.save_assignments_to_file('assignments.csv')
+        Assignment.save_assignments_to_file('assignments.csv')
 
     else:
         view.print_message('There is no such assignment')
