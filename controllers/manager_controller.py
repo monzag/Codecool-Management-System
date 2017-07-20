@@ -4,6 +4,7 @@ import smtplib
 from models.student import Student
 from models.mentor import Mentor
 from models.manager import Manager
+from models.login import Logins
 
 from controllers.mail_validation import *
 from controllers import codecooler_controller
@@ -111,7 +112,7 @@ def add_mentor():
     """
     titles = input_titles_for_mentor_add()
 
-    login = get_single_input(titles[0])
+    login = get_valid_input(Logins.is_login_valid, titles[0])
     password = codecooler_controller.get_random_password()
     name = get_valid_input(check_name, titles[2])
     surname = get_valid_input(check_name, titles[3])

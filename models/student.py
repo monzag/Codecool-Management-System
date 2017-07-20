@@ -28,6 +28,9 @@ class Student(Codecooler):
             cls(name, surname, login, password, mail)
 
     def get_attendance(self):
+        """
+        Counts the total attendance of a student and returns it.
+        """
 
         attendances = Attendance.list_of_attendance
         total_attendance = 0

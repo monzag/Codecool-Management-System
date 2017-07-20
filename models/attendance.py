@@ -8,6 +8,14 @@ class Attendance:
     list_of_attendance = []
 
     def __init__(self, student_login, date, today_value):
+        '''
+        Constructs the Attendance object.
+
+        Attrs:
+            student_login (str) - login attribute of Student object
+            date (Datetime obj) - date of attendance checked
+            today_value (int) - 100 for present, 80 for late, 0 for absent
+        '''
 
         self.student_login = student_login
         self.date = date
@@ -16,7 +24,17 @@ class Attendance:
 
     @staticmethod
     def load_data_from_file(filename):
+        '''
+        With file name provided creates list of Attendance object instances,
+        stored in this file. It triggers init of following object, which holds
+        addition to class list.
 
+        Args:
+            filename (str)
+
+        Return:
+            constructors : list of lists representing data needed to create objects
+        '''
         file_path = os.getcwd() + '/data/' + filename
 
         if not os.path.exists(file_path):
@@ -34,8 +52,8 @@ class Attendance:
         """
         Creates objects with data from splitted list.
 
-        Returns:
-            None
+        Args:
+            filename (str)
         """
 
         splitted_data_list = cls.load_data_from_file(filename)
@@ -52,7 +70,12 @@ class Attendance:
         return datetime.date(int(year), int(month), int(day))
 
     def save_attendance_to_file(self, filename):
+        '''
+        Appends a new attendance element to the CSV file.
 
+        Args:
+            filename (str)
+        '''
         filepath = os.getcwd() + '/data/' + filename
 
         if os.path.exists(os.getcwd() + '/data/' + filename):
@@ -64,14 +87,21 @@ class Attendance:
                 csvfile.write(self.data_to_save() + '\n')
 
     def data_to_save(self):
-
+        '''
+        Returns a row from object attributes that is ready to be saved.
+        '''
         row = [self.student_login, str(self.date), str(self.today_value)]
 
         return '|'.join(row)
 
     @classmethod
     def overwrite_file(cls, filename):
+        '''
+        Overwrites the CSV file with updated data.
 
+        Args:
+            filename (str)
+        '''
         filepath = os.getcwd() + '/data/' + filename
 
         with open(filepath, 'w') as csvfile:
@@ -79,7 +109,14 @@ class Attendance:
 
     @classmethod
     def data_to_overwrite(cls):
+        '''
+        Unpacks attributes of all attendances,
+        adds each of them to row in list and append it to string_to_save list
+        Change list to string.
 
+        Returns:
+            string_to_save (str)
+        '''
         string_to_save = []
         for attendance in cls.list_of_attendance:
             row = [attendance.student_login, str(attendance.date), str(attendance.today_value)]
@@ -87,10 +124,11 @@ class Attendance:
 
         if string_to_save == []:
             return ''
-            
+
         string_to_save = '\n'.join('|'.join(row) for row in string_to_save) + '\n'
 
         return string_to_save
 
     def __eq__(self, other):
+        
         return self.student_login == other.student_login and self.date == other.date
