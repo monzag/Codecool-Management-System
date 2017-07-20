@@ -11,7 +11,6 @@ from controllers.mail_validation import *
 from views import mentor_view
 import datetime
 
-
 def mentor_menu(user):
     '''
     Prints user specific features and asks him for operation
@@ -155,7 +154,7 @@ def update_attendance(option, student, attendance_list):
 
     today_attendance = get_today_attendance(option)
     attendance = Attendance(student.login, datetime.date.today(), today_attendance)
-    attendances.append(attendance)
+    attendance_list.append(attendance)
     attendance.save_attendance_to_file('attendance.csv')
 
 
@@ -254,16 +253,18 @@ def remove_student():
         Nothing, it just removes the student.
     """
     view_students()
-
     student_index = get_student_index()
-    if student_index != None:
+    students = Student.list_of_students
 
-        del Student.list_of_students[int(student_index)]
+    if student_index is not None:
+        students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)
         Student.save_students()
+        clean_attendance_data()
 
     else:
         view.print_message('Index does not exist!')
+
 
 
 def get_student_index():
