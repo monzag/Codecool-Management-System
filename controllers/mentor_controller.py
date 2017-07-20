@@ -180,8 +180,7 @@ def add_student():
     name, surname, login, email = get_valid_data()
     password = codecooler_controller.get_random_password()
     print('Password: ', password)
-    total_grade = 100
-    new_student = Student(100, 1, total_grade, name, surname, login, password, email)
+    new_student = Student(100, 1, name, surname, login, password, email)
 
     Student.save_students()
 
@@ -218,6 +217,7 @@ def check_valid(function, message):
         title = 'Write ' + message
         user_input = view.get_inputs([message], title)[0]
         is_valid = function(user_input)
+
     return ''.join(user_input)
 
 
