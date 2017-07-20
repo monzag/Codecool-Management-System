@@ -46,7 +46,7 @@ def view_students(students):
     Returns:
         None
     '''
-    lables = ['name', 'surname', 'email', 'attendance']
+    lables = ['name', 'surname', 'email']
     table = codecooler_controller.get_codecoolers_with_mails(students)
     view.print_table(table, lables)
     view.wait_until_key_pressed()
