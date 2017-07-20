@@ -82,14 +82,15 @@ def grade_assignment():
     if student_index != None:
 
         assignment_controller.print_student_assignments(student_index)
-        assignemnt = assignment_controller.get_assignment_form_user_input()
+        assignment = assignment_controller.get_assignment_form_user_input()
 
-        if assignemnt:
-            solution = assignemnt.solutions[student_index]
+        if assignment:
+            solution = assignment.solutions[student_index]
 
             if solution.can_be_graded:
 
                 view.print_message(solution.get_content())
+                solution.grade = get_new_grade(assignment.max_grade)
 
             else:
                 view.print_message('Assignment was already graded, or was not submited yet!')
