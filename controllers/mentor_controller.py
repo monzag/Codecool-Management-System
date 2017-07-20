@@ -303,7 +303,9 @@ def remove_student():
 
 
 def clean_attendance_data():
-
+    '''
+    Eliminates all duplicate or outdated attendances (i.e. after removing students)
+    '''
     attendances = Attendance.list_of_attendance
     atts_to_remove = []
 
@@ -320,6 +322,13 @@ def clean_attendance_data():
 
 
 def remove_duplicates(attendances):
+    '''
+    Checks if there are any equal attendances.
+    If True, removes any duplicates.
+
+    Args:
+        attendances (class Attendance list)
+    '''
 
     for att in attendances:
         for att2 in Attendance.list_of_attendance:
