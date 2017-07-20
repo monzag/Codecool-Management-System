@@ -109,3 +109,18 @@ def print_student_assignments(student_index):
         table.append(row)
 
     view.print_table(table, titles)
+
+
+def get_assignment_index():
+    '''
+    '''
+    labels = ['Index']
+    title = 'Type index number of assignment'
+    user_input = view.get_inputs(labels, title)[0]
+
+    assignment_indexes = [str(assignment_index + 1) for assignment_index in range(len(Assignment.list_of_assignments))]
+
+    if user_input in assignment_indexes:
+        return int(user_input) - 1
+
+    return None
