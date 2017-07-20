@@ -261,15 +261,16 @@ def remove_student():
     """
     view_students()
 
-    try:
-        index = get_student_index()
-        del Student.list_of_students[int(index)]
-        assignment_controller.remove_student_solutions(index)
-        # TODO remove attendance obj. instance sthing
-    except (ValueError, IndexError):
-        view.print_message('Index does not exist!')
+    student_index = get_student_index()
+    if student_index != None:
 
-    Student.save_students()
+        del Student.list_of_students[int(student_index)]
+        assignment_controller.remove_student_solutions(student_index)
+        # TODO remove attendance obj. instance sthing
+        Student.save_students()
+
+    else:
+        view.print_message('Index does not exist!')
 
 
 def get_student_index():
@@ -283,13 +284,11 @@ def get_student_index():
     """
     labels = ["Index"]
     title = "Type index number of student"
-    index = view.get_inputs(labels, title)[0]
+    user_input = view.get_inputs(labels, title)[0]
 
-    if not index.isdigit():
-        raise ValueError("Please type only numbers!")
+    student_indexes = [str(student_index + 1) for student_index in range(len(Student.list_of_students))]
 
-    elif int(index) - 1 not in range(len(Student.list_of_students)):
-        raise IndexError('Mentor with given index does not exist!')
+    if user_input in student_indexes:
+        return int(user_input) - 1
 
-    else:
-        return int(index) - 1
+    return None
