@@ -33,7 +33,7 @@ def submit_solution_to_assignment(assignment, student_index):
 
     if solution.submit_date == '0':
 
-        solution.submit_date = get_submit_date()
+        solution.submit_date = get_today_date()
         solution.file_name = assignment.name + '_' + str(student_index) + 'txt'
         save_solution_to_file(solution.file_name)
 
@@ -41,7 +41,7 @@ def submit_solution_to_assignment(assignment, student_index):
         assignment_view.print_fail_message()
 
 
-def get_submit_date():
+def get_today_date():
     '''
     '''
     return '{:0>2}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
@@ -61,7 +61,7 @@ def get_student_total_grade(student_index):
     '''
     grade = 0
     max_grade = 0
-    today = get_submit_date()
+    today = get_today_date()
 
     for assignment in Assignment.list_of_assignments:
         solution = assignment.solutions[student_index]
@@ -132,3 +132,10 @@ def get_assignment_form_user_input():
         return assignment
 
     return None
+
+
+def create_assignment():
+    '''
+    '''
+    add_date = get_today_date
+    name, add_date, deadline, max_grade, solutions
