@@ -11,6 +11,7 @@ from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
 from controllers.mail_validation import *
+from controllers.send_mail import *
 
 from views import view
 from views import mentor_view
