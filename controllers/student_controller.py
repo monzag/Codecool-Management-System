@@ -89,9 +89,11 @@ def view_all_students():
 
 def show_general_grade():
     '''
+    Get data about general grade of assignments and display it in table. 
     '''
-    data_to_table = assignment_controller.get_solutions_data()
-    print(data_to_table)
+    grades_info = assignment_controller.get_solutions_data()
+    titles = view_student.titles_to_general_grade()
+    view.print_table(grades_info, titles)
 
 
 def change_password(student):
