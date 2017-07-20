@@ -41,4 +41,12 @@ def invalid_assignment_in_submit():
 
 
 def data_to_view_students():
+    '''
+    Data to table when student want to show all students. 
+
+    Returns:
+        list of strings
+    '''
     return ["Name", "Surname", "e-mail"]
+
+
