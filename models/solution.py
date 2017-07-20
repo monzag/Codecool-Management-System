@@ -41,3 +41,16 @@ class Solution:
             return self.submit_date
         else:
             return 'not submited yet'
+
+    @property
+    def can_be_graded(self):
+        return self.grade == 0 and self.submit_date != '0'
+
+    def get_content(self):
+        '''
+        '''
+        file_path = os.getcwd() + '/data/solutions/' + self.file_name
+        with open(file_path, 'r') as data:
+            data = data.read()
+
+        return data
