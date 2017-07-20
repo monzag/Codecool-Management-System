@@ -2,6 +2,7 @@ import os
 import csv
 import datetime
 
+
 class Attendance:
 
     list_of_attendance = []
@@ -52,14 +53,14 @@ class Attendance:
 
     def save_attendance_to_file(self, filename):
 
-        file_path = os.getcwd() + '/data/' + filename
+        filepath = os.getcwd() + '/data/' + filename
 
         if os.path.exists(os.getcwd() + '/data/' + filename):
-            with open(file_path, 'a') as csvfile:
+            with open(filepath, 'a') as csvfile:
                 csvfile.write(self.data_to_save() + '\n')
 
         else:
-            with open(file_path, 'w') as csvfile:
+            with open(filepath, 'w') as csvfile:
                 csvfile.write(self.data_to_save() + '\n')
 
     def data_to_save(self):
@@ -67,3 +68,11 @@ class Attendance:
         row = [self.student_login, str(self.date), str(self.today_value)]
 
         return '|'.join(row)
+
+    @classmethod
+    def overwrite_file(cls, filename):
+
+        filepath = os.getcwd() + '/data/' + filename
+
+        with open(filepath, 'w') as csvfile:
+            csvfile.write(cls.data_to_overwrite())
