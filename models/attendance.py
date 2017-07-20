@@ -8,6 +8,14 @@ class Attendance:
     list_of_attendance = []
 
     def __init__(self, student_login, date, today_value):
+        '''
+        Constructs the Attendance object.
+
+        Attrs:
+            student_login (str) - login attribute of Student object
+            date (Datetime obj) - date of attendance checked
+            today_value (int) - 100 for present, 80 for late, 0 for absent
+        '''
 
         self.student_login = student_login
         self.date = date
@@ -16,7 +24,17 @@ class Attendance:
 
     @staticmethod
     def load_data_from_file(filename):
+        '''
+        With file name provided creates list of Attendance object instances,
+        stored in this file. It triggers init of following object, which holds
+        addition to class list.
 
+        Args:
+            filename (str)
+
+        Return:
+            constructors : list of lists representing data needed to create objects
+        '''
         file_path = os.getcwd() + '/data/' + filename
 
         if not os.path.exists(file_path):
@@ -34,8 +52,8 @@ class Attendance:
         """
         Creates objects with data from splitted list.
 
-        Returns:
-            None
+        Args:
+            filename (str)
         """
 
         splitted_data_list = cls.load_data_from_file(filename)
@@ -52,7 +70,9 @@ class Attendance:
         return datetime.date(int(year), int(month), int(day))
 
     def save_attendance_to_file(self, filename):
-
+        '''
+        
+        '''
         filepath = os.getcwd() + '/data/' + filename
 
         if os.path.exists(os.getcwd() + '/data/' + filename):
@@ -87,7 +107,7 @@ class Attendance:
 
         if string_to_save == []:
             return ''
-            
+
         string_to_save = '\n'.join('|'.join(row) for row in string_to_save) + '\n'
 
         return string_to_save
