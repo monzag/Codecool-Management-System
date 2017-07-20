@@ -150,7 +150,12 @@ def check_attendance():
     mentor_view.attendance_checked()
 
 
+def update_attendance(option, student, attendance_list):
 
+    today_attendance = get_today_attendance(option)
+    attendance = Attendance(student.login, datetime.date.today(), today_attendance)
+    attendance_list.append(attendance)
+    attendance.save_attendance_to_file('attendance.csv')
 
 
 def get_option(options):
