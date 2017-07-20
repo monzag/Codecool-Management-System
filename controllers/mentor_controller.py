@@ -11,6 +11,7 @@ from controllers import student_controller
 from controllers import assignment_controller
 from controllers import codecooler_controller
 from controllers.mail_validation import *
+from controllers.send_mail import *
 
 from views import view
 from views import mentor_view
@@ -195,7 +196,7 @@ def add_student():
     Student.save_codecoolers_to_file('students.csv', Student.list_of_students)
 
     msg = 'Login: {}, Password: {}'.format(login, password)
-    send_email(msg, mail)
+    send_email(msg, email)
 
 
 def get_valid_data():
