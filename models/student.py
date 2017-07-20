@@ -24,9 +24,8 @@ class Student(Codecooler):
         splitted_data_list = cls.load_data_from_file(file_name)
 
         for element in splitted_data_list:
-            name, surname, login, password, mail, total_grade = element
-            total_grade = int(total_grade)
-            cls(total_grade, name, surname, login, password, mail)
+            name, surname, login, password, mail = element
+            cls(name, surname, login, password, mail)
 
     def get_attendance(self):
 
@@ -65,7 +64,7 @@ class Student(Codecooler):
 
         string_to_save = []
         for student in cls.list_of_students:
-            row = [student.name, student.surname, student.login, student.password, student.email, str(student.total_grade)]
+            row = [student.name, student.surname, student.login, student.password, student.email]
             string_to_save.append(row)
 
         return '\n'.join('|'.join(row) for row in string_to_save)
