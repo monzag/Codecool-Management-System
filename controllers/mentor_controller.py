@@ -103,13 +103,13 @@ def grade_assignment():
                 Assignment.save_assignments_to_file('assignments.csv')
 
             else:
-                view.print_message('Assignment was already graded, or was not submited yet!')
+                mentor_view.assignment_already_graded()
 
         else:
-            view.print_message('There is no such assignment!')
+            mentor_view.no_such_assignment()
 
     else:
-        view.print_message('There is no such student!')
+        mentor_view.index_doesnt_exist()
 
 
 def get_new_grade(max_grade):
@@ -147,7 +147,7 @@ def check_attendance():
             os.system('clear')
 
             fullname = student.name + ' ' + student.surname
-            view.print_message(fullname)
+            mentor_view.print_message(fullname)
             view.print_menu(title, options, exit_message)
 
             option = get_option(options)
@@ -312,7 +312,7 @@ def remove_student():
         return mentor_view.print_empty_database_msg()
 
     student_index = get_student_index()
-    
+
     if student_index is not None:
         students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)
