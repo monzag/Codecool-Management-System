@@ -17,6 +17,7 @@ from controllers.send_mail import *
 from views import view
 from views import mentor_view
 
+
 def mentor_menu(user):
     '''
     Prints user specific features and asks him for operation
@@ -86,9 +87,12 @@ def grade_assignment():
     Then prints assignments of the student.
     Then asks the user for the choice and changing the grade.
     '''
+    if Student.list_of_students == []:
+        return mentor_view.print_empty_database_msg()
+
     view_students()
     student_index = get_student_index()
-    if student_index != None:
+    if student_index is not None:
 
         assignment_controller.print_student_assignments(student_index)
         assignment = assignment_controller.get_assignment_form_user_input()
@@ -103,13 +107,13 @@ def grade_assignment():
                 Assignment.save_assignments_to_file('assignments.csv')
 
             else:
-                view.print_message('Assignment was already graded, or was not submited yet!')
+                mentor_view.assignment_already_graded()
 
         else:
-            view.print_message('There is no such assignment!')
+            mentor_view.no_such_assignment()
 
     else:
-        view.print_message('There is no such student!')
+        mentor_view.index_doesnt_exist()
 
 
 def get_new_grade(max_grade):
@@ -147,14 +151,14 @@ def check_attendance():
             os.system('clear')
 
             fullname = student.name + ' ' + student.surname
-            view.print_message(fullname)
+            mentor_view.print_message(fullname)
             view.print_menu(title, options, exit_message)
 
             option = get_option(options)
-            if option == 4:
+            if option == 4:  # skips a student
                 continue
             elif option == 0:
-                break
+                break  # breaks checking for now
 
             update_attendance(option, student, attendances)
 
@@ -247,7 +251,6 @@ def add_student():
         mentor_view.recipent_error()
 
 
-
 def get_valid_data():
     '''
     Get valid data and return it.
@@ -306,13 +309,13 @@ def remove_student():
         If there are no students, returns printed message.
         Otherwise, returns nothing, only removes student.
     '''
-    view_students()
     students = Student.list_of_students
     if students == []:
         return mentor_view.print_empty_database_msg()
 
+    view_students()
     student_index = get_student_index()
-    
+
     if student_index is not None:
         students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)

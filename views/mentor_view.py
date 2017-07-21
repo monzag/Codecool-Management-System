@@ -12,6 +12,16 @@ def data_to_view_students():
     return ["Name", "Surname", "e-mail", "Attendance", 'Total grade']
 
 
+def assignment_already_graded():
+
+    print('Assignment was already graded, or was not submited yet!')
+
+
+def no_such_assignment():
+
+    print('There is no such assignment!')
+
+
 def data_to_check_attendance():
 
     title = "Student attendance for today"
