@@ -17,6 +17,7 @@ from controllers.send_mail import *
 from views import view
 from views import mentor_view
 
+
 def mentor_menu(user):
     '''
     Prints user specific features and asks him for operation
@@ -91,7 +92,7 @@ def grade_assignment():
 
     view_students()
     student_index = get_student_index()
-    if student_index != None:
+    if student_index is not None:
 
         assignment_controller.print_student_assignments(student_index)
         assignment = assignment_controller.get_assignment_form_user_input()
@@ -154,10 +155,10 @@ def check_attendance():
             view.print_menu(title, options, exit_message)
 
             option = get_option(options)
-            if option == 4:
+            if option == 4:  # skips a student
                 continue
             elif option == 0:
-                break
+                break  # breaks checking for now
 
             update_attendance(option, student, attendances)
 
@@ -248,7 +249,6 @@ def add_student():
 
     except smtplib.SMTPRecipientsRefused:
         mentor_view.recipent_error()
-
 
 
 def get_valid_data():
