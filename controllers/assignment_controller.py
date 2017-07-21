@@ -240,7 +240,7 @@ def get_valid_inputs():
         deadline  : str
         max_grade : int
     '''
-    name_message, date_message, grade_message = assignemt_view.get_new_assignemt_outprints()
+    name_message, date_message, grade_message = assignment_view.get_new_assignemt_outprints()
 
     name = check_valid(is_name, name_message)
     deadline = check_valid(is_date, date_message)
@@ -417,6 +417,7 @@ def edit_assignment():
     assignment = get_assignment_form_user_input()
     if assignment:
         name, deadline, max_grade = get_valid_inputs()
+        deadline = format_date(deadline)
         assignment.name = name
         assignment.deadline = deadline
         assignment.max_grade = max_grade
@@ -424,5 +425,5 @@ def edit_assignment():
         Assignment.save_assignments_to_file('assignments.csv')
 
     else:
-        no_assignment_message = assignment_view.get_no_assignment_message():
+        no_assignment_message = assignment_view.get_no_assignment_message()
         view.print_message(no_assignment_message)

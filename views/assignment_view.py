@@ -22,7 +22,7 @@ def get_assignment_index_outprints():
     return labels, title
 
 
-def assignemt_view.get_new_assignemt_outprints():
+def get_new_assignemt_outprints():
     name_message = 'Type name'
     date_message = 'Type deadline(yyyy:mm:dd)'
     grade_message = 'Type grade'
