@@ -2,13 +2,13 @@ from views import view
 
 
 def get_submision_text():
-    text = view.get_input('\nProviade assignment text:\n\n')
+    text = view.get_input('\nProvide assignment text:\n\n')
 
     return text
 
 
 def print_fail_message():
-    view.print_message('\nChoosen assignment was already submited.\n')
+    view.print_message('\nChosen assignment was already submited.\n')
 
 
 def get_titles():
