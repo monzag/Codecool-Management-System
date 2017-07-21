@@ -10,6 +10,21 @@ from views import assignment_view
 from views import view
 
 
+def print_student_assignments(student_index):
+    '''
+    Prints table representing students assignments.
+
+    Paramaters:
+        student_index : int
+
+    Returns:
+        None (void-print)
+    '''
+    titles = assignment_view.get_titles()
+    table = get_assignments_to_table(student_index)
+    view.print_table(table, titles)
+
+
 def get_assignments_to_table(student_index):
     '''
     For a single Student obj. creates data necessery to print in view table
@@ -21,16 +36,19 @@ def get_assignments_to_table(student_index):
         table : list of lists of strs
     '''
     table = []
-    for assignment in Assignment.list_of_assignments:
-        solution = []
-        solution.append(assignment.name)
-        solution.append(assignment.add_date)
-        solution.append(assignment.deadline)
-        solution.append(assignment.solutions[student_index].formated_submit_date)
-        solution.append(assignment.solutions[student_index].formated_grade)
-        solution.append(str(assignment.max_grade))
 
-        table.append(solution)
+    for assignment in Assignment.list_of_assignments:
+        row = []
+
+        row.append(assignment.name)
+        row.append(assignment.add_date)
+        row.append(assignment.deadline)
+        row.append(assignment.solutions[student_index].formated_submit_date)
+        row.append(assignment.solutions[student_index].formated_grade)
+        row.append(str(assignment.max_grade))
+
+        table.append(row)
+
 
     return table
 
@@ -65,10 +83,15 @@ def submit_solution_to_assignment(assignment, student_index):
 
 
 def get_today_date():
+    '''
+    Returns:
+        today date as 'yyyy:mm:dd' string
+    '''
     return '{:0>2}:{:0>2}:{:0>2}'.format(datetime.today().year, datetime.today().month, datetime.today().day)
 
 def save_solution_to_file(file_name):
     '''
+    Saves user submision to assignment into a file.
     '''
     text = assignment_view.get_submision_text()
 
@@ -79,7 +102,7 @@ def save_solution_to_file(file_name):
 
 def get_student_total_grade(student_index):
     '''
-    Calculates total grade of all uploaded submisions of a student
+    Calculates total grade of all uploaded submisions of a student.
 
     Paramaters:
         student_index : int
@@ -108,7 +131,7 @@ def get_student_total_grade(student_index):
 
 def remove_student_solutions(student_index):
     '''
-    Fallows remowing student. Removes all his solutions stored in database
+    Fallows remowing student. Removes all his solutions stored in database.
 
     Parameters:
         student_index : int
@@ -144,34 +167,6 @@ def assign_assignments_to_new_student():
     Assignment.save_assignments_to_file('assignments.csv')
 
 
-def print_student_assignments(student_index):
-    '''
-    Prints table representing students assignments.
-
-    Paramaters:
-        student_index : int
-
-    Returns:
-        None (void-print)
-    '''
-    titles = ['name', 'add date', 'deadline', 'submit_date', 'grade', 'max_grade']
-
-    table = []
-    for assignment in Assignment.list_of_assignments:
-        row = []
-
-        row.append(assignment.name)
-        row.append(assignment.add_date)
-        row.append(assignment.deadline)
-        row.append(assignment.solutions[student_index].formated_submit_date)
-        row.append(assignment.solutions[student_index].formated_grade)
-        row.append(str(assignment.max_grade))
-
-        table.append(row)
-
-    view.print_table(table, titles)
-
-
 def get_assignment_form_user_input():
     '''
     Asks user for input and tries to find Assignment under input index.
@@ -184,8 +179,7 @@ def get_assignment_form_user_input():
         assignment : Assignment obj.
         or None
     '''
-    labels = ['Index']
-    title = 'Type index number of assignment'
+    labels, title = assignment_view.get_assignment_index_outprints()
     user_input = view.get_inputs(labels, title)[0]
 
     assignment_indexes = [str(assignment_index + 1) for assignment_index in range(len(Assignment.list_of_assignments))]
@@ -246,9 +240,11 @@ def get_valid_inputs():
         deadline  : str
         max_grade : int
     '''
-    name = check_valid(is_name, 'name')
-    deadline = check_valid(is_date, 'deadline(yyyy:mm:dd)')
-    max_grade = int(check_valid(is_grade, 'max grade'))
+    name_message, date_message, grade_message = assignemt_view.get_new_assignemt_outprints()
+
+    name = check_valid(is_name, name_message)
+    deadline = check_valid(is_date, date_message)
+    max_grade = int(check_valid(is_grade, grade_message))
 
     return name, deadline, max_grade
 
@@ -428,4 +424,5 @@ def edit_assignment():
         Assignment.save_assignments_to_file('assignments.csv')
 
     else:
-        view.print_message('There is no such assignment')
+        no_assignment_message = assignment_view.get_no_assignment_message():
+        view.print_message(no_assignment_message)
