@@ -317,7 +317,7 @@ def remove_student():
         clean_attendance_data()
 
     else:
-        view.print_message('Index does not exist!')
+        mentor_view.index_doesnt_exist()
 
 
 def clean_attendance_data():
