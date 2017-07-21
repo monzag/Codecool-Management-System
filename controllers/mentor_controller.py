@@ -151,7 +151,7 @@ def check_attendance():
             os.system('clear')
 
             fullname = student.name + ' ' + student.surname
-            mentor_view.print_message(fullname)
+            view.print_message(fullname)
             view.print_menu(title, options, exit_message)
 
             option = get_option(options)
