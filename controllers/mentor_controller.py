@@ -63,7 +63,7 @@ def view_students():
         Nothing, it just prints the student list.
     '''
 
-    titles = ["Name", "Surname", "e-mail", "Attendance", 'Total grade']
+    titles = mentor_view.data_to_view_students()
     students_info = []
 
     for student_index, student in enumerate(Student.list_of_students):
@@ -299,16 +299,20 @@ def is_alpha(user_input):
 
 
 def remove_student():
-    """
+    '''
     Removes object Student from list by index.
 
     Returns:
-        Nothing, it just removes the student.
-    """
+        If there are no students, returns printed message.
+        Otherwise, returns nothing, only removes student.
+    '''
     view_students()
-    student_index = get_student_index()
     students = Student.list_of_students
+    if students == []:
+        return mentor_view.print_empty_database_msg()
 
+    student_index = get_student_index()
+    
     if student_index is not None:
         students.remove(students[int(student_index)])
         assignment_controller.remove_student_solutions(student_index)
