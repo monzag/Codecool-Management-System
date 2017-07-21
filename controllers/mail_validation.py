@@ -13,16 +13,17 @@ def check_mail(mail):
 
     characters_list = list(punctuation)
     no_forbidden_characters = True
-    splitted_mail = mail.split("@")
 
+    at_index = characters_list.index('@')
+    dot_index = characters_list.index('.')
+    del characters_list[at_index], characters_list[dot_index]
+    #Remove from list characters, which are allowed
     for character in characters_list:
-        # Remove from characters list signs that are allowed.
-        if character == "@" or character == ".":
-            characters_list.remove(character)
-            continue
 
         if character in mail:
             no_forbidden_characters = False
+
+    splitted_mail = mail.split("@")
 
     if no_forbidden_characters:
         # Check if '@' appears only once in mail and if "." is used

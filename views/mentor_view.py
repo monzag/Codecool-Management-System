@@ -7,6 +7,10 @@ def menu_labels(user):
 
     return title, exit_message, options
 
+def data_to_view_students():
+
+    return ["Name", "Surname", "e-mail", "Attendance", 'Total grade']
+
 
 def data_to_check_attendance():
 
