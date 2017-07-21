@@ -361,7 +361,8 @@ def get_solutions_data():
         minimum = min(assignment.solutions, key=lambda solution: solution.grade)
         maximum = max(assignment.solutions, key=lambda solution: solution.grade)
         avarage = sum(map(lambda solution: solution.grade, assignment.solutions))
-        avarage /= assignment.max_grade * len(assignment.solutions) * 100
+        avarage = avarage / (assignment.max_grade * len(assignment.solutions)) * 100
+
 
         row.append(assignment.name)
         row.append('{:2.2f}%'.format(avarage))
