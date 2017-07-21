@@ -86,6 +86,9 @@ def grade_assignment():
     Then prints assignments of the student.
     Then asks the user for the choice and changing the grade.
     '''
+    if Student.list_of_students == []:
+        return mentor_view.print_empty_database_msg()
+
     view_students()
     student_index = get_student_index()
     if student_index != None:
@@ -306,11 +309,11 @@ def remove_student():
         If there are no students, returns printed message.
         Otherwise, returns nothing, only removes student.
     '''
-    view_students()
     students = Student.list_of_students
     if students == []:
         return mentor_view.print_empty_database_msg()
 
+    view_students()
     student_index = get_student_index()
 
     if student_index is not None:
